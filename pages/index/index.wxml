@@ -1,0 +1,45 @@
+
+
+ 
+<import src="../../template/nav" />
+  <view class="flex fix_nav_wp">
+  <block wx:for="{{navData}}" wx:key="{{this}}">
+      <template is="nav" data="{{...item}}"/>
+  </block>
+  </view> 
+
+ <!-- <view class="flex fix_nav_wp">
+  <view class="nav_link" bindtap='gotoCompanyIndex'>
+    <button class="defalut_btn on_cor">
+      <icon class="iconfont icon-qiugouguanli del_ico idx_ico"></icon>     
+      <text class="txt">今日求购</text>
+    </button>
+  </view>
+  <view class="nav_link" bindtap='gotobusinessCard'>
+    <button class="defalut_btn">
+      <icon class="iconfont icon-mingpianjia del_ico job_ico mp_ico"></icon>
+      <text class="txt">名片</text>
+    </button>
+  </view>
+  <view class="nav_link ">
+    <button class="defalut_btn" bindtap='gotopublish'>
+      <view class="plus_wp">
+        <image src='../../images/plus_ico.png' class="plus_ico" />
+      </view>
+      <text class="txt txt_fb">发布</text>
+    </button>
+  </view>
+  <view class="nav_link">
+    <button class="defalut_btn" bindtap='gotoMessages'>
+      <icon class="iconfont icon-yikeappshouyetubiao35 del_ico man_ico xiaox_ico"></icon>
+      <text wx:if="{{news.comlook>0}}" class="tip_tip">{{news.comlook}}</text>
+      <text class="txt">消息</text>
+    </button>
+  </view>
+  <view class="nav_link">
+    <button class="defalut_btn" bindtap='bindViewMy'>
+      <icon class="iconfont icon-wode del_ico mine_ico my_ico"></icon>
+      <text class="txt">我的</text>
+    </button>
+  </view>
+</view>  -->
