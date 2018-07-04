@@ -1,2 +1,8 @@
 <!--pages/creation/creation.wxml-->
+<import src="../../template/nav" />
+  <view class="flex fix_nav_wp">
+  <block wx:for="{{navData}}" wx:key="{{this}}">
+      <template is="nav" data="{{...item}}"/>
+  </block>
+  </view> 
 <text>pages/creation/creation.wxml</text>

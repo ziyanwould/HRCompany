@@ -137,5 +137,30 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },  //各个跳转函数
+  gotoCompanyIndex: function () {
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
+  gotobusinessCard: function () {
+    wx.reLaunch({
+      url: '/pages/detail/detail'
+    })
+  },
+  gotopublish: function () {
+    wx.reLaunch({
+      url: '/pages/creation/creation'
+    })
+  },
+  gotoMessages: function () {
+    wx.reLaunch({
+      url: '/pages/news/news'
+    })
+  },
+  bindViewMy: function () {
+    wx.reLaunch({
+      url: '/pages/user/user'
+    })
   }
 })

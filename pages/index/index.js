@@ -38,6 +38,7 @@ Page({
     ],
 
   },
+  //各个跳转函数
   gotoCompanyIndex:function(){
     wx.reLaunch({
       url: '/pages/index/index'
@@ -62,7 +63,7 @@ Page({
     wx.reLaunch({
       url: '/pages/user/user'
     })
-  },
-
+  }
+  //各个跳转函数end
 
 })
