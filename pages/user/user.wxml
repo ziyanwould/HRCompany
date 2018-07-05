@@ -1,12 +1,6 @@
 <!--pages/user/user.wxml-->
 <!-- <text>pages/user/user.wxml</text> -->
-<import src="../../template/nav" />
-  <view class="flex fix_nav_wp">
-  <block wx:for="{{navData}}" wx:key="{{this}}">
-      <template is="nav" data="{{...item}}"/>
-  </block>
-  </view> 
-
+<include src="/template/bottom"/>
 <view class="container">
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>

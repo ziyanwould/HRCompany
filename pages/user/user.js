@@ -1,5 +1,5 @@
 // pages/user/user.js
-const app = getApp()
+const app = getApp();
 Page({
 
   /**
@@ -54,6 +54,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let isIphoneX = app.globalData.isIphoneX;
+    this.setData({
+      isIphoneX: isIphoneX
+    });
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

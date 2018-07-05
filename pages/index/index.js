@@ -1,4 +1,4 @@
-
+const app = getApp();
 
 Page({
   data: {
@@ -63,7 +63,14 @@ Page({
     wx.reLaunch({
       url: '/pages/user/user'
     })
-  }
+  },
   //各个跳转函数end
+  onLoad:function(){
+    let isIphoneX = app.globalData.isIphoneX;
+    this.setData({
+      isIphoneX: isIphoneX
+    });
+
+  }
 
 })

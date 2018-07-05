@@ -1,8 +1,3 @@
 <!--pages/news/news.wxml-->
-<import src="../../template/nav" />
-  <view class="flex fix_nav_wp">
-  <block wx:for="{{navData}}" wx:key="{{this}}">
-      <template is="nav" data="{{...item}}"/>
-  </block>
-  </view> 
+<include src="/template/bottom"/>
 <text>pages/news/news.wxml</text>

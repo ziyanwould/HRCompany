@@ -1,3 +1,5 @@
+
+<!-- 自定义导航栏组件 -->
 <template name="nav">
       <view class="nav_link" bindtap="{{fn}}">
         <button class="defalut_btn {{current==0?'':'on_cor'}}">
@@ -13,4 +15,9 @@
           </block>
         </button> 
       </view>
+</template>
+
+<!-- 背景图组价 -->
+<template name="banner">
+ <image src='http://www.liujiarong.top/WXImg/bannner.png'></image>
 </template>
