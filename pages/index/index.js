@@ -36,7 +36,17 @@ Page({
         fn: 'bindViewMy'
       },
     ],
+    seek:{
+      fn: 'seek',
+    }
+    ,
+    list:[
+     
+    ]
 
+    
+  
+    
   },
   //各个跳转函数
   gotoCompanyIndex:function(){
@@ -66,11 +76,75 @@ Page({
   },
   //各个跳转函数end
   onLoad:function(){
+    let that = this;
     let isIphoneX = app.globalData.isIphoneX;
-    this.setData({
+    that.setData({
       isIphoneX: isIphoneX
     });
+    that.datalist();
+   
+  },
+  //请求函数
+  datalist:function(messages="玩命加载中"){
+    var that = this;
+    wx.showLoading({
+        title: messages,
+    });
+    let setArr = ['李文文', '吴碧勇', '何碧碧',  '迪迦','李雯'];
+    var list = that.data.list;
+    if (list.length>19) {
+      wx.showToast({
+        title: '到底了...',
+        icon: 'loading',
+        duration: 2000
+      });
 
-  }
+    }
+    for (let i in setArr) {
+      if (list.length > 19) {
+        continue;//终止循环
+      } 
+      //let sexs = (i+1) % 2 == 0 ?'男':'女';
+      let lists = {
+        fn: 'detail',
+        sex: i % 2 == 0 ? '女' : '男',
+        tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
+        name: setArr[i],
+        area: i % 2 == 0 ? '广东佛山市' : '广东广州市',
+        stats: i % 2 == 0 ? '资质' : '不限',
+        pay: '面议',
+        person: false
 
+      }
+      list.push(lists)
+    }
+    that.setData({
+      list: list
+    });
+
+    setTimeout(function () {
+      wx.hideLoading();
+    }, 800);
+    setTimeout(function () {
+      wx.stopPullDownRefresh();
+    }, 900)
+  
+  },
+  onPullDownRefresh: function () {
+    // 显示顶部刷新图标  
+    // wx.showNavigationBarLoading();
+    let that = this;
+    that.setData({
+      list: []
+    })
+    that.datalist('刷新数据中')
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+ 
+    this.datalist()
+  },
 })

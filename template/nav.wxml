@@ -19,5 +19,44 @@
 
 <!-- 背景图组价 -->
 <template name="banner">
- <image src='http://www.liujiarong.top/WXImg/bannner.png'></image>
+  <view class='bannerImg'>
+    <image src='http://www.liujiarong.top/WXImg/bannner.png'></image>
+  </view>
+</template>
+
+<!--搜索组件-->
+<template name='seek'>
+  <view class='seeinput'>
+   <input placeholder-class='sde' placeholder='搜索' disabled='disabled' bindtap='{{fn}}'></input>
+  </view>
+</template>
+
+<!-- 兼职简历模板 -->
+<template name='partTime'>
+  <view class='partTime' bindtap='{{fn}}'>
+    <view class='left'>
+        <image src='http://www.liujiarong.top/WXImg/{{person?person:"person"}}.png'></image>
+    </view>
+    <view class='right'>
+      <view class='title'>
+         <image src='http://www.liujiarong.top/WXImg/nan.png'></image><text>{{tille}}</text>
+      </view>
+      <view class='name'>
+         <image  src='http://www.liujiarong.top/WXImg/{{sex=="男"?"name":"nv"}}.png'></image><text>{{name}}</text>
+      </view>
+       <view class='message'>
+         <image src='http://www.liujiarong.top/WXImg/area.png'></image><text>{{area}}</text>
+         <image src='http://www.liujiarong.top/WXImg/stats.png'></image><text>{{stats}}</text>
+         <image src='http://www.liujiarong.top/WXImg/pay.png'></image><text>{{pay}}</text>
+      </view>
+      <view class='other' wx:if='{{!log}}'>
+       查看简历
+      </view>
+       <view class='time' wx:if='{{!log}}'>
+           <image style='width:20rpx;height:20rpx;' src='http://www.liujiarong.top/WXImg/upTime.png'></image>
+           <text style='font-size:20rpx;color:#F6F7F7;'>2018-05-20</text>
+      </view>
+    </view>
+
+  </view>
 </template>
