@@ -31,7 +31,7 @@
   </view>
 </template>
 
-<!-- 兼职简历模板 -->
+<!-- 兼职/全职简历模板 -->
 <template name='partTime'>
   <view class='partTime' bindtap='{{fn}}'>
     <view class='left'>
@@ -44,10 +44,16 @@
       <view class='name'>
          <image  src='http://www.liujiarong.top/WXImg/{{sex=="男"?"name":"nv"}}.png'></image><text>{{name}}</text>
       </view>
-       <view class='message'>
+       <view class='message' wx:if='{{!education}}'>
          <image src='http://www.liujiarong.top/WXImg/area.png'></image><text>{{area}}</text>
-         <image src='http://www.liujiarong.top/WXImg/stats.png'></image><text>{{stats}}</text>
-         <image src='http://www.liujiarong.top/WXImg/pay.png'></image><text>{{pay}}</text>
+         <image src='http://www.liujiarong.top/WXImg/stats.png'></image><text class='stats'>{{stats}}</text>
+         <image src='http://www.liujiarong.top/WXImg/pay.png'></image><text class='pay'>{{pay}}</text>
+      </view>
+      <!-- 全职版块应有信息 -->
+      <view class='message fullTime' wx:if='{{education}}'>
+         <image src='http://www.liujiarong.top/WXImg/education.png'></image><text class='education'>{{education}}</text>
+         <image src='http://www.liujiarong.top/WXImg/birthday.png'></image><text class='birthday'>{{birthday}}</text>
+         <image src='http://www.liujiarong.top/WXImg/experience.png'></image><text class='experience'>{{experience}}</text>
       </view>
       <view class='other' wx:if='{{!log}}'>
        查看简历
@@ -59,4 +65,30 @@
     </view>
 
   </view>
+</template>
+
+<!-- 发布职位组建 -->
+<template name='creation'>
+     <view class='commom'>
+        <view class='title'>
+        职位信息
+        </view>
+        <view class='count'>
+          <view class='Left'><text>职位标题</text></view>
+          <view class='Right'><text>UI设计师</text> <icon class="iconfont icon-xiayiye del_ico idx_ico"></icon></view>
+        </view>
+        <view class='input'>
+          <view class='Left'><text>职位标题</text></view>
+          <view class='Right'><input placeholder='请输入内容'></input></view>
+        </view>
+      </view>
+
+      <view class='textarea'>
+        <view class='title'>
+       职位信息
+        </view>
+        <view class='textareaIn'>
+         <textarea placeholder='请输入'></textarea>
+        </view>
+      </view>
 </template>

@@ -40,6 +40,12 @@ Page({
         fn: 'bindViewMy'
       },
     ],
+    seek: {
+      fn: 'seek',
+    }
+    ,
+    list: []
+
 
   },
   //各个跳转函数
@@ -74,10 +80,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
     let isIphoneX = app.globalData.isIphoneX;
-    this.setData({
+    that.setData({
       isIphoneX: isIphoneX
     });
+    that.datalist();
 
   },
 
@@ -109,24 +117,75 @@ Page({
   
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
   
+  },
+    //请求函数
+  datalist: function (messages = "玩命加载中") {
+    var that = this;
+    wx.showLoading({
+      title: messages,
+    });
+    let setArr = ['刘婷婷', '吴军', '文瑜', '王毅', '何仙姑'];
+    var list = that.data.list;
+    if (list.length > 19) {
+      wx.showToast({
+        title: '到底了...',
+        icon: 'loading',
+        duration: 2000
+      });
+
+    }
+    for (let i in setArr) {
+      if (list.length > 19) {
+        continue;//终止循环
+      }
+      //let sexs = (i+1) % 2 == 0 ?'男':'女';
+      let lists = {
+        fn: 'detail',
+        sex: i % 2 == 0 ? '女' : '男',
+        tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
+        name: setArr[i],
+        education: i % 2 == 0 ? '本科' : '硕士',
+        birthday: i % 2 == 0 ? '32岁' : '28岁',
+        experience: 1+i+'年',
+        person: false
+
+      }
+      list.push(lists)
+    }
+    that.setData({
+      list: list
+    });
+
+    setTimeout(function () {
+      wx.hideLoading();
+    }, 800);
+    setTimeout(function () {
+      wx.stopPullDownRefresh();
+    }, 900)
+
+  },
+  onPullDownRefresh: function () {
+    // 显示顶部刷新图标  
+    // wx.showNavigationBarLoading();
+    let that = this;
+    that.setData({
+      list: []
+    })
+    that.datalist('刷新数据中')
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+    this.datalist()
   }
 })

@@ -40,9 +40,7 @@ Page({
       fn: 'seek',
     }
     ,
-    list:[
-     
-    ]
+    list:[]
 
     
   

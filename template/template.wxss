@@ -115,3 +115,26 @@
   display: inline-flex;
   align-items:center;
 }
+/*文字颜色样式*/
+.stats{
+  color: #03a6a6;
+}
+.pay{
+  color: #fe644f;
+}
+/*全职下样式修改*/
+.partTime .right  .fullTime image{
+   width: 23rpx;
+   height: 23rpx;
+}
+.fullTime .education{
+  color: #ffd05b;
+}
+
+.fullTime .birthday{
+ color: #fe644f;
+}
+
+.fullTime .experience{
+  color: #1dc5f6;
+}

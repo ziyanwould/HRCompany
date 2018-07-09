@@ -1,1 +1,11 @@
 /* pages/creation/creation.wxss */
+/*针对指引不同的标题颜色*/
+.cssActive{
+  color: #00A2E9;
+}
+page{
+  background-color: #F0F5F6;
+}
+.weui-navbar{
+  background: #FFFFFF;
+}

@@ -1,3 +1,2 @@
 <!--pages/detail/detail.wxml-->
-<include src="/template/bottom"/>
-<text>pages/detail/detail.wxml</text>
+<include src="/template/list"/>

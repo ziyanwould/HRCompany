@@ -1,5 +1,6 @@
 // pages/creation/creation.js
 const app = getApp();
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 Page({
 
   /**
@@ -38,8 +39,13 @@ Page({
         style: 0,
         ico: 'icon-wode',
         fn: 'bindViewMy'
-      },
+      }
+      
     ],
+    tabs: ["发布兼职", "发布全职",],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0
 
   },
   //各个跳转函数
@@ -77,6 +83,15 @@ Page({
     let isIphoneX = app.globalData.isIphoneX;
     this.setData({
       isIphoneX: isIphoneX
+    });
+    let that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+        });
+      }
     });
 
   },
@@ -128,5 +143,12 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
   }
 })

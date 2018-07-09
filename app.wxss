@@ -1,3 +1,6 @@
+
+ @import 'weui.wxss';   
+
 /* 小图标 */
 
 @font-face {font-family: "iconfont";
