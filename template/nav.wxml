@@ -69,26 +69,39 @@
 
 <!-- 发布职位组建 -->
 <template name='creation'>
-     <view class='commom'>
-        <view class='title'>
-        职位信息
-        </view>
-        <view class='count'>
-          <view class='Left'><text>职位标题</text></view>
-          <view class='Right'><text>UI设计师</text> <icon class="iconfont icon-xiayiye del_ico idx_ico"></icon></view>
-        </view>
-        <view class='input'>
-          <view class='Left'><text>职位标题</text></view>
-          <view class='Right'><input placeholder='请输入内容'></input></view>
-        </view>
-      </view>
+     <view class='commom' wx:for='{{select}}' wx:for-item='items' wx:key='{{this}}'>
 
-      <view class='textarea'>
         <view class='title'>
-       职位信息
+         {{items.comTitle}}
         </view>
-        <view class='textareaIn'>
-         <textarea placeholder='请输入'></textarea>
+        <block wx:for='{{items.child}}' wx:for-item='child'  wx:key='{{this}}'>
+
+       
+            <view class='count' wx:if='{{child.countTitle}}' bindtap='{{child.fn}}'>
+              <view class='Left'><text>{{child.countTitle}}</text></view>
+              <view class='Right'><text>{{child.countCount}}</text> <icon class="iconfont icon-xiayiye del_ico idx_ico"></icon></view>
+            </view>
+       
+            <block wx:if='{{!showTextarea}}'>
+              <view class='input' wx:if='{{!child.countTitle}}'>
+                <view class='Left'><text>{{child.inputTitle}}</text></view>
+                <view class='Right'><input placeholder='{{child.inputPlace}}' bindinput='{{child.fn}}'  placeholder-class='plclass' value='{{child.input}}'></input></view>
+              </view>
+             </block>
+        </block>
+     </view>
+      
+      <block wx:for='{{textarea}}' wx:key='{{this}}'  wx:key='{{this}}'>
+        <view class='textarea' wx:if='{{!showTextarea}}'>
+          <view class='title'>
+          {{item.textareaTitle}}
+          </view>
+          <view class='textareaIn'>
+          <textarea bindinput='{{item.fn}}' disabled='item.disabled' placeholder='{{item.placeTitle}}' placeholder-class='pltext' value='{{item.textarea}}'></textarea>
+          </view>
         </view>
+      </block>
+      <view class='publish'>
+         <button class="weui-btn nowbtn" bindtap='{{fn}}'  type="primary">{{publish}}</button>
       </view>
 </template>

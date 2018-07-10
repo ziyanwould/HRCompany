@@ -138,3 +138,69 @@
 .fullTime .experience{
   color: #1dc5f6;
 }
+/*发布职业的样式*/
+.page .title{
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 30rpx;
+  color: #96a1a6;
+  font-size: 26rpx;
+}
+.page .count,.page .input{
+  height: 94rpx;
+  background-color: #FFFFFF;
+  padding: 0 30rpx;
+  /*box-shadow:-2rpx 0px 8rpx #fff,0px -2rpx 8rpx #fff,0px 2rpx 8px #fff,2rpx 0px 8rpx #fff;*/
+  border-bottom: solid 1rpx #ecf2f2;
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size: 25rpx;
+  
+}
+.page .iconfont{
+  font-size: 26rpx;
+  position: relative;
+  top: -10rpx;
+} 
+.page .Left text{
+  color: #000000;
+  white-space:nowrap;
+  overflow:visible;
+  text-overflow:ellipsis;
+
+}
+
+.page .Right text{
+  color: #365b8b;
+  position: relative;
+  right: 10rpx;
+}
+.plclass {
+ text-align: right;
+ color: #dddddd;
+
+
+}
+.textareaIn{
+  padding: 30rpx;
+  background: #FFFFFF;
+}
+.textareaIn textarea{
+width: 100%;
+height:150px;
+display:block;
+position:relative;
+
+}
+.pltext{
+  padding-top: 30rpx;
+}
+.publish{
+  padding:30rpx  100rpx;
+  background: #FFFFFF;
+  margin: 1rpx 0;
+}
+.nowbtn{
+  background: #15A9FC!important;
+}

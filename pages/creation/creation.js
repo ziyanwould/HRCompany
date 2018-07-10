@@ -1,4 +1,8 @@
 // pages/creation/creation.js
+var model = require('../../model/model.js')
+
+var show = false;
+var item = {};
 const app = getApp();
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 Page({
@@ -7,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // show:true,
     //自定义模板必须引入的数据版块
     navData: [
       {
@@ -45,7 +50,140 @@ Page({
     tabs: ["发布兼职", "发布全职",],
     activeIndex: 0,
     sliderOffset: 0,
-    sliderLeft: 0
+    sliderLeft: 0,
+    //版块数据组
+    allms:{
+     // showTextarea:true,
+      select:[
+        {
+          comTitle:'职位信息',
+          child:[
+            {
+              inputTitle:'职位标题',
+              inputPlace:'请输入',
+              input:'',
+              fn:'titleInput'
+              
+            },
+            {
+              countTitle:'职位薪资',
+              countCount:'请选择',
+              fn:'choosePay'
+            }
+          ],
+        },
+         {
+          comTitle: '任职要求',
+          child: [
+            {
+              countTitle: '职位类别',
+              countCount: '请选择',
+              fn: 'post'
+            },
+            {
+              countTitle: '招聘人数',
+              countCount: '请选择',
+              fn: 'receuit'
+            },
+            {
+              countTitle: '工作地区',
+              countCount: '请选择',
+              fn: 'area'
+            }
+            ,
+            {
+              countTitle: '工作经验',
+              countCount: '请选择',
+              fn: 'exp'
+            }
+            ,
+            {
+              countTitle: '学历要求',
+              countCount: '请选择',
+              fn: 'education'
+            }
+          
+          ],
+        }
+      ],
+      textarea:[
+        {
+          textareaTitle:"情况说明",
+          fn:'textarea',
+          placeTitle:'请编辑岗位职责',
+          textarea:''
+        }
+      ],
+      publish:'发布职位',
+      fn:'publish'
+    },
+    otherms:{
+      select: [
+        {
+          comTitle: '职位信息',
+          child: [
+            {
+              inputTitle: '职位标题',
+              inputPlace: '请输入',
+              input: '',
+              fn: 'FtitleInput'
+
+            },
+            {
+              countTitle: '职位薪资',
+              countCount: '请选择',
+              fn: 'FchoosePay'
+            }
+          ],
+        },
+        {
+          comTitle: '证书要求',
+          child: [
+            {
+              countTitle: '证书类别',
+              countCount: '请选择',
+              fn: 'Ftype'
+            },
+            {
+              countTitle: '注册情况',
+              countCount: '请选择',
+              fn: 'Fcase'
+            },
+            {
+              countTitle: '证书状态',
+              countCount: '请选择',
+              fn: 'Fstate'
+            }
+            ,
+            {
+              countTitle: '用证地区',
+              countCount: '请选择',
+              fn: 'Farea'
+            }
+            ,
+            {
+              countTitle: '证书用途',
+              countCount: '请选择',
+              fn: 'Fuse'
+            }
+
+          ],
+        }
+      ],
+      textarea: [
+        {
+          textareaTitle: "情况说明",
+          fn: 'Ftextarea',
+          placeTitle: '请编辑岗位职责',
+          textarea: ''
+        }
+      ],
+      publish: '发布职位',
+      fn: 'publish'
+    },
+    item: {
+      show: show
+    }
 
   },
   //各个跳转函数
@@ -99,8 +237,10 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  
+  onReady: function (e) {
+    var that = this;
+    //请求数据
+    model.updateAreaData(that, 0, e);
   },
 
   /**
@@ -144,11 +284,53 @@ Page({
   onShareAppMessage: function () {
   
   },
+  area:function(){
+    this.translate()
+  },
+  Farea:function(){
+    this.translate()
+  },
 
   tabClick: function (e) {
     this.setData({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });
-  }
+  },
+   //点击选择城市按钮显示picker-view
+  translate: function (e) {
+    var that = this;
+    //隐藏输入框及头部及底部
+    that.setData({
+      'otherms.showTextarea': true,
+      'allms.showTextarea':true,
+      show:true
+
+    })
+    model.animationEvents(this, 0, true, 400);
+  },
+  //隐藏picker-view
+  hiddenFloatView: function (e) {
+    var that = this;
+    //隐藏输入框及头部及底部
+    that.setData({
+      'otherms.showTextarea': true,
+      'allms.showTextarea': false,
+      show: false
+    })
+    model.animationEvents(this, 200, false, 400);
+  },
+  //滑动事件
+  bindChange: function (e) {
+    model.updateAreaData(this, 1, e);
+    item = this.data.item;
+    this.setData({
+      province: item.provinces[item.value[0]].name,
+      city: item.citys[item.value[1]].name,
+      county: item.countys[item.value[2]].name
+    });
+  },
+  onReachBottom: function () {
+  },
+  nono: function () { }
 })
