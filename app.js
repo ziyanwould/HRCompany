@@ -1,6 +1,10 @@
+var common = require('utils/util.js');
 //app.js
 App({
   onLaunch: function () {
+    /*是否登录  更新状态*/
+    var _this = this;
+
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -32,6 +36,60 @@ App({
         }
       }
     })
+
+
+    try {
+      var value = wx.getStorageSync('Jobl')
+      if (value) {
+        //更新全局变量方式 20180515
+        _this.globalData.Jobl = value
+        typeof cb == "function" && cb(that.globalData.Jobl)
+        //更新全局变量结束 20180515
+      } else {
+        common.request('sort/get_job_type', {
+          params: {},
+          success:res=> {
+             console.log('获取列表1', res.data.data.list);
+            wx.setStorageSync('Jobl', res.data.data.list)
+
+            //更新全局变量方式 20180515
+            _this.globalData.Jobl = res.data.data.list
+            typeof cb == "function" && cb(that.globalData.Jobl)
+            //更新全局变量结束 20180515
+          }
+        })
+      }
+
+    } catch (e) {
+      //错误执行
+    }
+
+    try {
+      var value = wx.getStorageSync('CRL')
+      if (value) {
+        //更新全局变量方式 20180515
+        _this.globalData.CRL = value
+        typeof cb == "function" && cb(that.globalData.CRL)
+        //更新全局变量结束 20180515
+      } else {
+        common.request('sort/get_ger_type', {
+          params: {},
+          success: res=> {
+             console.log('获取列表2', res.data.data.list);
+            wx.setStorageSync('CRL', res.data.data.list)
+
+            //更新全局变量方式 20180515
+            _this.globalData.CRL = res.data.data.list
+            typeof cb == "function" && cb(that.globalData.CRL)
+            //更新全局变量结束 20180515
+          }
+        })
+      }
+
+    } catch (e) {
+      //错误执行
+    }
+
   },
   onShow: function () {
     let that = this;
@@ -48,6 +106,8 @@ App({
   },  
   globalData: {
     isIphoneX: false,  
-    userInfo: null
+    userInfo: null,
+    Jobl: [],//职位列表
+    CRL: [],//证书列表
   }
 })

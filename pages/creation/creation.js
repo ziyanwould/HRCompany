@@ -1,5 +1,6 @@
 // pages/creation/creation.js
 var model = require('../../model/model.js')
+const utils = require('../../utils/util.js')
 
 var show = false;
 var item = {};
@@ -247,7 +248,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+  //  let message = utils.sjc();
+  //  console.log(message) 测试箭头函数
+
+    // utils.request('sort/get_job_type', {
+    //   params: {},
+    //   success:res=> {
+    //      console.log(res)
+    //      utils.deleteEmptyProperty(res);
+    //      console.log(res)
+    //   }
+    // }) 测试封装函数
   },
 
   /**
@@ -314,11 +325,12 @@ Page({
     var that = this;
     //隐藏输入框及头部及底部
     that.setData({
-      'otherms.showTextarea': true,
+      'otherms.showTextarea': false,
       'allms.showTextarea': false,
       show: false
     })
     model.animationEvents(this, 200, false, 400);
+    console.log(that.data.province, that.data.city)
   },
   //滑动事件
   bindChange: function (e) {
