@@ -6,7 +6,8 @@
     "pages/news/news",
     "pages/user/user",
     "pages/creation/creation",
-    "pages/child/log/log"
+    "pages/child/log/log",
+    "pages/child/selectProject/selectProject"
 
   ],
   "window":{

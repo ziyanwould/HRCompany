@@ -259,6 +259,26 @@ Page({
     //      console.log(res)
     //   }
     // }) 测试封装函数
+   let that =this;
+    /**跳转筛选 */
+    let value = wx.getStorageSync('worktype')
+    console.log("otherms", that.data.otherms)
+    console.log("allms", that.data.allms)
+    if (value) {
+      if (that.data.activeIndex==0){
+        that.setData({
+          'otherms.select[1].child[0].countCount': value.value,
+           pID: value.id
+        })
+      }else{
+        that.setData({
+          'allms.select[1].child[0].countCount': value.value,
+           fID: value.id
+        })
+      }
+        
+    }
+    wx.removeStorageSync('worktype')
   },
 
   /**
@@ -295,10 +315,10 @@ Page({
   onShareAppMessage: function () {
   
   },
-  area:function(){
+  area(){
     this.translate()
   },
-  Farea:function(){
+  Farea(){
     this.translate()
   },
 
@@ -307,10 +327,11 @@ Page({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });
+   
   },
    //点击选择城市按钮显示picker-view
-  translate: function (e) {
-    var that = this;
+  translate(e) {
+    let that = this;
     //隐藏输入框及头部及底部
     that.setData({
       'otherms.showTextarea': true,
@@ -318,10 +339,11 @@ Page({
       show:true
 
     })
+   
     model.animationEvents(this, 0, true, 400);
   },
   //隐藏picker-view
-  hiddenFloatView: function (e) {
+  hiddenFloatView(e) {
     var that = this;
     //隐藏输入框及头部及底部
     that.setData({
@@ -333,7 +355,8 @@ Page({
     console.log(that.data.province, that.data.city)
   },
   //滑动事件
-  bindChange: function (e) {
+  bindChange(e) {
+    let that = this;
     model.updateAreaData(this, 1, e);
     item = this.data.item;
     this.setData({
@@ -341,8 +364,114 @@ Page({
       city: item.citys[item.value[1]].name,
       county: item.countys[item.value[2]].name
     });
+    if (that.data.activeIndex == 0) {
+      that.setData({
+        'otherms.select[1].child[3].countCount': that.data.province + ' ' + that.data.city
+      })
+    } else {
+      that.setData({
+        'allms.select[1].child[2].countCount': that.data.province + ' ' + that.data.city
+      })
+    }
   },
-  onReachBottom: function () {
+  onReachBottom () {
   },
-  nono: function () { }
+  nono() { },
+
+//es6简化写法
+  Ftype(){
+    wx.navigateTo({
+      url: '/pages/child/selectProject/selectProject'//实际路径要写全
+    })
+  },
+  post(){
+    wx.navigateTo({
+      url: '/pages/child/selectProject/selectProject?id=0'//实际路径要写全
+    })
+  },
+  //兼职的函数
+  
+  selsect(arry,elet){
+    var that = this;
+    wx.showActionSheet({
+      itemList: arry,
+      success: function (res) {
+        if (!res.cancel) {
+          console.log(res.tapIndex)
+          that.setData({
+            [elet]: arry[res.tapIndex]
+          })
+        }
+      }
+    })
+  },
+  FchoosePay(){
+    let arry = ["3k -6k", "6k -10k", "10k -15k","15k以上","面议"];
+    let ele = 'otherms.select[0].child[1].countCount';
+    this.selsect(arry, ele)
+  },
+  Fcase(){
+    let arry = ["转注", "初始", "不限"];
+    let ele = 'otherms.select[1].child[1].countCount';
+    this.selsect(arry, ele)
+  },
+  Fstate(){
+    let arry = ["闲置中", "快到期", "未拿证","不限"];
+    let ele = 'otherms.select[1].child[2].countCount';
+    this.selsect(arry, ele)
+  },
+  Fuse(){
+    let arry = ["资质", "项目", "不限"];
+    let ele = 'otherms.select[1].child[4].countCount';
+    this.selsect(arry, ele)
+  },
+  FtitleInput(e){
+   // console.log(e.detail.value);
+   this.setData({
+     'otherms.select[0].child[0].input': e.detail.value
+   })
+  },
+  Ftextarea(e){
+    this.setData({
+      'otherms.textarea[0].textarea': e.detail.value
+    })
+  },
+
+  publish(){
+    console.log(this.data.otherms)
+  },
+  
+  //全职相关
+  titleInput(e){
+    console.log(e.detail.value);
+    this.setData({
+      'allms.select[0].child[0].input': e.detail.value
+    })
+  },
+  textarea(e){
+    console.log(e.detail.value);
+     this.setData({
+       'allms.textarea[0].textarea': e.detail.value
+     })
+  },
+  choosePay(){
+    let arry = ["3k -6k", "6k -10k", "10k -15k", "15k以上", "面议"];
+    let ele = 'allms.select[0].child[1].countCount';
+    this.selsect(arry, ele)
+  },
+  receuit(){
+    let arry = ["1-5人", "4-20人", "20-30人", "若干人"];
+    let ele = 'allms.select[1].child[1].countCount';
+    this.selsect(arry, ele)
+  },
+  exp(){
+    let arry = ["1年", "2-5年", "5-10年", "10年以上"];
+    let ele = 'allms.select[1].child[3].countCount';
+    this.selsect(arry, ele)
+  },
+  education(){
+    let arry = ["高中", "大专", "本科", "硕士","博士以上","不限"];
+    let ele = 'allms.select[1].child[4].countCount';
+    this.selsect(arry, ele)
+  }
 })

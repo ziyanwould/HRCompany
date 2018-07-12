@@ -97,7 +97,7 @@
           {{item.textareaTitle}}
           </view>
           <view class='textareaIn'>
-          <textarea bindinput='{{item.fn}}' disabled='!item.disabled' placeholder='{{item.placeTitle}}' placeholder-class='pltext' value='{{item.textarea}}'></textarea>
+          <textarea bindinput='{{item.fn}}'  placeholder='{{item.placeTitle}}' placeholder-class='pltext' value='{{item.textarea}}'></textarea>
           </view>
         </view>
       </block>
