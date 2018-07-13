@@ -42,7 +42,35 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    comlist:[
+      {
+        'class':'image6',
+        'image':'Cperson',
+        'mes':'职位收藏',
+        'fn':''
+      },
+       {
+        'class': 'image7',
+        'image': 'Ctell',
+        'mes': '收藏夹',
+        'fn': ''
+      }
+      ,
+       {
+         'class': 'image8',
+         'image': 'Cphone',
+         'mes': '简历管理',
+         'fn': ''
+       }
+      ,
+       {
+         'class': 'image9',
+         'image': 'QQ',
+         'mes': '已购买简历',
+         'fn': ''
+       }
+    ]
   },
   //事件处理函数
   bindViewTap: function () {

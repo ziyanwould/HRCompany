@@ -1,7 +1,7 @@
 <!--pages/user/user.wxml-->
 <!-- <text>pages/user/user.wxml</text> -->
 <include src="/template/bottom"/>
-<view class="container">
+<!-- <view class="container">
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
@@ -12,5 +12,40 @@
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
   </view>
-</view>
+</view> -->
 
+<view class='page'>
+  
+      <view class='count'>
+          <view class='listms'>
+              <view class='Clist'><view class='imgCen'><image class='image0' src='http://www.liujiarong.top/WXImg/business.png'></image></view><text class='text0'>广东中住七一网络科技有限公司</text></view>
+              <view  class='Clist'><view class='imgCen'><image class='image1' src='http://www.liujiarong.top/WXImg/site.png'></image></view><text class='text1'>广州市中山大学科技园B座1818</text></view>
+              <view  class='Clist'><view class='imgCen'><image class='image2' src='http://www.liujiarong.top/WXImg/Email.png'></image></view><text class='text2'  >15622102239@qq.com</text></view>
+              <view  class='Clist'><view class='imgCen'><image class='image3' src='http://www.liujiarong.top/WXImg/network.png'></image></view><text class='text3' >www.zhongzhu71.com</text></view>
+          </view>
+        
+              <view  class='Clist'><view class='imgCen'><image class='image4' src='http://www.liujiarong.top/WXImg/recommend.png'></image></view><text>企业介绍</text></view>
+              <view class='detail'>
+                中住71（www.zhongzhu71.com）是广东中住七一网络科技有限公司创办经营的中国领先的城市建设领域服务供应平台，致力通过共享为城市建设领域提供专业化、定制化、一站式服务。
+              </view>
+         
+              <image class='image5' src='http://www.liujiarong.top/WXImg/logos.png'></image>
+              <button class='edit'>编辑</button>
+     </view>
+
+    
+     <view class='list' wx:for='{{comlist}}' bindtap='{{item.fn}}'>
+        <view class='left'>
+           <view class='imgCen'> <image class='{{item.class}}' src='http://www.liujiarong.top/WXImg/{{item.image}}.png'></image></view><text>{{item.mes}}</text>
+        </view>
+        <view class='right'>
+           <image class='toright' src='http://www.liujiarong.top/WXImg/toright.png'></image>
+        </view>
+     </view>
+
+
+
+
+     <button class='quit'>退出登录</button>
+
+</view>
