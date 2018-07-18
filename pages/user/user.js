@@ -70,6 +70,32 @@ Page({
          'mes': '已购买简历',
          'fn': ''
        }
+    ],
+    firlist:[
+      {
+        'class':'image0',
+        'pic':'business',
+        'classt':'text0',
+        'count':'广东中住七一网络科技有限公司'
+      },
+      {
+        'class': 'image1',
+        'pic': 'site',
+        'classt': 'text1',
+        'count': '广州市中山大学科技园B座1818'
+      },
+      {
+        'class': 'image2',
+        'pic': 'Email',
+        'classt': 'text2',
+        'count': '15622102239@qq.com'
+      },
+         {
+        'class': 'image3',
+        'pic': 'network',
+        'classt': 'text3',
+        'count': 'www.zhongzhu71.com'
+      }
     ]
   },
   //事件处理函数
@@ -194,6 +220,11 @@ Page({
   bindViewMy: function () {
     wx.reLaunch({
       url: '/pages/user/user'
+    })
+  },
+  edit(){
+    wx.navigateTo({
+      url: '/pages/child/comInfo/comInfo'
     })
   }
 })

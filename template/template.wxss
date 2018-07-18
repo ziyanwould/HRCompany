@@ -195,6 +195,7 @@ position:relative;
 }
 .pltext{
   padding-top: 30rpx;
+   color: #dddddd;
 }
 .publish{
   padding:30rpx  100rpx;
@@ -203,4 +204,22 @@ position:relative;
 }
 .nowbtn{
   background: #15A9FC!important;
+}
+.commom .Right input{
+  text-align: right;
+}
+.see_textarea{
+  position: relative;
+  padding: 30rpx;
+  font-size: 26rpx;
+  border-bottom: 2rpx solid #F4F4F4;
+  background: #FFFFFF;
+  height: 300rpx;
+}
+.Alert{
+  position: absolute;
+  bottom: 36rpx;
+  right: 36rpx;
+  font-size: 20rpx;
+  color: #a3a3a3;
 }

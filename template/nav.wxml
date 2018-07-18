@@ -71,7 +71,7 @@
 <template name='creation'>
      <view class='commom' wx:for='{{select}}' wx:for-item='items' wx:key='{{this}}'>
 
-        <view class='title'>
+        <view class='title' wx:if='{{items.comTitle}}'>
          {{items.comTitle}}
         </view>
         <block wx:for='{{items.child}}' wx:for-item='child'  wx:key='{{this}}'>
@@ -96,8 +96,9 @@
           <view class='title'>
           {{item.textareaTitle}}
           </view>
-          <view class='textareaIn'>
-          <textarea bindinput='{{item.fn}}'  placeholder='{{item.placeTitle}}' placeholder-class='pltext' value='{{item.textarea}}'></textarea>
+          <view class='textareaIn see_textarea'>
+          <textarea bindinput='{{item.fn}}'  placeholder='{{item.placeTitle}}' placeholder-class='pltext' maxlength="{{item.noteMaxLen}}" value='{{item.textarea}}'></textarea>
+           <view wx:if='{{item.noteMaxLen}}' class='Alert'>{{item.currentNoteLen|0}}/{{item.noteMaxLen}}</view>
           </view>
         </view>
       </block>

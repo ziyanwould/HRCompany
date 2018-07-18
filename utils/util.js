@@ -108,6 +108,16 @@ function wxPromisify(fn) {
   }
 }
 
+//异步处理方案 2
+
+const Promisify = (api) => {
+  return (options, ...params) => {
+    return new Promise((resolve, reject) => {
+      api(Object.assign({}, options, { success: resolve, fail: reject }), ...params);
+    });
+  }
+}
+
 
 
 //格栅化字符串无效值
@@ -165,5 +175,6 @@ module.exports = {
   request: request,
   wxPromisify: wxPromisify,
   deleteEmptyProperty: deleteEmptyProperty,
-  timeFat: timeFat
+  timeFat: timeFat,
+  Promisify: Promisify
 }

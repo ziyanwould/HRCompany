@@ -1,0 +1,10 @@
+<!--pages/child/comInfo/comInfo.wxml-->
+<import src="/template/nav" />
+
+  <view class='page'>
+     <view class='count thisone'  bindtap=''>
+              <view class='Left'><text>公司LOGO</text></view>
+              <view class='Right'><image class='img' src='http://www.liujiarong.top/WXImg/logo-zhongzhu711.png'></image></view>
+            </view>
+    <template is='creation' data='{{...cominfo}}'/>
+  </view>

@@ -21,7 +21,7 @@
 }
 
 .page{
-  padding-top: 60rpx;
+  padding-top: 1rpx;
   background-color: #F9F9F9;
   min-height: 100%;
 }
