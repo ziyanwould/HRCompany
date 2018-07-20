@@ -106,3 +106,94 @@
          <button class="weui-btn nowbtn" bindtap='{{fn}}'  type="primary">{{publish}}</button>
       </view>
 </template>
+
+
+<!-- 注册版块 -->
+<template name='logon'>
+
+   <view class='allLogo'>
+      
+      <view class='centerLogon'>
+        <!-- 进度条 -->
+        <view class='thisab'>
+          <view class='sele1'>
+            <view class='round'>
+                <view class='inner'>
+                  <text>1</text>
+                </view>
+            </view>
+
+              <view class='round'>
+                <view class='inner'>
+                  <text>2</text>
+                </view>
+            </view>
+
+              <view class='round'>
+                <view class='inner'>
+                  <text>3</text>
+                </view>
+            </view>
+
+              <view class='round'>
+                <view class='inner'>
+                  <text>4</text>
+                </view>
+            </view>
+          </view>
+        </view>
+        <!-- 填写信息板块 -->
+        <block wx:if=''>
+        <view class='logonIn'>
+           <view class='img'><image src='http://www.liujiarong.top/WXImg/logocomp.png'  class='img1'></image></view>
+           <view class='title'>企业名字：</view>
+           <view class='input'><input value='0000' placeholder='(请与营业执照注册名保存一致)' placeholder-class='loPlone'></input></view>
+        </view>
+
+         <view class='logonIn'>
+           <view class='img'><image src='http://www.liujiarong.top/WXImg/Logoarea.png'  class='img2'></image></view>
+           <view class='title'>企业地址：</view>
+           <view class='input'><input value='' placeholder='' placeholder-class='loPlone'></input></view>
+        </view>
+
+          <view class='logonIn'>
+           <view class='img'><image src='http://www.liujiarong.top/WXImg/Logoarea.png'  class='img2'></image></view>
+           <view class='title'>企业地址：</view>
+           <view class='input'><input value='' placeholder='' placeholder-class='loPlone'></input></view>
+        </view>
+        </block>
+        <!-- 上传证书版块 -->
+        <view class='uploa'>
+          <image src='http://www.liujiarong.top/WXImg/companylogon.png' class='img4'></image>
+          <view class='imgUp'>点击上传营业执照</view>
+        </view>
+        <view class='imgFont'>(图片格式为jpg,png,大小不超过3M)</view>
+       <!-- 上一步与下一步 -->
+       
+       <view class='setp'>
+         <view class='seleft'>
+           <image src='http://www.liujiarong.top/WXImg/logoleft.png' class='img3'></image>
+         </view>
+         <view class='seright'>
+          下一步
+         </view>
+       </view>
+
+       <!-- 代表注册和已有账号 -->
+       <view class='logoIm'>
+          <view class='mesLeft'>
+            注册代表你已同意<text>《建筑猎聘用户协议》</text>
+          </view>
+
+           <view class='mesRight'>
+            <text>已有账户</text>
+          </view>
+       </view>
+
+        
+          
+      </view>
+
+   </view>
+
+</template>

@@ -8,7 +8,8 @@
     "pages/creation/creation",
     "pages/child/log/log",
     "pages/child/selectProject/selectProject",
-    "pages/child/comInfo/comInfo"
+    "pages/child/comInfo/comInfo",
+    "pages/child/logon/logon"
 
   ],
   "window":{

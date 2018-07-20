@@ -145,4 +145,10 @@ Page({
  
     this.datalist()
   },
+  seek() {
+    wx.navigateTo({
+      url: '/pages/child/logon/logon'//实际路径要写全
+    })
+  }
 })
+
