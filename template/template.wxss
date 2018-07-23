@@ -400,3 +400,26 @@ font-size: 32rpx;
   color: #FFFFFF;
   text-align: center;
 }
+.imgarea{
+  width: 35rpx;
+  height: 33rpx;
+}
+
+.allLogo  .time[disabled],.allLogo  .time{
+ background: rgba(0,0,0,0.01);
+  display: inline-block;
+  line-height:normal;
+  border:none;
+  outline:none;
+  list-style: none;
+  border-radius: none;
+  position: absolute;
+  font-size: 28rpx;
+  color: #FFFFFF;
+  right: 58rpx;
+  z-index: 99;
+
+}
+.allLogo  .time::after{
+  border: none;
+}

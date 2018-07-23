@@ -117,76 +117,51 @@
         <!-- 进度条 -->
         <view class='thisab'>
           <view class='sele1'>
-            <view class='round'>
-                <view class='inner'>
-                  <text>1</text>
+
+            <view class='round' wx:for='{{step}}' wx:key='{{this}}'>
+                <view class='inner' wx:if='{{item.active}}'>
+                  <text>{{item.num}}</text>
                 </view>
             </view>
 
-              <view class='round'>
-                <view class='inner'>
-                  <text>2</text>
-                </view>
-            </view>
-
-              <view class='round'>
-                <view class='inner'>
-                  <text>3</text>
-                </view>
-            </view>
-
-              <view class='round'>
-                <view class='inner'>
-                  <text>4</text>
-                </view>
-            </view>
           </view>
         </view>
         <!-- 填写信息板块 -->
-        <block wx:if=''>
-        <view class='logonIn'>
-           <view class='img'><image src='http://www.liujiarong.top/WXImg/logocomp.png'  class='img1'></image></view>
-           <view class='title'>企业名字：</view>
-           <view class='input'><input value='0000' placeholder='(请与营业执照注册名保存一致)' placeholder-class='loPlone'></input></view>
-        </view>
-
-         <view class='logonIn'>
-           <view class='img'><image src='http://www.liujiarong.top/WXImg/Logoarea.png'  class='img2'></image></view>
-           <view class='title'>企业地址：</view>
-           <view class='input'><input value='' placeholder='' placeholder-class='loPlone'></input></view>
-        </view>
-
-          <view class='logonIn'>
-           <view class='img'><image src='http://www.liujiarong.top/WXImg/Logoarea.png'  class='img2'></image></view>
-           <view class='title'>企业地址：</view>
-           <view class='input'><input value='' placeholder='' placeholder-class='loPlone'></input></view>
+        <block wx:if='{{mesInput}}'>
+        <view class='logonIn' wx:for='{{inputList}}' wx:key='{{this}}' bindtap='{{item.fun}}'>
+           <view class='img'><image src='http://www.liujiarong.top/WXImg/{{item.img}}'  class='{{item.classx}}'></image></view>
+           <view class='title'>{{item.title}}</view>
+           <view class='input'><input value='{{item.value}}' type='{{item.type}}' data-id='{{index}}' bindinput='{{item.fn}}' disabled='{{item.dis}}' placeholder='{{item.placeholder}}' placeholder-class='{{item.placlass}}'></input></view>
+             <button bindtap='{{item.fn2}}' disabled='{{item.disabled}}' class='time' wx:if="{{item.valMessPan}}" >{{item.time}}</button> 
         </view>
         </block>
         <!-- 上传证书版块 -->
-        <view class='uploa'>
-          <image src='http://www.liujiarong.top/WXImg/companylogon.png' class='img4'></image>
-          <view class='imgUp'>点击上传营业执照</view>
-        </view>
-        <view class='imgFont'>(图片格式为jpg,png,大小不超过3M)</view>
+        <block wx:if='{{credImg}}'>
+          <view class='uploa' bindtap='Ccie.fn'>
+            <image src='http://www.liujiarong.top/WXImg/{{Ccie.img}}' class='{{Ccie.classx}}'></image>
+            <view class='imgUp'>{{Ccie.uptext}}</view>
+          </view>
+          <view class='imgFont'>{{Ccie.other}}</view>
+        </block>
        <!-- 上一步与下一步 -->
        
        <view class='setp'>
-         <view class='seleft'>
+         <view class='seleft' bindtap='{{lastSetp}}'>
            <image src='http://www.liujiarong.top/WXImg/logoleft.png' class='img3'></image>
          </view>
-         <view class='seright'>
-          下一步
+         <view class='seright' bindtap='{{nextSetp}}'>
+          {{nextText}}
          </view>
        </view>
 
        <!-- 代表注册和已有账号 -->
        <view class='logoIm'>
-          <view class='mesLeft'>
-            注册代表你已同意<text>《建筑猎聘用户协议》</text>
+          <view class='mesLeft' wx:if='{{mes}}'>
+             {{mesLeft}}<text>{{mesRight}}</text>
           </view>
 
-           <view class='mesRight'>
-            <text>已有账户</text>
+           <view class='mesRight' wx:if='{{Acc}}'>
+           <text>{{AccText}}</text>
           </view>
        </view>
 
