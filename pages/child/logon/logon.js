@@ -350,7 +350,8 @@ Page({
         that.step1();
         break;
       case 2:
-
+        that.setStep(3);
+        that.state(3)
         break;
       default:
 
@@ -401,22 +402,25 @@ Page({
           value:'',
           placeholder:'请输入密码',
           placlass:'loPlone',
-          fn:'watchInput'
+          fn:'watchInput',
+          'type':'password',
         },
         {
           img: 'code.png',
           classx: 'img2',
-          title: '确认登录密码',
+          title: '确认登录密码：',
           value: '',
           placeholder: '请再次输入密码',
           placlass: 'loPlone',
-          fn: 'watchInput'
+          fn: 'watchInput',
+          'type': 'password',
         
         }]
       that.setData({
         'useDa.mesInput': true,
         'useDa.credImg': false,
         'useDa.Acc': false,
+        'useDa.inputList': list
       }) 
     }
   
