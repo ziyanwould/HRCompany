@@ -3,6 +3,7 @@ const app = getApp();
 Page({
   data: {
     //自定义模板必须引入的数据版块
+    items: {},
     navData: [
       {
         name: "兼职人才",  //文本
@@ -80,6 +81,15 @@ Page({
       isIphoneX: isIphoneX
     });
     that.datalist();
+    //var self = common.tanchu() //原来的模式下不能铺满
+    that.setData({
+      items: {
+        //height: 550,
+        masTitle: "",
+        show: true,
+        fages: true
+      }
+    });
    
   },
   //请求函数
@@ -149,6 +159,15 @@ Page({
     wx.navigateTo({
       url: '/pages/child/logon/logon'//实际路径要写全
     })
+  },
+  //针对登录的js
+    urlclose: function () {
+    this.setData({
+      items: {
+        show: false
+      }
+    });
   }
+
 })
 

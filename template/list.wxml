@@ -3,6 +3,7 @@
  
 <include src="bottom"/>
 <import src="nav" />
+<template is="notLogin" data="{{...items}}"/> 
 <block>
  <template is="banner" />
  <template is='seek' data='{{...seek}}'/>
@@ -12,6 +13,7 @@
    <template is='partTime' data='{{...item}}'/>
   </block>
 </view>
+
 
  <!-- <view class="flex fix_nav_wp">
   <view class="nav_link" bindtap='gotoCompanyIndex'>
