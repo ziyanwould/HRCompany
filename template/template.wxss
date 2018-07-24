@@ -404,6 +404,27 @@ font-size: 32rpx;
   width: 35rpx;
   height: 33rpx;
 }
+.allLogo  .imgpass{
+  width: 30rpx;
+  height: 36rpx;
+
+}
+
+.allLogo  .logUse{
+  width: 30rpx;
+  height: 35rpx;
+
+}
+.allLogo  .logcall{
+  width: 36rpx;
+  height: 35rpx;
+
+}
+.allLogo  .logfaty{
+  width: 33rpx;
+  height: 37rpx;
+
+}
 
 .allLogo  .time[disabled],.allLogo  .time{
  background: rgba(0,0,0,0.01);

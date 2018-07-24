@@ -14,6 +14,7 @@ Page({
    */
   data: {
     currentTime: 61,
+    codeNum:2,
     step:-1,
     useDa:{
       step: [
@@ -81,7 +82,8 @@ Page({
       
       ],
       Ccie:{
-        img:'companylogon.png',
+       // img:'companylogon.png',
+        img:'http://www.liujiarong.top/WXImg/companylogon.png',
         classx:'img4',
         uptext:'点击上传营业执照',
         other:'(图片格式为jpg,png,大小不超过3M)',
@@ -158,85 +160,56 @@ Page({
   
   },
   getVerificationCode: function (e) {
-    let flage = this.data.useDa.inputList[3].time;
+    let code = this.data.codeNum;
+    let mobiles = code-1;
+    let flage = this.data.useDa.inputList[code].time;
+    console.log("输入框信息1", flage)
     if (!(flage == '获取验证码' || flage == '重新发送')){
-      console.log("输入框信息", flage)
+      console.log("输入框信息2", flage)
        return false;
      }
     //  发送验证码
-    let mobile = this.data.mobile;
+    let mobile = this.data.useDa.inputList[mobiles].value;
     let regMobile = /^1\d{10}$/;
-    // if (!regMobile.test(mobile)) {
-    //   wx.showModal({
-    //     content: '您的手机号输入有误',
-    //     showCancel: false,
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         //console.log('用户点击确定')
-    //       }
-    //     }
-    //   });
-    //   return false;
-    // }
+    if (!regMobile.test(mobile)) {
+      wx.showModal({
+        content: '您的手机号输入有误',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            //console.log('用户点击确定')
+          }
+        }
+      });
+      return false;
+    }
     //启动计数器
+
     this.getCode();
     var that = this
+    let setmessage = 'useDa.inputList['+code+'].disabled'
     that.setData({
-      'useDa.inputList[3].disabled': true
+      [setmessage]: true
     })
-    // if (that.data.leibie == 0) {
-    //   var tmoble = "手机注册"
-    // } else {
-    //   var tmoble = "手机登录"
-
-    // };
-
-    // wx.request({
-    //   url: 'https://api.17liepin.com/api/common/send_smscode',
-    //   header: {
-    //     'content-type': 'application/json',
-    //     'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY='
-
-    //   },
-    //   method: 'POST',
-    //   data: {
-    //     mobile: that.data.mobile,
-    //     action_type: tmoble,
-    //     content: "登录/注册建筑猎聘"
-
-    //   },
-
-
-    //   success: function (res) {
-    //     console.log("接口返回", res.data)
-    //     wx.showToast({
-    //       title: res.data.message,
-    //       icon: 'success',
-    //       duration: 2000
-    //     });
-
-    //     //  存储验证码是否发送成功
-    //     that.setData({
-    //       note: res.data.success
-    //     })
-    //   }
-
-    // })
+   
   },
   getCode: function (options) {
     var that = this;
-    var currentTime = that.data.currentTime
+    var currentTime = that.data.currentTime;
+    let code = this.data.codeNum;
+    var setmessage = 'useDa.inputList[' + code+'].time';
+    var setdis = 'useDa.inputList[' + code +'].disabled';
     interval = setInterval(function () {
       currentTime--;
       that.setData({
-        'useDa.inputList[3].time': currentTime + '秒'
+        [setmessage]: currentTime + '秒'
       })
       if (currentTime <= 0) {
         clearInterval(interval)
         that.setData({
-          'useDa.inputList[3].time': '重新发送',
+          [setmessage]: '重新发送',
           currentTime: 61,
-          'useDa.inputList[3].disabled': false
+          [setdis]: false
         })
       }
     }, 1000)
@@ -296,6 +269,38 @@ Page({
       [value]: e.detail.value
     })
   },
+  //上传图片板块
+  setup(){
+    let that = this;
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        let   tempFilePaths = res.tempFilePaths
+        console.log("图片链接", tempFilePaths)
+        wx.showToast({
+          title: '正在上传...',
+          icon: 'loading',
+          mask: true,
+          duration: 10000
+        })  
+        setTimeout(function(){
+          that.setData({
+            'useDa.Ccie.img': tempFilePaths
+          })
+          wx.hideToast();  
+          wx.showToast({
+            title: '长传成功',
+            icon: 'success',
+            duration: 1000
+          });
+        },800)
+       
+      }
+    })
+  },
   //页面逻辑版块
   activeSetp(){
     let that = this;
@@ -329,14 +334,41 @@ Page({
   
     let that = this;
     that.activeSetp()
-    switch (that.data.step) {
+    let num = that.data.step;
+    if (num>2){
+      let lastList = 'lastList' + num
+      that.setData({
+        [lastList]: that.data.useDa.inputList
+      })
+    }
+   
+    switch (num) {
       case 1:
         wx.navigateBack({
           delta: 1 //返回页面数
         })
         break;
       case 2:
-      
+        that.state(1);
+        that.setStep(1);
+        that.setData({
+          'useDa.inputList': that.data.lastList1
+        })
+        break;
+      case 3:
+        that.state(2);
+        that.setStep(2);
+        that.setData({
+          'useDa.inputList': that.data.lastList2
+        })
+        break;
+      case 4:
+        that.state(3);
+        that.setStep(3);
+        that.setData({
+          'useDa.inputList': that.data.lastList3,
+          'useDa.nextText': '下一步'
+        })
         break;
       default:
       
@@ -345,13 +377,23 @@ Page({
   nextSetp(){
     let that = this;
     that.activeSetp();
-    switch (that.data.step) {
+    let num = that.data.step;
+    let lastList = 'lastList' + num
+    that.setData({
+      [lastList]: that.data.useDa.inputList
+    })
+    switch (num) {
       case 1:
         that.step1();
         break;
       case 2:
-        that.setStep(3);
-        that.state(3)
+        that.step2();
+        break;
+      case 3:
+        that.step3();   
+        break;
+      case 4:
+        that.step4();
         break;
       default:
 
@@ -364,29 +406,197 @@ Page({
     let that = this;
     //console.log(that.data.useDa.inputList[0].value, that.data.useDa.inputList[1].value, that.data.useDa.inputList[2].value)
     let arg = that.data.useDa.inputList;
+    let flage = false;
     for (let val of arg) {
       if (val.value=='') {
-        wx.showModal({
-          content: '您尚有信息没有填写完毕',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-            }
-          }
-        });
-      }else{
-        //页面信息刷新
-        that.setStep(2);
-        that.state(2);
-
+        flage = true
       }
+    }
+    if(flage){
+      wx.showModal({
+        content: '您尚有信息没有填写完毕',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          }
+        }
+      });
+    }else{
+      //页面信息刷新
+      that.setStep(2);
+      that.state(2);
+    }
+
+  },
+  step2(){
+    let that = this;
+    let flage = that.data.useDa.Ccie.img;
+    if (flage == "http://www.liujiarong.top/WXImg/companylogon.png"){
+      wx.showModal({
+        content: '您尚未上传营业执照',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          }
+        }
+      })
+    }else{
+      that.setStep(3);
+      that.state(3)
+      if (that.data.lastList3) {
+        that.setData({
+          'useDa.inputList': that.data.lastList3
+        })
+      }
+    }
+  
+  },
+  step3() {
+    let that = this;
+    let ps1 = that.data.useDa.inputList[0].value;
+    let ps2 = that.data.useDa.inputList[1].value;
+
+    let regMobile = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+   
+    if (ps1==''){
+      wx.showModal({
+        content: '密码不能为空',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          }
+        }
+      })
+    } else if (!regMobile.test(ps1)) {
+      wx.showModal({
+        content: '您的密码强度不够',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            //console.log('用户点击确定')
+          }
+        }
+      })
+      return false;
+    }else if(ps1!=ps2){
+      wx.showModal({
+        content: '您的两次密码不一致',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            //console.log('用户点击确定')
+          }
+        }
+      })
+    }else{
+      that.setStep(4);
+      that.state(4);
+       if (that.data.lastList4){
+          that.setData({
+            'useDa.inputList': that.data.lastList4
+          })
+        }
+    }
+ 
+  },
+  step4(){
+    let that = this;
+    let mes1 = that.data.useDa.inputList[0].value;
+    let mes2 = that.data.useDa.inputList[1].value;
+    let mes3 = that.data.useDa.inputList[2].value;
+
+    if (mes1==''){
+      wx.showModal({
+        content: '联系人不能为空',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            //console.log('用户点击确定')
+          }
+        }
+      })
+    }else if (mes2 =='')
+    {
+      wx.showModal({
+        content: '手机号不能为空',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            //console.log('用户点击确定')
+          }
+        }
+      })
+    } else if (mes3 == ''){
+      wx.showModal({
+        content: '验证码不能为空',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            //console.log('用户点击确定')
+          }
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '成功提交',
+        icon: 'success',
+        duration: 1000
+      });
+      setTimeout(function(){
+        wx.navigateBack({
+          delta: 1 //返回页面数
+        })
+      },1000)
+
+    
     }
 
   },
   state(unm){
     let that = this;
-    if (unm==2){
+    if (unm == 1){
+      let list = [
+        {
+          img: 'logocomp.png',
+          classx: 'img1',
+          title: '企业名字：',
+          value: '',
+          placeholder: '(请与营业执照注册名保存一致)',
+          placlass: 'loPlone',
+          fn: 'watchInput'
+        },
+        {
+          img: 'Logoarea.png',
+          classx: 'img2',
+          title: '所在地：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: '',
+          dis: true,
+          fun: 'area'
+        },
+        {
+          img: 'detailArea.png',
+          classx: 'imgarea',
+          title: '详细地址：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput'
+        }
+      ]
+
+      that.setData({
+        'useDa.mesInput': true,
+        'useDa.credImg': false,
+        'useDa.Acc': false,
+        'useDa.inputList': list
+      }) 
+    } else if (unm==2){
       that.setData({
         'useDa.mesInput' : false,
         'useDa.credImg': true,
@@ -397,17 +607,17 @@ Page({
       let list = [
         {
           img:'code.png',
-          classx:'img1',
+          classx:'imgpass',
           title:'设置登录密码：',
           value:'',
-          placeholder:'请输入密码',
+          placeholder: '密码由6-21字母和数字组成',
           placlass:'loPlone',
           fn:'watchInput',
           'type':'password',
         },
         {
           img: 'code.png',
-          classx: 'img2',
+          classx: 'imgpass',
           title: '确认登录密码：',
           value: '',
           placeholder: '请再次输入密码',
@@ -421,6 +631,51 @@ Page({
         'useDa.credImg': false,
         'useDa.Acc': false,
         'useDa.inputList': list
+      }) 
+    } else if (unm == 4){
+
+      let list = [
+        {
+          img: 'logUse.png',
+          classx: 'logUse',
+          title: '联系人姓名：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput',
+         
+        },
+        {
+          img: 'logcall.png',
+          classx: 'logcall',
+          title: '联系人手机号码：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput',
+       
+
+        },
+        {
+          img: 'logfaty.png',
+          classx: 'logfaty',
+          title: '手机号码验证码：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput',
+          fn2:'getVerificationCode',
+          valMessPan:true,
+          time: "获取验证码"
+
+        }
+        ]
+      that.setData({
+        'useDa.mesInput': true,
+        'useDa.credImg': false,
+        'useDa.Acc': false,
+        'useDa.inputList': list,
+        'useDa.nextText':'完成注册'
       }) 
     }
   

@@ -137,8 +137,8 @@
         </block>
         <!-- 上传证书版块 -->
         <block wx:if='{{credImg}}'>
-          <view class='uploa' bindtap='Ccie.fn'>
-            <image src='http://www.liujiarong.top/WXImg/{{Ccie.img}}' class='{{Ccie.classx}}'></image>
+          <view class='uploa' bindtap='{{Ccie.fn}}'>
+            <image src='{{Ccie.img}}' class='{{Ccie.classx}}'></image>
             <view class='imgUp'>{{Ccie.uptext}}</view>
           </view>
           <view class='imgFont'>{{Ccie.other}}</view>
