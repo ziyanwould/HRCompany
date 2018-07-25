@@ -16,7 +16,8 @@ Page({
     currentTime: 61,
     codeNum:2,
     step:-1,
-    useDa:{
+    switchs:true,
+    allDa:{
       step: [
         {
           num: 1,
@@ -35,17 +36,17 @@ Page({
           active: false
         }
       ],
-      mesInput:true,
-      credImg:false,
-      inputList:[
+      mesInput: true,
+      credImg: false,
+      inputList: [
         {
-          img:'logocomp.png',
-          classx:'img1',
-          title:'企业名字：',
-          value:'',
-          placeholder:'(请与营业执照注册名保存一致)',
-          placlass:'loPlone',
-          fn:'watchInput'
+          img: 'logocomp.png',
+          classx: 'img1',
+          title: '企业名字：',
+          value: '',
+          placeholder: '(请与营业执照注册名保存一致)',
+          placlass: 'loPlone',
+          fn: 'watchInput'
         },
         {
           img: 'Logoarea.png',
@@ -55,8 +56,8 @@ Page({
           placeholder: '',
           placlass: 'loPlone',
           fn: '',
-          dis:true,
-          fun:'area'
+          dis: true,
+          fun: 'area'
         },
         {
           img: 'detailArea.png',
@@ -79,25 +80,101 @@ Page({
         //   valMessPan:true,
         //   time: "获取验证码"
         // }
-      
+
       ],
-      Ccie:{
-       // img:'companylogon.png',
-        img:'http://www.liujiarong.top/WXImg/companylogon.png',
-        classx:'img4',
-        uptext:'点击上传营业执照',
-        other:'(图片格式为jpg,png,大小不超过3M)',
-        fn:'setup'
+      Ccie: {
+        // img:'companylogon.png',
+        img: 'http://www.liujiarong.top/WXImg/companylogon.png',
+        classx: 'img4',
+        uptext: '点击上传营业执照',
+        other: '(图片格式为jpg,png,大小不超过3M)',
+        fn: 'setup'
 
       },
-      lastSetp:'lastSetp',
-      nextSetp:'nextSetp',
-      nextText:'下一步',
-      mes:true,
-      mesLeft:'注册代表你已同意',
-      mesRight:'《建筑猎聘用户协议》',
-      Acc:true,
-      AccText:'已有账户',
+      lastSetp: 'lastSetp',
+      nextSetp: 'nextSetp',
+      nextText: '下一步',
+      mes: true,
+      mesLeft: '注册代表你已同意',
+      mesRight: '《建筑猎聘用户协议》',
+      Acc: true,
+      AccText: '已有账户',
+    },
+    useDa:{
+    
+    },
+    login: {
+       switcher:true,
+      mesInput: true,
+      credImg: false,
+      inputList: [
+        {
+          img: 'logUse.png',
+          classx: 'logUse',
+          title: '账号：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput'
+        },
+        {
+          img: 'code.png',
+          classx: 'imgpass',
+          title: '密码：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput',
+          'type': 'password',
+        }
+      ],
+      lastSetp: '',
+      nextSetp: '',
+      nextText: '登录',
+      mes: true,
+      mesLeft: ' ',
+      mesRight: ' ',
+      Acc: true,
+      AccText: '立即注册',
+    },
+    login2: {
+        switcher: false,
+        mesInput: true,
+        credImg: false,
+        inputList: [
+          {
+            img: 'logphone.png',
+            classx: 'logphone',
+            title: '请输入手机号码：',
+            value: '',
+            placeholder: '',
+            placlass: 'loPlone',
+            fn: 'watchInput',
+
+
+          },
+          {
+            img: 'logfaty.png',
+            classx: 'logfaty',
+            title: '请输入验证码：',
+            value: '',
+            placeholder: '',
+            placlass: 'loPlone',
+            fn: 'watchInput',
+            fn2: 'getVerificationCode',
+            valMessPan: true,
+            time: "获取验证码"
+
+          }
+        ],
+        lastSetp: '',
+        nextSetp: '',
+        nextText: '登录',
+        mes: true,
+        mesLeft: ' ',
+        mesRight: ' ',
+        Acc: true,
+        AccText: '立即注册',
     }
     
   },
@@ -106,7 +183,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    let that = this;
+   this.setData({
+     useDa: that.data.login2,
+     codeNum: 1,
+   })
   },
 
   /**

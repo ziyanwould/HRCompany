@@ -173,9 +173,9 @@
 
 </template>
 
- <!-- 登录组件 -->
+ <!-- 登录弹出组件 -->
  <template name="notLogin" >
-  <view class='maskLayer' style='height:{{height}}px' wx:if="{{show}}">
+  <view class='maskLayer' style='height:{{height}}px' wx:if="{{show}}" >
      <view class='masCount' >
         <view class='masTitle'>
           登录或注册{{masTitle}}
@@ -203,3 +203,55 @@
      </view>
   </view>
 </template> 
+
+<!-- 登录组件 -->
+<template name='Login'>
+   <view class='allLogo'>
+      <view class='centerLogon'>
+        <!-- 填写信息板块 -->
+        <block wx:if='{{mesInput}}'>
+        <view class='logonIn' wx:for='{{inputList}}' wx:key='{{this}}' bindtap='{{item.fun}}'>
+           <view class='img'><image src='http://www.liujiarong.top/WXImg/{{item.img}}'  class='{{item.classx}}'></image></view>
+           <view class='title'>{{item.title}}</view>
+           <view class='input'><input value='{{item.value}}' type='{{item.type}}' data-id='{{index}}' bindinput='{{item.fn}}' disabled='{{item.dis}}' placeholder='{{item.placeholder}}' placeholder-class='{{item.placlass}}'></input></view>
+             <button bindtap='{{item.fn2}}' disabled='{{item.disabled}}' class='time' wx:if="{{item.valMessPan}}" >{{item.time}}</button> 
+        </view>
+        </block> 
+       <!-- 上一步与下一步 -->   
+       <view class='setp'>
+         <!-- <view class='seleft' bindtap='{{lastSetp}}'>
+           <image src='http://www.liujiarong.top/WXImg/logoleft.png' class='img3'></image>
+         </view> -->
+         <view class='seright round' bindtap='{{nextSetp}}'>
+          {{nextText}}
+         </view>
+       </view>
+
+       <!-- 代表注册和已有账号 -->
+       <view class='logoIm'>
+          <view class='mesLeft' wx:if='{{mes}}'>
+             {{mesLeft}}<text>{{mesRight}}</text>
+          </view>
+
+           <view class='mesRight' wx:if='{{Acc}}'>
+           <text>{{AccText}}</text>
+          </view>
+       </view>  
+          
+      </view>
+    <view class='switcher'>
+      <view class='swtitle'>其他登录方式</view>
+      <view class='swicon'>
+        <view class='swWx'>
+          <button>微信</button>
+        </view>
+        <view class='wxAcco' wx:if='{{switcher}}'>
+          <button> 手机</button>
+      </view>
+      <view class='swPone' wx:if='{{!switcher}}'>
+          <button> 账号</button>
+      </view>
+      </view>
+      </view>
+   </view>
+</template>
