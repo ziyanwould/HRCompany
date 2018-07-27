@@ -1,5 +1,6 @@
 const app = getApp();
-
+const utils = require('../../utils/util.js')
+const Promise = require('../../utils/bluebird.min.js')
 Page({
   data: {
     //自定义模板必须引入的数据版块
@@ -167,8 +168,98 @@ Page({
         show: false
       }
     });
-  }
+  },
+  //
+getPhoneNumber(e) {
+  let that = this;
+    that.setData({
+    
+      encryptedData: e.detail.encryptedData ,
+      iv: e.detail.iv
+    })
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '未授权',
+        success: function (res) { }
+      })
+    } else {
+      new Promise(step1)
+        .then(function (val) {
+          console.log(val);
+         return new Promise(step2)
+        })
+        .then(function (val) {
+          console.log(val);
+          return new Promise(step3)
+        })
+        .then(function () {
+          console.log('搞定！')
+        })
 
+
+
+      function step1(resolve, reject){
+        const mylogin = utils.wxPromisify(wx.login);
+        mylogin().then(res => {
+          console.log(res)
+          let data = {
+            "code": res.code
+          }
+          that.setData({
+            code: data
+          })
+          resolve(true)
+        }).catch(res => {
+          reject(false)
+        })
+      }
+   
+
+      function step2(resolve, reject) {
+        
+        utils.post('api/common/get_com_wx_openid', that.data.code).then((res) => {
+        console.log(res);//正确返回结果
+        wx.hideLoading();
+        that.setData({
+          oppid: res.wx_openid
+        })
+        resolve()
+      }).catch((errMsg) => {
+        console.log(errMsg);//错误提示信息
+        wx.hideLoading();
+        reject()
+      });
+      }
+
+      function step3(resolve, reject){
+        let datas ={
+          "openid": that.data.oppid,
+          "encryptedData": that.data.encryptedData,
+          "iv": that.data.iv
+        };
+        utils.post('api/common/wx_login_phone_token', datas).then((res) => {
+          console.log(res);//正确返回结果
+          wx.hideLoading();
+          resolve()
+        }).catch((errMsg) => {
+          console.log(errMsg);//错误提示信息
+          wx.hideLoading();
+          reject()
+        });
+      }
+      // wx.showModal({
+      //   title: '提示',
+      //   showCancel: false,
+      //   content: '同意授权',
+      //   success: function (res) { }
+      // })
+    }
+}
 
 })
 

@@ -16,7 +16,7 @@
 
 <view class='page'>
   
-      <view class='count'>
+      <!-- <view class='count'>
           <view class='listms'>
 
               <view class='Clist' wx:for='{{firlist}}' wx:key='{{this}}'>
@@ -33,8 +33,17 @@
          
               <image class='image5' src='http://www.liujiarong.top/WXImg/logos.png'></image>
               <button class='edit' bindtap='edit'>编辑</button>
-     </view>
+     </view> -->
 
+
+    <view class='noLogin'>
+      <image class='wai' src='http://www.liujiarong.top/WXImg/loginUse_1.png'></image>
+        <image class='nei' src='http://www.liujiarong.top/WXImg/uselogin.png'></image>
+       <view class='text'>
+         <text>登录</text>
+         <text>注册</text>
+       </view>
+    </view>
     
      <view class='list' wx:for='{{comlist}}' wx:key='{{this}}' bindtap='{{item.fn}}'>
         <view class='left'>

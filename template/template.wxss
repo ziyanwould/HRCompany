@@ -508,6 +508,7 @@ font-size: 32rpx;
   display: flex;
   align-items: center;
   font-size: 33rpx;
+   justify-content: center;
 }
 
 /* 登录注册底下切换 */

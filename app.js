@@ -49,7 +49,7 @@ App({
         common.request('sort/get_job_type', {
           params: {},
           success:res=> {
-             console.log('获取列表1', res.data.data.list);
+             console.log('获取列表1', res.data.data.list,res);
             wx.setStorageSync('Jobl', res.data.data.list)
 
             //更新全局变量方式 20180515
@@ -75,7 +75,7 @@ App({
         common.request('sort/get_ger_type', {
           params: {},
           success: res=> {
-             console.log('获取列表2', res.data.data.list);
+             console.log('获取列表2', res.data.data.list,res);
             wx.setStorageSync('CRL', res.data.data.list)
 
             //更新全局变量方式 20180515

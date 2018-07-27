@@ -143,3 +143,57 @@ margin-bottom: 20rpx;
 .detail{
   margin-top: 20rpx;
 }
+.noLogin{
+  margin: 40rpx 30rpx;
+  position: relative;
+  height: 540rpx;
+  background: url('http://www.liujiarong.top/WXImg/loginBack.png') repeat-x center center;
+ background-size: 722rpx 540rpx;
+ text-align: center;
+}
+.noLogin .wai{
+  width: 180rpx;
+  height: 180rpx;
+  margin-top: 128rpx;
+    animation: rotateplane 5.2s infinite ease-in-out;
+}
+.noLogin .nei{
+  position: absolute;
+  width: 106rpx;
+  height: 106rpx;
+  top: 165rpx;
+  left: 50%;
+  margin-left: -53rpx;
+    
+}
+.noLogin .text{
+  color: #FFFFFF;
+  margin-top: 40rpx;
+}
+.noLogin .text text{
+  display: inline-block;
+  font-size: 32rpx;
+} 
+.noLogin .text text:nth-of-type(1){
+ padding-right: 18rpx;
+ border-right: 2rpx solid #FFFFFF;
+ margin-right:  18rpx;
+} 
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+ 
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+  } 50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+  } 100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+  }

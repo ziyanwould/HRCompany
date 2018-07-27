@@ -16,6 +16,8 @@ Page({
     currentTime: 61,
     codeNum:2,
     step:-1,
+    company_register:{
+    },//注册信息表
     switchs:true,
     allDa:{
       step: [
@@ -185,8 +187,8 @@ Page({
   onLoad: function (options) {
     let that = this;
    this.setData({
-     useDa: that.data.login2,
-     codeNum: 1,
+     useDa: that.data.allDa,
+     codeNum: 2,
    })
   },
 
@@ -265,7 +267,19 @@ Page({
       return false;
     }
     //启动计数器
-
+    utils.post('api/common/send_smscode', {
+      "mobile": mobile,
+      "action_type": "手机注册",
+      "content": "建筑猎聘登录/注册"
+    }).then((res) => {
+      console.log(res);//正确返回结果
+      wx.hideLoading();
+    
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      wx.hideLoading();
+  
+    });
     this.getCode();
     var that = this
     let setmessage = 'useDa.inputList['+code+'].disabled'
@@ -359,7 +373,7 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        let   tempFilePaths = res.tempFilePaths
+       let    tempFilePaths = res.tempFilePaths
         console.log("图片链接", tempFilePaths)
         wx.showToast({
           title: '正在上传...',
@@ -367,17 +381,36 @@ Page({
           mask: true,
           duration: 10000
         })  
-        setTimeout(function(){
+
+        const uploadFile = utils.wxPromisify(wx.uploadFile);
+        uploadFile({
+          url: 'https://api.17liepin.com/usercenter/upload_img', //仅为示例，非真实的接口地址
+          filePath: tempFilePaths[0],
+          name: 'file',
+          header: {
+            'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY='
+          },
+        }).then(res => {
+          console.log()
+          let dataimg = JSON.parse(res.data)
+          let imgsrc = dataimg.imgs[0];
           that.setData({
-            'useDa.Ccie.img': tempFilePaths
+            'useDa.Ccie.img': imgsrc
           })
-          wx.hideToast();  
-          wx.showToast({
-            title: '长传成功',
-            icon: 'success',
-            duration: 1000
-          });
-        },800)
+          setTimeout(function () {
+            wx.hideToast();
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 1000
+            });
+          }, 200)
+        }).catch(res => {
+         
+        })
+
+
+      
        
       }
     })

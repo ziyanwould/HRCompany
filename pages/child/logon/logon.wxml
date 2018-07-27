@@ -1,8 +1,8 @@
 <!--pages/child/logon/logon.wxml-->
 <import src="/template/nav" />
 
-<!-- <template is="logon" data='{{...useDa}}'/> -->
-<template is="Login" data='{{...useDa}}'/>
+<template is="logon" data='{{...useDa}}'/>
+<!-- <template is="Login" data='{{...useDa}}'/> -->
 
 <!-- 加入联动动地址选择 -->
 <import src="/model/model.wxml"/>
