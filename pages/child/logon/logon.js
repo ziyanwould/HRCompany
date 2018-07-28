@@ -16,6 +16,7 @@ Page({
     currentTime: 61,
     codeNum:2,
     step:-1,
+    wxPhone:18776007488,
     company_register:{
     },//注册信息表
     switchs:true,
@@ -69,19 +70,75 @@ Page({
           placeholder: '',
           placlass: 'loPlone',
           fn: 'watchInput'
+        }
+
+      ],
+      Ccie: {
+        // img:'companylogon.png',
+        img: 'http://www.liujiarong.top/WXImg/companylogon.png',
+        classx: 'img4',
+        uptext: '点击上传营业执照',
+        other: '(图片格式为jpg,png,大小不超过3M)',
+        fn: 'setup'
+
+      },
+      lastSetp: 'lastSetp',
+      nextSetp: 'nextSetp',
+      nextText: '下一步',
+      mes: true,
+      mesLeft: '注册代表你已同意',
+      mesRight: '《建筑猎聘用户协议》',
+      Acc: true,
+      AccText: '已有账户',
+    },
+    wxDa: {
+      step: [
+        {
+          num: 1,
+          active: true
         },
-        // {
-        //   img: 'detailArea.png',
-        //   classx: 'imgarea',
-        //   title: '验证码：',
-        //   value: '',
-        //   placeholder: '请输入验证码',
-        //   placlass: 'loPlone',
-        //   fn: '',
-        //   fn2:'getVerificationCode',
-        //   valMessPan:true,
-        //   time: "获取验证码"
-        // }
+        {
+          num: 2,
+          active: false
+        }
+        , {
+          num: 3,
+          active: false
+        }
+     
+      ],
+      mesInput: true,
+      credImg: false,
+      inputList: [
+        {
+          img: 'logocomp.png',
+          classx: 'img1',
+          title: '企业名字：',
+          value: '',
+          placeholder: '(请与营业执照注册名保存一致)',
+          placlass: 'loPlone',
+          fn: 'watchInput'
+        },
+        {
+          img: 'Logoarea.png',
+          classx: 'img2',
+          title: '所在地：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: '',
+          dis: true,
+          fun: 'area'
+        },
+        {
+          img: 'detailArea.png',
+          classx: 'imgarea',
+          title: '详细地址：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput'
+        }
 
       ],
       Ccie: {
@@ -186,10 +243,18 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+  //手机号注册呢
    this.setData({
      useDa: that.data.allDa,
      codeNum: 2,
    })
+  //微信注册
+  //   this.setData({
+  //    useDa: that.data.wxDa,
+  //    codeNum: 2,
+  //    wxLogin:true
+  //  })
+
   },
 
   /**
@@ -455,6 +520,34 @@ Page({
         [lastList]: that.data.useDa.inputList
       })
     }
+    if (that.data.wxLogin){
+      switch (num) {
+        case 1:
+          wx.navigateBack({
+            delta: 1 //返回页面数
+          })
+          break;
+        case 2:
+          that.state(1);
+          that.setStep(1);
+          that.setData({
+            'useDa.inputList': that.data.lastList1
+          })
+          break;
+        case 3:
+          that.state(2);
+          that.setStep(2);
+          that.setData({
+            'useDa.inputList': that.data.lastList2,
+            'useDa.nextText': '下一步'
+          })
+          break;
+  
+        default:
+
+      }
+      return false;
+    }
    
     switch (num) {
       case 1:
@@ -496,6 +589,24 @@ Page({
     that.setData({
       [lastList]: that.data.useDa.inputList
     })
+    if(that.data.wxLogin){
+      switch (num) {
+        case 1:
+          that.step1();
+          break;
+        case 2:
+          that.step2();
+          break;
+        case 3:
+          that.step4();
+          break;
+      
+        default:
+
+      }
+
+      return false
+    }
     switch (num) {
       case 1:
         that.step1();
@@ -539,6 +650,7 @@ Page({
     }else{
       //页面信息刷新
       that.setStep(2);
+      that.save(1)
       that.state(2);
     }
 
@@ -557,7 +669,20 @@ Page({
         }
       })
     }else{
+      if (that.data.wxLogin) {
+        that.setStep(3);
+        that.save(2)
+        that.state(5);
+        if (that.data.lastList4) {
+          that.setData({
+            'useDa.inputList': that.data.lastList4
+          })
+        }
+        return false;
+
+      }
       that.setStep(3);
+      that.save(2)
       that.state(3)
       if (that.data.lastList3) {
         that.setData({
@@ -607,6 +732,7 @@ Page({
       })
     }else{
       that.setStep(4);
+      that.save(3)
       that.state(4);
        if (that.data.lastList4){
           that.setData({
@@ -619,8 +745,15 @@ Page({
   step4(){
     let that = this;
     let mes1 = that.data.useDa.inputList[0].value;
-    let mes2 = that.data.useDa.inputList[1].value;
-    let mes3 = that.data.useDa.inputList[2].value;
+    var mes2 = 0;
+    var mes3 = '';
+    if(that.data.wxLogin){
+      mes3 = true;
+      mes2= true
+    }else{
+      mes3 =that.data.useDa.inputList[2].value;
+      mes2 =that.data.useDa.inputList[1].value
+    }
 
     if (mes1==''){
       wx.showModal({
@@ -654,16 +787,41 @@ Page({
         }
       })
     }else{
-      wx.showToast({
-        title: '成功提交',
-        icon: 'success',
-        duration: 1000
-      });
-      setTimeout(function(){
-        wx.navigateBack({
-          delta: 1 //返回页面数
+     
+      that.save(5)
+   
+      //提交
+      console.log("message", that.data.company_register)
+      utils.post('api/common/company_register', that.data.company_register).then((res) => {
+        console.log(res);//正确返回结果
+        wx.showToast({
+          title: '成功提交',
+          icon: 'success',
+          duration: 1000
+        });
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1 //返回页面数
+          })
+        }, 1000)
+        wx.hideLoading();
+       
+      }).catch((errMsg) => {
+        console.log(errMsg);//错误提示信息
+        wx.showModal({
+          content: errMsg,
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            }
+          }
         })
-      },1000)
+
+        wx.hideLoading();
+       
+      });
+     
 
     
     }
@@ -791,8 +949,84 @@ Page({
         'useDa.inputList': list,
         'useDa.nextText':'完成注册'
       }) 
+    } else if (unm == 5){
+      let list = [
+        {
+          img: 'logUse.png',
+          classx: 'logUse',
+          title: '联系人姓名：',
+          value: '',
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput',
+
+        },
+        {
+          img: 'logcall.png',
+          classx: 'logcall',
+          title: '联系人手机号码：',
+          value: that.data.wxPhone,
+          placeholder: '',
+          placlass: 'loPlone',
+          fn: 'watchInput',
+          dis:true
+
+        }
+      
+      ]
+      that.setData({
+        'useDa.mesInput': true,
+        'useDa.credImg': false,
+        'useDa.Acc': false,
+        'useDa.inputList': list,
+        'useDa.nextText': '完成注册'
+      }) 
     }
   
+  },
+  //存数据函数函数
+  save(num){
+     let that = this;    
+    switch (num) {
+      case 1:
+        that.setData({
+          
+          "company_register.Company_Name": that.data.useDa.inputList[0].value,
+          "company_register.Province": that.data.province ,
+          "company_register.City": that.data.city,
+          "company_register.County": that.data.county,
+          "company_register.Address": that.data.useDa.inputList[2].value
+        })
+        break;
+      case 2:
+        that.setData({
+          "company_register.Company_License": that.data.useDa.Ccie.img
+        })
+        break;
+      case 3:
+        that.setData({
+          "company_register.password": that.data.useDa.inputList[1].value
+        })
+        break;
+      case 4:
+        that.setData({
+          "company_register.Link_Man": that.data.useDa.inputList[0].value,
+          "company_register.phone": that.data.useDa.inputList[1].value,
+          "company_register.code": that.data.useDa.inputList[2].value
+        
+        })
+        break;
+      case 5:
+        that.setData({
+          "company_register.Link_Man": that.data.useDa.inputList[0].value,
+          "company_register.phone": that.data.wxPhone,
+         
+
+        })
+        break;
+      default:
+
+    }
   }
 
 })
