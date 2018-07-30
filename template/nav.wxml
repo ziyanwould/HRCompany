@@ -161,7 +161,7 @@
           </view>
 
            <view class='mesRight' wx:if='{{Acc}}'>
-           <text>{{AccText}}</text>
+           <text bindtap='swictchTO'>{{AccText}}</text>
           </view>
        </view>
 
@@ -194,7 +194,7 @@
             </button>
         </view>
         <view class='Btn' bindtap="urlTo2">
-         其他方式登录
+         企业名登录
         </view>
      </view>
   </view>
@@ -230,7 +230,7 @@
           </view>
 
            <view class='mesRight' wx:if='{{Acc}}'>
-           <text>{{AccText}}</text>
+           <text bindtap='{{AccFn}}'>{{AccText}}</text>
           </view>
        </view>  
           
@@ -239,13 +239,13 @@
       <view class='swtitle'>其他登录方式</view>
       <view class='swicon'>
         <view class='swWx'>
-          <button>微信</button>
+          <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信</button>
         </view>
         <view class='wxAcco' wx:if='{{switcher}}'>
-          <button> 手机</button>
+          <button bindtap='icoIpone'> 短信</button>
       </view>
       <view class='swPone' wx:if='{{!switcher}}'>
-          <button> 账号</button>
+          <button bindtap='AccNumber'> 账号</button>
       </view>
       </view>
       </view>

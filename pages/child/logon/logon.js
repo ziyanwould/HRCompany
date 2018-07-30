@@ -170,7 +170,7 @@ Page({
         {
           img: 'logUse.png',
           classx: 'logUse',
-          title: '账号：',
+          title: '企业名/手机号：',
           value: '',
           placeholder: '',
           placlass: 'loPlone',
@@ -195,6 +195,8 @@ Page({
       mesRight: ' ',
       Acc: true,
       AccText: '立即注册',
+      AccFn:'loginTo',
+      nextSetp:'enter',
     },
     login2: {
         switcher: false,
@@ -234,6 +236,8 @@ Page({
         mesRight: ' ',
         Acc: true,
         AccText: '立即注册',
+        AccFn: 'loginTo',
+        nextSetp: 'enterico',
     }
     
   },
@@ -242,18 +246,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     let that = this;
-  //手机号注册呢
-   this.setData({
-     useDa: that.data.allDa,
-     codeNum: 2,
-   })
-  //微信注册
-  //   this.setData({
-  //    useDa: that.data.wxDa,
-  //    codeNum: 2,
-  //    wxLogin:true
-  //  })
+    if (options.login_phone){
+        //微信注册
+      that.setData({
+      useDa: that.data.wxDa,
+      codeNum: 2,
+      wxLogin:true,
+      login_token: options.login_token,
+      wxPhone: options.login_phone
+    })
+    }else if(options.type){
+      that.setData({
+        useDa: that.data.login,
+        logine:true
+      })
+    } else{
+      //手机号注册呢
+      that.setData({
+        useDa: that.data.allDa,
+        codeNum: 2,
+      })
+
+    }
+ 
 
   },
 
@@ -552,7 +569,7 @@ Page({
     switch (num) {
       case 1:
         wx.navigateBack({
-          delta: 1 //返回页面数
+          delta: 2 //返回页面数
         })
         break;
       case 2:
@@ -801,7 +818,7 @@ Page({
         });
         setTimeout(function () {
           wx.navigateBack({
-            delta: 1 //返回页面数
+            delta: 2 //返回页面数
           })
         }, 1000)
         wx.hideLoading();
@@ -1020,13 +1037,304 @@ Page({
         that.setData({
           "company_register.Link_Man": that.data.useDa.inputList[0].value,
           "company_register.phone": that.data.wxPhone,
-         
+          "company_registe.login_token": that.data.login_token
 
         })
         break;
       default:
 
     }
-  }
+  },
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
 
+      encryptedData: e.detail.encryptedData,
+      iv: e.detail.iv
+    })
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '未授权',
+        success: function (res) { }
+      })
+    } else {
+      new Promise(step1)
+        .then(function (val) {
+          console.log(val);
+          return new Promise(step2)
+        })
+        .then(function (val) {
+          console.log(val);
+          return new Promise(step3)
+        })
+        .then(function () {
+          console.log('搞定！')
+        })
+
+
+
+      function step1(resolve, reject) {
+        const mylogin = utils.wxPromisify(wx.login);
+        mylogin().then(res => {
+          console.log(res)
+          let data = {
+            "code": res.code
+          }
+          that.setData({
+            code: data
+          })
+          resolve(true)
+        }).catch(res => {
+          reject(false)
+        })
+      }
+
+
+      function step2(resolve, reject) {
+
+        utils.post('api/common/get_com_wx_openid', that.data.code).then((res) => {
+          console.log(res);//正确返回结果
+          wx.hideLoading();
+          that.setData({
+            oppid: res.wx_openid
+          })
+          resolve()
+        }).catch((errMsg) => {
+          console.log(errMsg);//错误提示信息
+          wx.hideLoading();
+          reject()
+        });
+      }
+
+      function step3(resolve, reject) {
+        let datas = {
+          "openid": that.data.oppid,
+          "encryptedData": that.data.encryptedData,
+          "iv": that.data.iv
+        };
+        utils.post('api/common/wx_login_phone_token', datas).then((res) => {
+          console.log(res);//正确返回结果
+          // console.log(res.dic.has_Verify)
+          if (res.dic.has_Verify == 0) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '你的微信号尚未进行企业认证，是否进行认证？',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e) => {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+                  // wx.navigateTo({
+                  //   url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}`//实际路径要写全
+                  // })
+                  that.setData({
+                    useDa: that.data.wxDa,
+                    codeNum: 2,
+                    wxLogin: true,
+                    login_token: res.dic.login_token,
+                    wxPhone: res.dic.login_phone,
+                    logine:false
+                  })
+
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          }
+          wx.hideLoading();
+          resolve()
+        }).catch((errMsg) => {
+          console.log(errMsg);//错误提示信息
+          wx.hideLoading();
+          reject()
+        });
+      }
+   
+    }
+  },
+  icoIpone(){
+    let that = this;
+    that.setData({
+      useDa: that.data.login2,
+      logine: true,
+      codeNum: 1,
+    })
+  },
+  AccNumber(){
+    let that = this;
+    that.setData({
+      useDa: that.data.login,
+      logine: true,
+      codeNum: 2,
+    })
+  }
+  , loginTo(){
+    let that = this;
+    that.setData({
+      useDa: that.data.allDa,
+      codeNum: 2,
+      logine:false
+    })
+  },
+   enter(){
+    let that = this;
+     let message = that.entercom();
+     let mobile = message.m1;
+     let datas ={};
+     let numbers =/^([~'!@#￥$%^&*()-+_=:0-9\s\S]+)$/;
+     let regMobile = /^1\d{10}$/;
+     if (numbers.test(mobile)){
+       console.log("进入号码范畴")
+       if (!regMobile.test(mobile)) {
+         wx.showModal({
+           content: '您的手机号输入有误',
+           showCancel: false,
+           success: function (res) {
+             if (res.confirm) {
+               //console.log('用户点击确定')
+             }
+           }
+         });
+       }else{
+         if (message.m1 == '' || message.m2 == '') {
+           wx.showModal({
+             content: '您尚有未填信息',
+             showCancel: false,
+             success: function (res) {
+               if (res.confirm) {
+                 //console.log('用户点击确定')
+               }
+             }
+           });
+           return false;
+         }
+         datas={
+           "phone": mobile,
+          // "code": "string",
+          // "company": "string",
+           "password": message.m2
+         }
+       }
+     }else{
+       if (message.m1 == '' || message.m2 == '' ){
+         wx.showModal({
+           content: '您尚有未填信息',
+           showCancel: false,
+           success: function (res) {
+             if (res.confirm) {
+               //console.log('用户点击确定')
+             }
+           }
+         });
+         return false;
+       }
+       datas = {
+         //"phone": mobile,
+         // "code": "string",
+         "company": mobile,
+         "password": message.m2
+       }
+     
+     }
+
+  
+     utils.post('api/common/company_login', datas).then((res) => {
+       console.log(res);//正确返回结果
+       wx.hideLoading();
+   
+    
+     }).catch((errMsg) => {
+       console.log(errMsg);//错误提示信息
+       wx.showModal({
+         content: errMsg,
+         showCancel: false,
+         success: function (res) {
+           if (res.confirm) {
+             //console.log('用户点击确定')
+           }
+         }
+       });
+       wx.hideLoading();
+    
+     });
+   },
+   enterico(){
+     let that = this;
+     let message = that.entercom();
+     let mobile = message.m1;
+     let regMobile = /^1\d{10}$/;
+     if (!regMobile.test(mobile)) {
+       wx.showModal({
+         content: '您的手机号输入有误',
+         showCancel: false,
+         success: function (res) {
+           if (res.confirm) {
+             //console.log('用户点击确定')
+           }
+         }
+       });
+     } else if (message.m1 == '' || message.m2 == '' ){
+       wx.showModal({
+         content: '您尚有未填信息',
+         showCancel: false,
+         success: function (res) {
+           if (res.confirm) {
+             //console.log('用户点击确定')
+           }
+         }
+       });
+     }
+     else{
+       let datas ={
+         "phone": mobile,
+         "code": message.m2,
+       
+       }
+       utils.post('api/common/company_login', datas).then((res) => {
+         console.log(res);//正确返回结果
+         wx.hideLoading();
+
+
+       }).catch((errMsg) => {
+         console.log(errMsg);//错误提示信息
+         wx.showModal({
+           content: errMsg,
+           showCancel: false,
+           success: function (res) {
+             if (res.confirm) {
+               //console.log('用户点击确定')
+             }
+           }
+         });
+         wx.hideLoading();
+
+       });
+     }
+
+
+   }
+   ,entercom(){
+     let that = this;
+     let val1 = that.data.useDa.inputList[0].value;
+     let val2 = that.data.useDa.inputList[1].value;
+     console.log("登录信息", val1, val2)
+     return {
+       m1: val1,
+       m2: val2,
+     }
+   },
+  swictchTO(){
+    let that = this;
+    that.setData({
+      useDa: that.data.login,
+      logine: true
+    })
+  }
 })

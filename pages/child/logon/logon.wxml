@@ -1,8 +1,13 @@
 <!--pages/child/logon/logon.wxml-->
 <import src="/template/nav" />
+<block wx:if='{{!logine}}'>
+  <template is="logon" data='{{...useDa}}'/> 
+</block>
 
-<template is="logon" data='{{...useDa}}'/>
-<!-- <template is="Login" data='{{...useDa}}'/> -->
+<block wx:if='{{logine}}'>
+   <template is="Login" data='{{...useDa}}'/>
+</block>
+
 
 <!-- 加入联动动地址选择 -->
 <import src="/model/model.wxml"/>

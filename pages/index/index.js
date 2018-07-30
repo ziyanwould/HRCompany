@@ -244,6 +244,26 @@ getPhoneNumber(e) {
         };
         utils.post('api/common/wx_login_phone_token', datas).then((res) => {
           console.log(res);//正确返回结果
+          // console.log(res.dic.has_Verify)
+          if (res.dic.has_Verify==0){
+            wx.showModal({
+              title: '温馨提示',
+              content: '你的微信号尚未进行企业认证，是否进行认证？',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e)=> {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+                  wx.navigateTo({
+                    url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}`//实际路径要写全
+                  })
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          }
           wx.hideLoading();
           resolve()
         }).catch((errMsg) => {
@@ -259,7 +279,17 @@ getPhoneNumber(e) {
       //   success: function (res) { }
       // })
     }
-}
+},
+  urlTo() {
+    wx.navigateTo({
+      url: `/pages/child/logon/logon`//实际路径要写全
+    })
+  },
+  urlTo2 (){
+    wx.navigateTo({
+      url: `/pages/child/logon/logon?type=company`//实际路径要写全
+    })
+  }
 
 })
 
