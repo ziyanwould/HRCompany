@@ -24,6 +24,12 @@
   </view>
 </template>
 
+<template name="banner1">
+  <view class='bannerImg'>
+    <image src='http://www.liujiarong.top/WXImg/redetailBan.png'></image>
+  </view>
+</template>
+
 <!--搜索组件-->
 <template name='seek'>
   <view class='seeinput'>
@@ -250,4 +256,70 @@
       </view>
       </view>
    </view>
+</template>
+
+<!-- 详情页的人物信条 -->
+
+<template name='personMes'>
+  <view class='personMes'>
+
+      <view class="person1 {{switchde?'':'success_circle'}}" >
+        <view class='first'>
+           <view class='fLeft'>
+              <view class='nameSex'>
+                <text>刘菲菲</text><image class='redetailWom' src='http://www.liujiarong.top/WXImg/redetailWom.png'></image>
+              </view>
+               <view class='tags'>
+                <text>34岁</text>
+                 <text>本科</text>
+                  <text>15年</text>
+              </view>
+           </view>
+
+           <view class='fRight'>
+            <image class='redetailPerson' src='http://www.liujiarong.top/WXImg/redetailPerson.png'></image>
+           </view>
+        </view>
+
+        <view class='second' wx:if='{{switchde}}'>
+          社保所在地：广东省-广州市 
+        </view>
+
+        <view class='third'>
+           <view class='tLeft'>二级建造师 - 建筑工程</view>
+            <view class='tRight'>
+            <image class='redetailTime'  src='http://www.liujiarong.top/WXImg/redetailTime.png'></image><text>2018-05-20</text>
+            </view>
+        </view>
+      </view>
+
+      <view class='person2'>
+
+        <view class='showDe' wx:if='{{switchde}}'>
+         <view class='shLeft'>
+           <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
+            <view class='list'><image class='redetail03' src='http://www.liujiarong.top/WXImg/redetail03.png'></image>证书状态：闲置中</view>
+             <view class='list'><image class='redetail05' src='http://www.liujiarong.top/WXImg/redetail05.png'></image>证书用途：资质</view>
+         </view>
+         <view class='shRight'>
+               <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：转注</view>
+             <view class='list'><image class='redetail04' src='http://www.liujiarong.top/WXImg/redetail04.png'></image>证书所在地：广东省-广州市</view>
+         </view>
+       </view>
+
+        <view class='showDe' wx:if='{{!switchde}}'>
+         <view class='shLeft'>
+           <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
+            <view class='list'><image class='redetail07' src='http://www.liujiarong.top/WXImg/redetail07.png'></image>期望薪资：15000-20000元/月</view>
+           
+         </view>
+         <view class='shRight'>
+               <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>到岗时间：随时</view>
+             <view class='list'><image class='redetail08' src='http://www.liujiarong.top/WXImg/redetail08.png'></image>工作类型：全职</view>
+         </view>
+       </view>
+
+      </view>
+  </view>
+
 </template>
