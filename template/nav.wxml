@@ -295,7 +295,7 @@
 
       <view class='person2'>
 
-        <view class='showDe' wx:if='{{switchde}}'>
+        <view class='showDe' wx:if='{{!switchde}}'>
          <view class='shLeft'>
            <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
             <view class='list'><image class='redetail03' src='http://www.liujiarong.top/WXImg/redetail03.png'></image>证书状态：闲置中</view>
@@ -307,7 +307,7 @@
          </view>
        </view>
 
-        <view class='showDe' wx:if='{{!switchde}}'>
+        <view class='showDe' wx:if='{{switchde}}'>
          <view class='shLeft'>
            <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
             <view class='list'><image class='redetail07' src='http://www.liujiarong.top/WXImg/redetail07.png'></image>期望薪资：15000-20000元/月</view>
@@ -322,4 +322,154 @@
       </view>
   </view>
 
+</template>
+
+<template name='positionCount'>
+  <view class='positionCount'>
+  <!-- 评价与自我介绍 -->
+  <view class='evaluate'>
+    <view class='title'>
+     自我评价
+    </view>
+    <view class='count'>
+     1、人品公诚勤勇、端正朴实，作风务实严谨，能吃苦耐劳；能承受加班和出差，能适应施工现场工作；<br/>
+     2、熟悉国家及相关行业有关工程的法律法规。<br/>
+     3、熟悉建设工程方案的编制、审核工作；工程资料的编制收集管理工作；工程竣工验收的相关工作。<br/>
+    </view>
+  </view>
+  <!-- 工作经历 -->
+  <view class='work'>
+    <view class='title'>
+     工作经历
+    </view>
+    <view class='list'>
+      <view class='time'>
+      2010/6--至今
+      </view>
+      <view class='tags1'><image class='redetail11' src='http://www.liujiarong.top/WXImg/redetail11.png'></image>广州金大建筑工程有限公司</view>
+      <view class='tags2'><image class='redetail12' src='http://www.liujiarong.top/WXImg/redetail12.png'></image>土建工程师/建筑工程管理/项目经理</view>
+      <view class='secondTitle'>工作内容：</view>
+      <view class='secondCount'>
+      1、负责施工方案编制；<br/>
+      2、制定公司的相关规章制度；<br/>
+      3、负责项目项目管理协调各相关单位的工作；<br/>
+      4、负责检查、收集、协助编制项目安全管理资料及工程竣工验收资料<br/>
+      </view>
+    </view>
+
+    <view class='list'>
+      <view class='time'>
+      2010/6--至今
+      </view>
+      <view class='tags1'><image class='redetail11' src='http://www.liujiarong.top/WXImg/redetail11.png'></image>广州金大建筑工程有限公司</view>
+      <view class='tags2'><image class='redetail12' src='http://www.liujiarong.top/WXImg/redetail12.png'></image>土建工程师/建筑工程管理/项目经理</view>
+      <view class='secondTitle'>工作内容：</view>
+      <view class='secondCount'>
+      1、负责施工方案编制；<br/>
+      2、制定公司的相关规章制度；<br/>
+      3、负责项目项目管理协调各相关单位的工作；<br/>
+      4、负责检查、收集、协助编制项目安全管理资料及工程竣工验收资料<br/>
+      </view>
+    </view>
+  </view>
+  <!-- 项目经历 -->
+  <view class='project'>
+    <view class='title'>
+     项目经历
+    </view>
+
+    <view class='list'>
+     <view class='time'>
+      2010/6--至今
+     </view>
+      <view class='tags3'><image class='redetail13' src='http://www.liujiarong.top/WXImg/redetail13.png'></image>江隆花园（三江盛会）一期二期工程项目</view>
+      <view class='secondTitle'>项目内容：</view>
+      <view class='secondCount'>
+       项目的质量、安全管理工作；编制项目施工组织设计及专项施工方案；
+      </view>
+    </view>
+
+     <view class='list'>
+      <view class='time'>
+        2010/6--至今
+      </view>
+        <view class='tags3'><image class='redetail13' src='http://www.liujiarong.top/WXImg/redetail13.png'></image>江隆花园（三江盛会）一期二期工程项目</view>
+        <view class='secondTitle'>项目内容：</view>
+        <view class='secondCount'>
+        项目的质量、安全管理工作；编制项目施工组织设计及专项施工方案；
+        </view>
+    </view>
+  </view>
+  <!-- 教育经历 -->
+  <view class='education'>
+    <view class='title'>
+    教育经历
+    </view>
+    <view class='list'>
+      <view class='time'>
+      2011/2--2014/1
+      </view>
+      <view class='thirdCount'>
+      <image class='redetail14' src='http://www.liujiarong.top/WXImg/redetail14.png'></image>
+      <text>广州建筑工程学校</text>
+        <text>工业与民用建筑</text>
+        <text>本科</text>
+      </view>
+    </view>
+     <view class='list'>
+      <view class='time'>
+      2011/2--2014/1
+      </view>
+      <view class='thirdCount'>
+      <image class='redetail14' src='http://www.liujiarong.top/WXImg/redetail14.png'></image>
+      <text>广州建筑工程学校</text>
+        <text>工业与民用建筑</text>
+        <text>本科</text>
+      </view>
+    </view>
+  
+  </view>
+  <!-- 证书信息 -->
+  <view class='credentail'>
+    <view class='title'>
+      证书信息
+     </view>
+   
+     
+     <view class='list'>
+       <view class='time'>
+         2011/2--2014/1
+       </view> 
+       <view class='tags5'><image class='redetail15' src='http://www.liujiarong.top/WXImg/redetail15.png'></image>全国建设工程造价员资格证书</view>
+       <view class='fourTCount'>
+        工业与民用建筑　　
+       </view>
+    
+     </view> 
+     <view class='list'>
+       <view class='time'>
+         2011/2--2014/1
+       </view> 
+       <view class='tags5'><image class='redetail15' src='http://www.liujiarong.top/WXImg/redetail15.png'></image>全国建设工程造价员资格证书</view>
+       <view class='fourTCount'>
+        工业与民用建筑　　
+       </view>
+     </view>
+   
+    
+
+  </view>
+
+ </view>
+</template>
+
+<!-- 底部按钮效果 -->
+<template name='positionClick'>
+ <view class='positionClick'>
+     <button class="weui-btn" type="primary">购买</button>
+     <view class='pright'>
+      <image class='redetail09' src='http://www.liujiarong.top/WXImg/redetail09.png'></image>
+      <text>收藏</text>
+     </view>
+ </view>
 </template>

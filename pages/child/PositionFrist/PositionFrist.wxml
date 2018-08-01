@@ -2,3 +2,5 @@
 <import src="/template/nav" />
 <template is="banner1" />
 <template is="personMes" />
+<template is="positionCount" />
+<template is="positionClick" />

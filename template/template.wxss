@@ -715,3 +715,181 @@ margin: 0 24rpx;
   display:flex;
   justify-content:flex-end;
 }
+.redetail11{
+  width: 22rpx;
+  height: 22rpx;
+}
+
+.redetail12{
+  width: 23rpx;
+  height: 21rpx;
+}
+
+.redetail13{
+  width: 23rpx;
+  height: 23rpx;
+}
+
+.redetail14{
+  width: 26rpx;
+  height: 22rpx;
+}
+
+.redetail15{
+  width: 25rpx;
+  height: 23rpx;
+}
+/*简历列表页里信息*/
+.positionCount{
+  background: #EFEFEF;
+ padding-bottom: 140rpx;
+}
+.positionCount .evaluate{
+ background: #FFFFFF;
+ padding: 0 30rpx;
+ border-top: 24rpx solid #EFEFEF;
+}
+.positionCount .title{
+  font-size: 34rpx;
+  color: #5b5b5b;
+  padding: 30rpx 0 20rpx 0;}
+.positionCount .evaluate .count{
+
+  font-size: 24rpx;
+  /* line-height: 35rpx; */
+  padding-bottom: 30rpx;
+}
+.positionCount .work{
+  background: #FFFFFF;
+   border-top: 24rpx solid #EFEFEF;
+   padding: 0 30rpx 30rpx 30rpx;
+}
+.positionCount .time{
+  font-size: 26rpx;
+  color: #5b5b5b;
+  padding-bottom: 20rpx;
+}
+.positionCount  .tags1{
+  padding-bottom: 10rpx;
+}
+.positionCount   image{
+  margin-right: 10rpx;
+}
+.positionCount .tags1 {
+   color: #5b5b5b;
+   font-size: 24rpx;
+}
+.positionCount .tags2 {
+  color: #a3a3a3;
+    font-size: 24rpx;
+}
+.positionCount .secondTitle{
+ padding-top: 20rpx;
+}
+.positionCount .secondCount{
+  padding-top: 10rpx;
+  /* padding-bottom: 30rpx; */
+}
+.positionCount  .work .list{
+  border-top: 1rpx  dotted #F1F0F4;
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+}
+.positionCount  .work .list:nth-of-type(2){
+  border: none!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+.positionCount .project{
+  background: #FFFFFF;
+   border-top: 24rpx solid #EFEFEF;
+    padding: 0 30rpx 30rpx 30rpx;
+}
+.positionCount .project{
+  background: #FFFFFF;
+   border-top: 24rpx solid #EFEFEF;
+    padding: 0 30rpx 30rpx 30rpx;
+}
+.positionCount  .project .list{
+  border-top: 1rpx  dotted #F1F0F4;
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+}
+.positionCount .project .list:nth-of-type(2){
+  border: none!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+.positionCount  .project .list{
+  border-top: 1rpx  dotted #F1F0F4;
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+}
+.positionCount .tags3{
+  color: #a3a3a3;
+}
+.positionCount .secondTitle{
+  font-weight: 600;
+}
+.positionCount .education{
+    background: #FFFFFF;
+   border-top: 24rpx solid #EFEFEF;
+    padding: 0 30rpx 30rpx 30rpx;
+}
+.positionCount  .education .list{
+  border-top: 1rpx  dotted #F1F0F4;
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+}
+.positionCount .education .list:nth-of-type(2){
+  border: none!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+.positionCount .thirdCount text:nth-of-type(2),.positionCount .thirdCount text:nth-of-type(3){
+ color: #a3a3a3;
+ margin-left: 40rpx;
+}
+.positionCount .credentail{
+    background: #FFFFFF;
+   border-top: 24rpx solid #EFEFEF;
+    padding: 0 30rpx 30rpx 30rpx;
+}
+.positionCount  .credentail .list{
+  border-top: 1rpx  dotted #F1F0F4;
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+}
+.positionCount .credentail .list:nth-of-type(2){
+  border: none!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+.positionCount .fourTCount{
+  margin-top: 5rpx;
+}
+.positionClick{
+  width: 95%;
+  padding: 30rpx;
+  position: fixed;
+  bottom: 0;
+  background: #FFFFFF;
+} 
+.positionClic .pright image,.positionCli .pright text{
+  display: block;
+}
+.positionClick{
+  display: flex;
+}
+.positionClick .pright{
+  width: 102rpx;
+}
+.positionClick button{
+  flex: 1;
+}
+.pright{
+   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
