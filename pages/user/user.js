@@ -45,10 +45,24 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     comlist:[
       {
-        'class':'image6',
-        'image':'Cperson',
-        'mes':'职位收藏',
-        'fn':''
+        'class':'Cmmember',
+        'image':'Cmmember',
+        'mes':'会员中心',
+        'fn':'',
+        'RTitle':'开通会员，畅享会员高级功能',
+        'Tclass':'Tclass'
+      },
+      {
+        'class': 'Hrdoug',
+        'image': 'Hrdoug',
+        'mes': '猎聘豆',
+        'fn': ''
+      },
+      {
+        'class': 'image6',
+        'image': 'Cperson',
+        'mes': '职位收藏',
+        'fn': ''
       },
        {
         'class': 'image7',

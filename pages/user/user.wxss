@@ -197,3 +197,16 @@ margin-bottom: 20rpx;
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
   }
+  .Cmmember{
+    width:28rpx;
+    height:28rpx;
+  }
+  .Hrdoug{
+    width:28rpx;
+    height:28rpx;
+  }
+  .Tclass{
+    font-size: 22rpx;
+    margin-right: 18rpx;
+    color: #FFD703;
+  }
