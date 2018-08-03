@@ -12,7 +12,8 @@
     "pages/child/logon/logon",
     "pages/child/PositionFrist/PositionFrist",
     "pages/child/Positionsecond/Positionsecond",
-    "pages/child/map/map"
+    "pages/child/map/map",
+    "pages/child/posOrgin/posOrgin"
 
   ],
   "window":{

@@ -158,7 +158,7 @@ Page({
   },
   seek() {
     wx.navigateTo({
-      url: "/pages/child/map/map"//实际路径要写全
+      url: "/pages/child/posOrgin/posOrgin"//实际路径要写全
     })
   },
   //针对登录的js

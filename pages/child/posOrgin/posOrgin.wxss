@@ -1,0 +1,79 @@
+/* pages/child/posOrgin/posOrgin.wxss */
+.position.headerSeach{
+  height: 70rpx;
+  background: #f7f8f8;
+  display: flex;
+  position: relative;
+}
+.headleft{
+flex: 1;
+text-align: center;
+line-height: 70rpx;
+color: #088ee7;
+}
+.headright{
+flex: 1;
+text-align: center;
+line-height: 70rpx;
+}
+.headleft:after
+{ 
+content:"";
+height: 36rpx;
+border-right: 2rpx solid #088ee7;
+position: absolute;
+left: 50%;
+margin-left:1rpx; 
+top:50%;
+margin-top: -18rpx;
+}
+.countList .list{
+  border-bottom: 18rpx solid #f7f8f8;
+}
+.lfirst,.lsecond{
+  display: flex;
+  padding: 0 30rpx;
+  justify-content: space-between;
+  align-items:center;
+}
+.lfirst{
+  padding-top: 30rpx;
+  height: 84rpx;
+  
+}
+.lfirst text:nth-of-type(1){
+  display: inline-block;
+  margin-right: 10rpx;
+  font-size: 26rpx;
+}
+.lfirst text:nth-of-type(2){
+  color: #088ee7;
+  display: inline-block;
+  padding:0 5rpx;
+  border: 1rpx solid #088ee7;
+}
+
+.right text:nth-of-type(1){
+  color: #088ee7;
+  display: inline-block;
+  margin-right: 20rpx;
+}
+.right text:nth-of-type(2){
+  padding: 5rpx 10rpx;
+  border-radius: 10rpx;
+  background: #088ee7;
+  color: #FFFFFF;
+}
+.lsecond{
+  padding: 20rpx 30rpx;
+  margin-top: 10rpx;
+  border-top: 1rpx dotted #f7f8f8;
+}
+.lsecond .left{
+  font-size: 22rpx;
+  color: rgba(39, 38, 38, 0.8);
+}
+.lsecond .right{
+  font-size: 22rpx;
+  color: rgba(39, 38, 38, 0.37);
+}
