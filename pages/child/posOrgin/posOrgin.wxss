@@ -20,7 +20,7 @@ line-height: 70rpx;
 { 
 content:"";
 height: 36rpx;
-border-right: 2rpx solid #088ee7;
+border-right: 2rpx solid #dcdcdc;
 position: absolute;
 left: 50%;
 margin-left:1rpx; 
@@ -50,6 +50,8 @@ margin-top: -18rpx;
   color: #088ee7;
   display: inline-block;
   padding:0 5rpx;
+  font-size: 23rpx;
+  border-radius:10rpx; 
   border: 1rpx solid #088ee7;
 }
 
@@ -67,7 +69,7 @@ margin-top: -18rpx;
 .lsecond{
   padding: 20rpx 30rpx;
   margin-top: 10rpx;
-  border-top: 1rpx dotted #f7f8f8;
+  border-top: 3rpx dotted #dcdcdce1;
 }
 .lsecond .left{
   font-size: 22rpx;
@@ -76,4 +78,45 @@ margin-top: -18rpx;
 .lsecond .right{
   font-size: 22rpx;
   color: rgba(39, 38, 38, 0.37);
+}
+
+.changeEdit{
+  padding:0 30rpx;
+}
+.changeEdit .title{
+  font-size: 26rpx;
+  padding-top: 45rpx;
+  padding-bottom: 15rpx;
+  font-weight: 600;
+}
+.editCount{
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+.editCount text{
+display: inline-block;
+padding: 15rpx 45rpx;
+border: 2rpx solid #E1E1E1;
+margin-right: 15rpx;
+margin-bottom: 24rpx;
+
+}
+.sort{
+  display: flex;
+  margin: 30rpx;
+  justify-content:space-between;
+}
+.sort text{
+  display: inline-block;
+  width: 330rpx;
+  height: 58rpx;
+  border: 2rpx solid #E3E3E3;
+  text-align: center;
+  line-height: 58rpx;
+  border-radius: 5rpx;
+}
+.sort text.active{
+  background: #1B87E0;
+  color: #FFFFFF;
+  border: 2rpx solid #1B87E0;
 }
