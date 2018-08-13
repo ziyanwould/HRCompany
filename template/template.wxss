@@ -695,6 +695,10 @@ margin: 0 24rpx;
   position: relative;
 
 }
+.personMes .active{
+  position: relative;
+  top: 30rpx;
+}
 .personMes .showDe .list{
   display: flex;
   align-items:center;
@@ -886,7 +890,13 @@ margin: 0 24rpx;
 }
 .positionClick button{
   flex: 1;
+  background: #00A2E9;
 }
+.positionClick .button-hover{
+  
+  background: #00A2E9;
+}
+
 .pright{
    display: flex;
   flex-direction: column;

@@ -13,7 +13,8 @@
     "pages/child/PositionFrist/PositionFrist",
     "pages/child/Positionsecond/Positionsecond",
     "pages/child/map/map",
-    "pages/child/posOrgin/posOrgin"
+    "pages/child/positionManagement/positionManagement",
+    "pages/child/collect/collect"
 
   ],
   "window":{

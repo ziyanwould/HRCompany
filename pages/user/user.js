@@ -1,5 +1,7 @@
 // pages/user/user.js
 const app = getApp();
+const utils = require('../../utils/util.js')
+const Promise = require('../../utils/bluebird.min.js')
 Page({
 
   /**
@@ -26,7 +28,7 @@ Page({
         ico: '',
         fn: 'gotopublish'
       }, {
-        name: "消息",
+        name: "推荐",
         current: 0,
         style: 0,
         ico: 'icon-yikeappshouyetubiao35',
@@ -61,14 +63,14 @@ Page({
       {
         'class': 'image6',
         'image': 'Cperson',
-        'mes': '职位收藏',
-        'fn': ''
+        'mes': '职位管理',
+        'fn': 'posOrgin'
       },
        {
         'class': 'image7',
         'image': 'Ctell',
         'mes': '收藏夹',
-        'fn': ''
+        'fn': 'collect'
       }
       ,
        {
@@ -153,6 +155,8 @@ Page({
         }
       })
     }
+
+    this.companyMes()
   },
 
   /**
@@ -232,13 +236,38 @@ Page({
     })
   },
   bindViewMy: function () {
-    wx.reLaunch({
-      url: '/pages/user/user'
-    })
+    // wx.reLaunch({
+    //   url: '/pages/user/user'
+    // })
+    return false;
   },
   edit(){
     wx.navigateTo({
       url: '/pages/child/comInfo/comInfo'
+    })
+  },
+  companyMes(){
+    const token = wx.getStorageSync('token')
+    utils.post('usercenter/get_cominfo',false,  token).then((res) => {
+      console.log(res);//正确返回结果
+      // console.log(res.dic.has_Verify)
+ 
+      wx.hideLoading();
+     // resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      wx.hideLoading();
+     // reject()
+    });
+  },
+  posOrgin(){
+    wx.navigateTo({
+      url: '/pages/child/positionManagement/positionManagement'//实际路径要写全
+    })
+  },
+  collect(){
+    wx.navigateTo({
+      url: '/pages/child/collect/collect'//实际路径要写全
     })
   }
 })

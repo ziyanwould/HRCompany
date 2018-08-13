@@ -34,7 +34,7 @@ Page({
         ico: '',
         fn: 'gotopublish'
       }, {
-        name: "消息",
+        name: "推荐",
         current: 0,
         style: 0,
         ico: 'icon-yikeappshouyetubiao35',
@@ -199,9 +199,10 @@ Page({
     })
   },
   gotopublish: function () {
-    wx.reLaunch({
-      url: '/pages/creation/creation'
-    })
+    // wx.reLaunch({
+    //   url: '/pages/creation/creation'
+    // })
+    return false;
   },
   gotoMessages: function () {
     wx.reLaunch({

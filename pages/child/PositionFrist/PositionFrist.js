@@ -5,14 +5,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    explain:{
+      explain:"情况说明"
+    }
+    , personMes:{
+      switchde:true
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    let that = this;
+  console.log("mes",options)
+    if (options.id){
+      that.setData({
+        'explain.explain':"自我介绍",
+        'personMes.switchde':false,
+        'explain.fullTime':true
+      })
+    }
   },
 
   /**

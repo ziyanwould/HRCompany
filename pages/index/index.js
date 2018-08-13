@@ -1,3 +1,4 @@
+let page = 1;
 const app = getApp();
 const utils = require('../../utils/util.js')
 const Promise = require('../../utils/bluebird.min.js')
@@ -25,7 +26,7 @@ Page({
         ico: '',
         fn: 'gotopublish'
       }, {
-        name: "消息",
+        name: "推荐",
         current: 0,
         style: 0,
         ico: 'icon-yikeappshouyetubiao35',
@@ -50,9 +51,10 @@ Page({
   },
   //各个跳转函数
   gotoCompanyIndex:function(){
-    wx.reLaunch({
-      url: '/pages/index/index'
-    })
+    // wx.reLaunch({
+    //   url: '/pages/index/index'
+    // })
+    return false;
   },
   gotobusinessCard:function(){
     wx.reLaunch({
@@ -76,6 +78,7 @@ Page({
   },
   //各个跳转函数end
   onLoad:function(){
+    page=0;
     let that = this;
     let isIphoneX = app.globalData.isIphoneX;
     that.setData({
@@ -91,7 +94,25 @@ Page({
         fages: true
       }
     });
+    // 判断是否登录
+    try {
+      let value = wx.getStorageSync('token')
+      if (value.has_Verify == 3) {
+        that.setData({
+          items: {
+            show: false,
+          }
+        });
+      }
+    } catch (e) {
+
+    }
    
+  },
+  onShow: function () {
+
+
+  
   },
   //请求函数
   datalist:function(messages="玩命加载中"){
@@ -99,36 +120,91 @@ Page({
     wx.showLoading({
         title: messages,
     });
-    let setArr = ['李文文', '吴碧勇', '何碧碧',  '迪迦','李雯'];
     var list = that.data.list;
-    if (list.length>19) {
-      wx.showToast({
-        title: '到底了...',
-        icon: 'loading',
-        duration: 2000
-      });
+    //测试用start
+    // let setArr = ['李文文', '吴碧勇', '何碧碧',  '迪迦','李雯'];
+    // if (list.length>19) {
+    //   wx.showToast({
+    //     title: '到底了...',
+    //     icon: 'loading',
+    //     duration: 2000
+    //   });
 
-    }
-    for (let i in setArr) {
-      if (list.length > 19) {
-        continue;//终止循环
-      } 
-      //let sexs = (i+1) % 2 == 0 ?'男':'女';
-      let lists = {
+    // }
+    // for (let i in setArr) {
+    //   if (list.length > 19) {
+    //     continue;//终止循环
+    //   } 
+    //   //let sexs = (i+1) % 2 == 0 ?'男':'女';
+    //   let lists = {
+    //     fn: 'detail',
+    //     sex: i % 2 == 0 ? '女' : '男',
+    //     tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
+    //     name: setArr[i],
+    //     area: i % 2 == 0 ? '广东佛山市' : '广东广州市',
+    //     stats: i % 2 == 0 ? '资质' : '不限',
+    //     pay: '面议',
+    //     person: false
+
+    //   }
+    //   list.push(lists)
+    // }
+    // that.setData({
+    //   list: list
+    // });
+    //测试end
+
+    utils.post('api/resume/resume_list',{
+      "type_id": 0,
+      "pageIndex": page,
+      "pageSize": 8
+    }).then((res) => {
+      console.log(res);//正确返回结果
+      if (res.list==''){
+        wx.showToast({
+         title: '到底了...',
+         icon: 'loading',
+        duration: 2000
+       });
+       return false;
+      }
+      for(let i in res.list){
+        console.log(res.list[i]);
+        let lists = {
         fn: 'detail',
-        sex: i % 2 == 0 ? '女' : '男',
-        tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
-        name: setArr[i],
-        area: i % 2 == 0 ? '广东佛山市' : '广东广州市',
+        //sex: i % 2 == 0 ? '女' : '男',
+        tille: res.list[i].certificate.length == 0 ? res.list[i].title : `${res.list[i].certificate[0].fir_type_name}-${res.list[i].certificate[0].sec_type_name}`,
+        name: res.list[i].name,
+        area: res.list[i].certificate.length == 0 ? `${res.list[i].city}` : `${res.list[i].certificate[0].province}${res.list[i].certificate[0].city}`,
         stats: i % 2 == 0 ? '资质' : '不限',
-        pay: '面议',
-        person: false
+          pay: res.list[i].wages == null ? `面议` : `${res.list[i].wages}`,
+        person: res.list[i].img,
+        time: res.list[i].utime.substr(0, 10) 
 
       }
-      list.push(lists)
-    }
-    that.setData({
+        if (res.list[i].sex==0){
+          lists.sex='男'
+        } else if (res.list[i].sex == 1){
+          lists.sex = '男'
+        } else if (res.list[i].sex == 2) {
+          lists.sex = '女'
+         }else{
+          lists.sex = res.list[i].sex
+         }
+           ;
+        list.push(lists)
+      }
+     
+      that.setData({
       list: list
+     });
+      page++;
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+      wx.hideLoading();
+     // reject()
     });
 
     setTimeout(function () {
@@ -146,6 +222,7 @@ Page({
     that.setData({
       list: []
     })
+    page=0;
     that.datalist('刷新数据中')
   },
 
@@ -158,7 +235,8 @@ Page({
   },
   seek() {
     wx.navigateTo({
-      url: "/pages/child/posOrgin/posOrgin"//实际路径要写全
+      url: "/pages/child/PositionFrist/PositionFrist"//全职简历
+      // url:"/pages/child/Positionsecond/Positionsecond"   
     })
   },
   //针对登录的js
@@ -256,7 +334,59 @@ getPhoneNumber(e) {
                 if (e.confirm) {
                   //console.log('用户点击主操作')
                   wx.navigateTo({
-                    url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}`//实际路径要写全
+                    // url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}`//实际路径要写全
+                    url: '/pages/child/logon/logon?login_phone='+res.dic.login_phone+'&login_token='+res.dic.login_token//实际路径要写全
+                  })
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          } else if (res.dic.has_Verify == 1 || res.dic.has_Verify == 2){
+            wx.showModal({
+              title: '温馨提示',
+              content: '您的账号还在审核中',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e) => {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+             
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          } else if(res.dic.has_Verify == 3){
+            wx.showToast({
+              title: '登录成功',
+              icon: 'success',
+              duration: 3000
+            });
+            // 存储登录信息
+            try {
+              // wx.setStorageSync('token', res.dic.login_token);
+              wx.setStorageSync('token', res.dic);
+              app.globalData.register=true;
+              that.setData({
+                'items.show':false
+              })
+            } catch (e) {
+            }
+          } else if (res.dic.has_Verify == 4){
+            wx.showModal({
+              title: '温馨提示',
+              content: '你的微信号尚未进行企业认证，是否进行认证？',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e) => {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+                  wx.navigateTo({
+                    url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}&has_Verify=${res.dic.has_Verify}`//实际路径要写全
+                    //序号为4是认证失败，需要提示重新认证，并且接口换成“api/common/company_again_register”
                   })
                 } else {
                   //console.log('用户点击辅助操作')
@@ -288,6 +418,12 @@ getPhoneNumber(e) {
   urlTo2 (){
     wx.navigateTo({
       url: `/pages/child/logon/logon?type=company`//实际路径要写全
+    })
+  }
+  , detail(){
+    wx.navigateTo({
+      url: "/pages/child/PositionFrist/PositionFrist"//全职简历
+      // url:"/pages/child/Positionsecond/Positionsecond"   
     })
   }
 

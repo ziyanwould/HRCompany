@@ -89,7 +89,27 @@ App({
     } catch (e) {
       //错误执行
     }
-
+    
+    //检查登录是否失效并提示，且删除本地token值
+    try {
+      var value = wx.getStorageSync('token')
+      if (value) {
+        console.log("token", value)
+        utils.post('api/common/check_islogin', {
+          'login_token': value.login_token
+        }).then((res) => {
+          console.log(res);//正确返回结果
+          wx.hideLoading();
+         // resolve()
+        }).catch((errMsg) => {
+          console.log(errMsg);//错误提示信息
+          wx.hideLoading();
+         // reject()
+        });
+      }
+    } catch (e) {
+      // Do something when catch error
+    }
   },
   onShow: function () {
     let that = this;
@@ -109,5 +129,7 @@ App({
     userInfo: null,
     Jobl: [],//职位列表
     CRL: [],//证书列表
+    register:false,//登录状态
+    
   }
 })

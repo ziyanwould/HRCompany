@@ -1,2 +1,8 @@
 /* pages/child/PositionFrist/PositionFrist.wxss */
 @import "/template/template.wxss";  
+.bubai{
+  background: #FFFFFF;
+}
+page{
+  background: #EFEFEF;
+}

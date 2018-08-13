@@ -1,6 +1,8 @@
 <!--pages/child/PositionFrist/PositionFrist.wxml-->
 <import src="/template/nav" />
 <template is="banner1" />
-<template is="personMes" />
-<template is="positionCount" />
+<view class='bubai'>
+ <template is="personMes" data='{{...personMes}}'/>
+</view>
+<template is="positionCount"  data='{{...explain}}' />
 <template is="positionClick" />

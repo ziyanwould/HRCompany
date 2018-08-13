@@ -1,5 +1,8 @@
 // pages/detail/detail.js
+let page = 1;
 const app = getApp();
+const utils = require('../../utils/util.js')
+const Promise = require('../../utils/bluebird.min.js')
 Page({
 
   /**
@@ -27,7 +30,7 @@ Page({
         ico: '',
         fn: 'gotopublish'
       }, {
-        name: "消息",
+        name: "推荐",
         current: 0,
         style: 0,
         ico: 'icon-yikeappshouyetubiao35',
@@ -55,9 +58,10 @@ Page({
     })
   },
   gotobusinessCard: function () {
-    wx.reLaunch({
-      url: '/pages/detail/detail'
-    })
+    // wx.reLaunch({
+    //   url: '/pages/detail/detail'
+    // })
+    return false;
   },
   gotopublish: function () {
     wx.reLaunch({
@@ -80,6 +84,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    page =1;
     var that = this;
     let isIphoneX = app.globalData.isIphoneX;
     that.setData({
@@ -131,36 +136,90 @@ Page({
     wx.showLoading({
       title: messages,
     });
-    let setArr = ['刘婷婷', '吴军', '文瑜', '王毅', '何仙姑'];
     var list = that.data.list;
-    if (list.length > 19) {
-      wx.showToast({
-        title: '到底了...',
-        icon: 'loading',
-        duration: 2000
+
+    // let setArr = ['刘婷婷', '吴军', '文瑜', '王毅', '何仙姑'];
+    // if (list.length > 19) {
+    //   wx.showToast({
+    //     title: '到底了...',
+    //     icon: 'loading',
+    //     duration: 2000
+    //   });
+
+    // }
+    // for (let i in setArr) {
+    //   if (list.length > 19) {
+    //     continue;//终止循环
+    //   }
+    //   //let sexs = (i+1) % 2 == 0 ?'男':'女';
+    //   let lists = {
+    //     fn: 'detail',
+    //     sex: i % 2 == 0 ? '女' : '男',
+    //     tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
+    //     name: setArr[i],
+    //     education: i % 2 == 0 ? '本科' : '硕士',
+    //     birthday: i % 2 == 0 ? '32岁' : '28岁',
+    //     experience: 1+i+'年',
+    //     person: false
+
+    //   }
+    //   list.push(lists)
+    // }
+    // that.setData({
+    //   list: list
+    // });
+
+    utils.post('api/resume/resume_list', {
+      "type_id": 1,
+      "pageIndex": page,
+      "pageSize": 8
+    }).then((res) => {
+      console.log(res);//正确返回结果
+      if (res.list == '') {
+        wx.showToast({
+          title: '到底了...',
+          icon: 'loading',
+          duration: 2000
+        });
+        return false;
+      }
+      for (let i in res.list) {
+        console.log(res.list[i]);
+        let lists = {
+          fn: 'detail',
+          tille: res.list[i].work,
+          name: res.list[i].name,
+          education: res.list[i].education,
+          birthday: res.list[i].age,
+          experience: res.list[i].jobexp,
+          person: res.list[i].img,
+          time: res.list[i].utime.substr(0, 10) 
+
+
+        }
+        if (res.list[i].sex == 0) {
+          lists.sex = '男'
+        } else if (res.list[i].sex == 1) {
+          lists.sex = '男'
+        } else if (res.list[i].sex == 2) {
+          lists.sex = '女'
+        } else {
+          lists.sex = res.list[i].sex
+        }
+        ;
+        list.push(lists)
+      }
+  
+      that.setData({
+        list: list
       });
+      page++;
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
 
-    }
-    for (let i in setArr) {
-      if (list.length > 19) {
-        continue;//终止循环
-      }
-      //let sexs = (i+1) % 2 == 0 ?'男':'女';
-      let lists = {
-        fn: 'detail',
-        sex: i % 2 == 0 ? '女' : '男',
-        tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
-        name: setArr[i],
-        education: i % 2 == 0 ? '本科' : '硕士',
-        birthday: i % 2 == 0 ? '32岁' : '28岁',
-        experience: 1+i+'年',
-        person: false
-
-      }
-      list.push(lists)
-    }
-    that.setData({
-      list: list
+    
+      // reject()
     });
 
     setTimeout(function () {
@@ -175,6 +234,7 @@ Page({
     // 显示顶部刷新图标  
     // wx.showNavigationBarLoading();
     let that = this;
+    page=0;
     that.setData({
       list: []
     })
@@ -187,5 +247,12 @@ Page({
   onReachBottom: function () {
 
     this.datalist()
+  },
+  detail() {
+    let full ='full'
+    wx.navigateTo({
+      url: `/pages/child/PositionFrist/PositionFrist?id=${full}`//全职简历
+      // url:"/pages/child/Positionsecond/Positionsecond"   
+    })
   }
 })

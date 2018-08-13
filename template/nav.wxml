@@ -1,4 +1,5 @@
 
+
 <!-- 自定义导航栏组件 -->
 <template name="nav">
       <view class="nav_link" bindtap="{{fn}}">
@@ -41,7 +42,7 @@
 <template name='partTime'>
   <view class='partTime' bindtap='{{fn}}'>
     <view class='left'>
-        <image src='http://www.liujiarong.top/WXImg/{{person?person:"person"}}.png'></image>
+        <image src='{{person?person:"http://www.liujiarong.top/WXImg/person.png"}}'></image>
     </view>
     <view class='right'>
       <view class='title'>
@@ -66,7 +67,7 @@
       </view>
        <view class='time' wx:if='{{!log}}'>
            <image style='width:20rpx;height:20rpx;' src='http://www.liujiarong.top/WXImg/upTime.png'></image>
-           <text style='font-size:20rpx;color:#F6F7F7;'>2018-05-20</text>
+           <text style='font-size:20rpx;color:#CED4D9;'>{{time}}</text>
       </view>
     </view>
 
@@ -307,7 +308,7 @@
          </view>
        </view>
 
-        <view class='showDe' wx:if='{{switchde}}'>
+        <view class='showDe active' wx:if='{{switchde}}'>
          <view class='shLeft'>
            <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
             <view class='list'><image class='redetail07' src='http://www.liujiarong.top/WXImg/redetail07.png'></image>期望薪资：15000-20000元/月</view>
@@ -329,7 +330,7 @@
   <!-- 评价与自我介绍 -->
   <view class='evaluate'>
     <view class='title'>
-     自我评价
+     {{explain}}
     </view>
     <view class='count'>
      1、人品公诚勤勇、端正朴实，作风务实严谨，能吃苦耐劳；能承受加班和出差，能适应施工现场工作；<br/>
@@ -337,6 +338,7 @@
      3、熟悉建设工程方案的编制、审核工作；工程资料的编制收集管理工作；工程竣工验收的相关工作。<br/>
     </view>
   </view>
+  <block wx:if='{{fullTime}}'>
   <!-- 工作经历 -->
   <view class='work'>
     <view class='title'>
@@ -459,17 +461,135 @@
     
 
   </view>
-
+  </block>
  </view>
 </template>
 
 <!-- 底部按钮效果 -->
 <template name='positionClick'>
  <view class='positionClick'>
-     <button class="weui-btn" type="primary">购买</button>
+     <button class="weui-btn" hover-class='button-hover' type="primary">购买</button>
      <view class='pright'>
       <image class='redetail09' src='http://www.liujiarong.top/WXImg/redetail09.png'></image>
       <text>收藏</text>
      </view>
  </view>
+</template>
+
+<!-- 推荐组建 之搜索 -->
+<template name='search'>
+   
+    <view class="page__bd">
+            <view class="weui-search-bar">
+                <view class="weui-search-bar__form">
+                    <view class="weui-search-bar__box">
+                        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                        <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+                        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                            <icon type="clear" size="14"></icon>
+                        </view>
+                    </view>
+                    <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                        <icon class="weui-icon-search" type="search" size="14"></icon>
+                        <view class="weui-search-bar__text">搜索</view>
+                    </label>
+                </view>
+                <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+            </view>
+            <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
+                <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">
+                        <view>实时搜索文本</view>
+                    </view>
+                </navigator>
+                <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">
+                        <view>实时搜索文本</view>
+                    </view>
+                </navigator>
+                <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">
+                        <view>实时搜索文本</view>
+                    </view>
+                </navigator>
+                <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">
+                        <view>实时搜索文本</view>
+                    </view>
+                </navigator>
+            </view>
+    </view>
+</template>
+
+<!-- 推荐组建 之标题 -->
+<template name='searTitle'>
+      <view class='position headerSeach'>
+      <view class='headleft' bindtap='screen1'>网络编辑</view>
+      <view class='headright' bindtap='screen2'>筛选</view>
+    </view>
+
+    <view class='sort' wx:if='{{scondSeek}}' >
+      <text class='active'>智能排序</text> <text>时间排序</text>
+    </view>
+</template>
+
+<!-- 推荐组建 之二级筛选-->
+<template name='searSencod'>
+    <view class='changeEdit'>
+      <view class='title'>兼职</view>
+      <view class='editCount'>
+        <text>微融贷</text>
+        <text>房地产</text>
+        <text>三脚架对对对</text>
+        <text>都市我我四啊啊</text>
+        <text>地级市杜</text>
+        <text>上岛咖啡模块</text>
+        <text>订单</text>
+        <text>实打实</text>
+        <text>爽肤水</text>
+      </view>
+
+      <view class='title'>全职</view>
+      <view class='editCount'>
+        <text>微融贷</text>
+        <text>房地产</text>
+        <text>三脚架对对对</text>
+        <text>都市我我四啊啊</text>
+        <text>地级市杜</text>
+        <text>上岛咖啡模块</text>
+        <text>订单</text>
+        <text>实打实</text>
+        <text>爽肤水</text>
+      </view>
+      <button class="weui-btn" style='background: #1B87E0;margin-bottom: 24rpx;' type="primary">确定</button>
+   </view>
+</template>
+
+<!-- 推荐组建 之列表 -->
+<template name='searchList'>
+        <view class='countList list'>
+
+          <view class='lfirst'>
+            <view class='left'>
+              <text>土木工程师-注册岩土工程师</text>
+              <text>兼职</text>
+            </view>
+            <view class='right'>
+              <!-- <text>刷新</text> -->
+              <text></text>
+              <text>刷新</text>
+            </view>
+          </view>
+          
+          <view class='lsecond'>
+              <view class='left'>
+              广东广州市
+              </view>
+              <view class='right'>
+              2018-05-20
+              </view>
+          </view>
+        
+        </view>
+        
 </template>
