@@ -94,8 +94,12 @@ Page({
         fages: true
       }
     });
+
+   
+  },
+  onShow: function () {
     // 判断是否登录
-    try {
+      let that =this;
       let value = wx.getStorageSync('token')
       if (value.has_Verify == 3) {
         that.setData({
@@ -104,16 +108,9 @@ Page({
           }
         });
       }
-    } catch (e) {
-
-    }
-   
+    
   },
-  onShow: function () {
 
-
-  
-  },
   //请求函数
   datalist:function(messages="玩命加载中"){
     var that = this;

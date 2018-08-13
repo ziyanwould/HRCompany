@@ -87,6 +87,48 @@ Page({
          'fn': ''
        }
     ],
+    nolist: [
+      {
+        'class': 'Cmmember',
+        'image': 'Cmmember',
+        'mes': '会员中心',
+        'fn': 'notlogin',
+        'RTitle': '开通会员，畅享会员高级功能',
+        'Tclass': 'Tclass'
+      },
+      {
+        'class': 'Hrdoug',
+        'image': 'Hrdoug',
+        'mes': '猎聘豆',
+        'fn': 'notlogin'
+      },
+      {
+        'class': 'image6',
+        'image': 'Cperson',
+        'mes': '职位管理',
+        'fn': 'notlogin'
+      },
+      {
+        'class': 'image7',
+        'image': 'Ctell',
+        'mes': '收藏夹',
+        'fn': 'notlogin'
+      }
+      ,
+      {
+        'class': 'image8',
+        'image': 'Cphone',
+        'mes': '简历管理',
+        'fn': 'notlogin'
+      }
+      ,
+      {
+        'class': 'image9',
+        'image': 'QQ',
+        'mes': '已购买简历',
+        'fn': 'notlogin'
+      }
+    ],
     firlist:[
       {
         'class':'image0',
@@ -124,6 +166,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this;
     let isIphoneX = app.globalData.isIphoneX;
     this.setData({
       isIphoneX: isIphoneX
@@ -157,6 +200,16 @@ Page({
     }
 
     this.companyMes()
+    try {
+      let value = wx.getStorageSync('token')
+      if (value.has_Verify == 3) {
+        that.setData({
+         token:true
+        });
+      }
+    } catch (e) {
+
+    }
   },
 
   /**
@@ -269,5 +322,17 @@ Page({
     wx.navigateTo({
       url: '/pages/child/collect/collect'//实际路径要写全
     })
+  },
+  //未登录状态
+  notlogin(){
+    wx.showModal({
+      content: '请先登录/注册',
+      showCancel: false,
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        }
+      }
+    });
   }
 })

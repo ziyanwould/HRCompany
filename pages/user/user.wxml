@@ -16,7 +16,7 @@
 
 <view class='page'>
   
-      <view class='count'>
+      <view class='count' wx:if='{{token}}'>
           <view class='listms'>
 
               <view class='Clist' wx:for='{{firlist}}' wx:key='{{this}}'>
@@ -36,16 +36,16 @@
      </view>
 
 
-    <!-- <view class='noLogin'>
+    <view class='noLogin' wx:if='{{!token}}'>
       <image class='wai' src='http://www.liujiarong.top/WXImg/loginUse_1.png'></image>
         <image class='nei' src='http://www.liujiarong.top/WXImg/uselogin.png'></image>
        <view class='text'>
          <text>登录</text>
          <text>注册</text>
        </view>
-    </view> -->
+    </view>
     
-     <view class='list' wx:for='{{comlist}}' wx:key='{{this}}' bindtap='{{item.fn}}'>
+     <view class='list' wx:for='{{token?comlist:nolist}}' wx:key='{{this}}' bindtap='{{item.fn}}'>
         <view class='left'>
            <view class='imgCen'> <image class='{{item.class}}' src='http://www.liujiarong.top/WXImg/{{item.image}}.png'></image></view><text>{{item.mes}}</text>
         </view>
@@ -58,6 +58,6 @@
 
 
 
-     <button class='quit'>退出登录</button>
+     <button class='quit' wx:if='{{token}}'>退出登录</button>
 
 </view>

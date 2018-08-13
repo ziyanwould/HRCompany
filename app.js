@@ -95,17 +95,35 @@ App({
       var value = wx.getStorageSync('token')
       if (value) {
         console.log("token", value)
-        utils.post('api/common/check_islogin', {
-          'login_token': value.login_token
-        }).then((res) => {
-          console.log(res);//正确返回结果
-          wx.hideLoading();
-         // resolve()
-        }).catch((errMsg) => {
-          console.log(errMsg);//错误提示信息
-          wx.hideLoading();
-         // reject()
-        });
+        // common.request('api/common/check_islogin', {
+        //   'login_token': value.login_token
+        // })
+        common.request('api/common/check_islogin', {
+          params: {
+            'login_token': value.login_token
+          },
+          success: function (res) {
+            // success  
+            console.log(res.data.message);
+
+            if (res.data.message!='已登录'){
+              wx.showToast({
+                title: '身份过期',
+                icon: 'loading',
+                duration: 3000
+              });
+              wx.removeStorageSync('token')
+            }
+          },
+          fail: function () {
+            // fail  
+            wx.showToast({
+              title: '网络故障',
+              icon: 'loading',
+              duration: 3000
+            });
+          },
+        })
       }
     } catch (e) {
       // Do something when catch error
