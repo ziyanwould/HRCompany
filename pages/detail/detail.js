@@ -254,5 +254,12 @@ Page({
       url: `/pages/child/PositionFrist/PositionFrist?id=${full}`//全职简历
       // url:"/pages/child/Positionsecond/Positionsecond"   
     })
+  },
+  //搜索跳转
+  seek(){
+    wx.navigateTo({
+      url: "/pages/child/Searchpage/Searchpage?permanent=2"//全职简历
+      // url:"/pages/child/Positionsecond/Positionsecond"   
+    })
   }
 })

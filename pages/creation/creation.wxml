@@ -1,9 +1,11 @@
 <!--pages/creation/creation.wxml-->
+<import src="/template/nav" />
+<template is="notLogin" data="{{...items}}"/> 
 <block wx:if='{{!show}}'>
  <include src="/template/bottom"/>
 </block>
 
-<import src="/template/nav" />
+
 <view class="page  {{isIphoneX?'bottomPX':'bottomP'}}">
     <view class="page__bd">
         <view class="weui-tab">

@@ -1,3 +1,4 @@
+
 /* pages/user/user.wxss */
 .userinfo {
   display: flex;
@@ -210,3 +211,6 @@ margin-bottom: 20rpx;
     margin-right: 18rpx;
     color: #FFD703;
   }
+  /* 登录弹出框样式 */
+  @import "/template/login.wxss";  
+

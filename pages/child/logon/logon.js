@@ -1117,6 +1117,12 @@ Page({
           that.setData({
             oppid: res.wx_openid
           })
+          //存储oppid
+          try {
+            wx.setStorageSync('oppid', res.wx_openid)
+          } catch (e) {
+          }
+        //存储结束
           resolve()
         }).catch((errMsg) => {
           console.log(errMsg);//错误提示信息

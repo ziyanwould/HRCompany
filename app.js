@@ -104,9 +104,9 @@ App({
           },
           success: function (res) {
             // success  
-            console.log(res.data.message);
+            console.log("mssage",res);
 
-            if (res.data.message!='已登录'){
+            if (res.data.message!='成功'){
               wx.showToast({
                 title: '身份过期',
                 icon: 'loading',

@@ -14,7 +14,10 @@
     "pages/child/Positionsecond/Positionsecond",
     "pages/child/map/map",
     "pages/child/positionManagement/positionManagement",
-    "pages/child/collect/collect"
+    "pages/child/collect/collect",
+    "pages/child/resume/resume",
+    "pages/child/Searchpage/Searchpage",
+    "pages/child/citySelect/citySelect"
 
   ],
   "window":{

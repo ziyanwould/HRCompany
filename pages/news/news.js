@@ -127,7 +127,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
- 
+    // 判断是否登录
+    let that = this;
+    let value = wx.getStorageSync('token')
+    if (value.has_Verify != 3) {
+      this.setData({
+        items: {
+          //height: 550,
+          masTitle: "",
+          show: true,
+          fages: true
+        }
+      });
+    }
   },
 
   /**
@@ -275,5 +287,194 @@ Page({
       searSencod: false,
       'seekData.scondSeek':true
     })
+  },
+  //针对登录的js
+
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
+
+      encryptedData: e.detail.encryptedData,
+      iv: e.detail.iv
+    })
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '未授权',
+        success: function (res) { }
+      })
+    } else {
+      new Promise(step1)
+        .then(function (val) {
+          console.log(val);
+          return new Promise(step2)
+        })
+        .then(function (val) {
+          console.log(val);
+          return new Promise(step3)
+        })
+        .then(function () {
+          console.log('搞定！')
+        })
+
+
+
+      function step1(resolve, reject) {
+        const mylogin = utils.wxPromisify(wx.login);
+        mylogin().then(res => {
+          console.log(res)
+          let data = {
+            "code": res.code
+          }
+          that.setData({
+            code: data
+          })
+          resolve(true)
+        }).catch(res => {
+          reject(false)
+        })
+      }
+
+
+      function step2(resolve, reject) {
+
+        utils.post('api/common/get_com_wx_openid', that.data.code).then((res) => {
+          console.log(res);//正确返回结果
+          wx.hideLoading();
+          that.setData({
+            oppid: res.wx_openid
+          })
+          //存储oppid
+          try {
+            wx.setStorageSync('oppid', res.wx_openid)
+          } catch (e) {
+          }
+          //存储结束
+          resolve()
+        }).catch((errMsg) => {
+          console.log(errMsg);//错误提示信息
+          wx.hideLoading();
+          reject()
+        });
+      }
+
+      function step3(resolve, reject) {
+        let datas = {
+          "openid": that.data.oppid,
+          "encryptedData": that.data.encryptedData,
+          "iv": that.data.iv
+        };
+        utils.post('api/common/wx_login_phone_token', datas).then((res) => {
+          console.log(res);//正确返回结果
+          // console.log(res.dic.has_Verify)
+          if (res.dic.has_Verify == 0) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '你的微信号尚未进行企业认证，是否进行认证？',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e) => {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+                  wx.navigateTo({
+                    // url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}`//实际路径要写全
+                    url: '/pages/child/logon/logon?login_phone=' + res.dic.login_phone + '&login_token=' + res.dic.login_token//实际路径要写全
+                  })
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          } else if (res.dic.has_Verify == 1 || res.dic.has_Verify == 2) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '您的账号还在审核中',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e) => {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          } else if (res.dic.has_Verify == 3) {
+            wx.showToast({
+              title: '登录成功',
+              icon: 'success',
+              duration: 3000
+            });
+            // 存储登录信息
+            try {
+              // wx.setStorageSync('token', res.dic.login_token);
+              wx.setStorageSync('token', res.dic);
+              app.globalData.register = true;
+              that.setData({
+                'items.show': false,
+                token: true
+              })
+            } catch (e) {
+            }
+          } else if (res.dic.has_Verify == 4) {
+            wx.showModal({
+              title: '温馨提示',
+              content: '你的微信号尚未进行企业认证，是否进行认证？',
+              confirmText: "确定",
+              cancelText: "取消",
+              success: (e) => {
+                console.log(e);
+                if (e.confirm) {
+                  //console.log('用户点击主操作')
+                  wx.navigateTo({
+                    url: `/pages/child/logon/logon?login_phone=${res.dic.login_phone}&login_token=${res.dic.login_token}&has_Verify=${res.dic.has_Verify}`//实际路径要写全
+                    //序号为4是认证失败，需要提示重新认证，并且接口换成“api/common/company_again_register”
+                  })
+                } else {
+                  //console.log('用户点击辅助操作')
+                }
+              }
+            })
+          }
+          wx.hideLoading();
+          resolve()
+        }).catch((errMsg) => {
+          console.log(errMsg);//错误提示信息
+          wx.hideLoading();
+          reject()
+        });
+      }
+      // wx.showModal({
+      //   title: '提示',
+      //   showCancel: false,
+      //   content: '同意授权',
+      //   success: function (res) { }
+      // })
+    }
+  },
+  urlTo() {
+    wx.navigateTo({
+      url: `/pages/child/logon/logon`//实际路径要写全
+    })
+  },
+  urlTo2() {
+    wx.navigateTo({
+      url: `/pages/child/logon/logon?type=company`//实际路径要写全
+    })
+  },
+  urlclose() {
+    this.setData({
+      items: {
+        show: false
+      }
+    });
   }
+  //
 })

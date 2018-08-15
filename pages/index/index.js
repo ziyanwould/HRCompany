@@ -232,19 +232,12 @@ Page({
   },
   seek() {
     wx.navigateTo({
-      url: "/pages/child/PositionFrist/PositionFrist"//全职简历
+      url: "/pages/child/Searchpage/Searchpage?permanent=0"//全职简历
       // url:"/pages/child/Positionsecond/Positionsecond"   
     })
   },
   //针对登录的js
-    urlclose: function () {
-    this.setData({
-      items: {
-        show: false
-      }
-    });
-  },
-  //
+
 getPhoneNumber(e) {
   let that = this;
     that.setData({
@@ -303,6 +296,12 @@ getPhoneNumber(e) {
         that.setData({
           oppid: res.wx_openid
         })
+        //存储oppid
+          try {
+            wx.setStorageSync('oppid', res.wx_openid )
+          } catch (e) {
+          }
+        //存储结束
         resolve()
       }).catch((errMsg) => {
         console.log(errMsg);//错误提示信息
@@ -416,7 +415,15 @@ getPhoneNumber(e) {
     wx.navigateTo({
       url: `/pages/child/logon/logon?type=company`//实际路径要写全
     })
+  },
+  urlclose() {
+    this.setData({
+      items: {
+        show: false
+      }
+    });
   }
+  //
   , detail(){
     wx.navigateTo({
       url: "/pages/child/PositionFrist/PositionFrist"//全职简历

@@ -1,6 +1,8 @@
 <!--pages/user/user.wxml-->
 <!-- <text>pages/user/user.wxml</text> -->
 <include src="/template/bottom"/>
+<import src="/template/nav" />
+<template is="notLogin" data="{{...items}}"/> 
 <!-- <view class="container">
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
@@ -36,7 +38,7 @@
      </view>
 
 
-    <view class='noLogin' wx:if='{{!token}}'>
+    <view class='noLogin' wx:if='{{!token}}' bindtap='login'>
       <image class='wai' src='http://www.liujiarong.top/WXImg/loginUse_1.png'></image>
         <image class='nei' src='http://www.liujiarong.top/WXImg/uselogin.png'></image>
        <view class='text'>
@@ -58,6 +60,6 @@
 
 
 
-     <button class='quit' wx:if='{{token}}'>退出登录</button>
+     <button class='quit' wx:if='{{token}}' bindtap='exit'>退出登录</button>
 
 </view>
