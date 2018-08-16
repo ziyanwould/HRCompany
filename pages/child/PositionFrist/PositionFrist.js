@@ -123,6 +123,60 @@ Page({
       wx.hideLoading();
     //  reject()
     });
+  },
+  //收藏取消收藏
+  shoucang(name='收藏'){
+    let that = this;
+    let url = '';
+    if(name=='收藏'){
+      url ='api/resume/collect_resume'
+    }else{
+      url ='api/resume/remove_collect_Resume'
+    }
+    let token = wx.getStorageSync('token');
+
+    utils.post(url, {
+      resume_id: that.data.explain.resumePart.resume_id
+    },token.login_token).then((res) => {
+      console.log(res);//正确返回结果
+      if(name=='收藏'){
+        wx.showToast({
+          title: '收藏成功',
+          icon: 'success',
+          duration: 3000
+        });
+      }else{
+        wx.showToast({
+          title: '移除收藏',
+          icon: 'success',
+          duration: 3000
+        });
+      }
+      
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      
+      //  reject()
+    });
+  }
+   ,
+  clickshou(e){
+    let that = this;
+
+    if(that.data.mes){
+      that.shoucang();
+      that.setData({
+        mes:false
+      })
+
+    }else{
+      that.shoucang(false);
+      that.setData({
+        mes: true
+      })
+    }
+
   }
 
 })

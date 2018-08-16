@@ -345,35 +345,19 @@
     <view class='title'>
      工作经历
     </view>
-    <view class='list'>
+    <view class='list' wx:for='{{resumePart.workExperience}}' wx:key='{{this}}'>
       <view class='time'>
-      2010/6--至今
+      {{item.startTime}}--{{item.endTime}}
       </view>
-      <view class='tags1'><image class='redetail11' src='http://www.liujiarong.top/WXImg/redetail11.png'></image>广州金大建筑工程有限公司</view>
-      <view class='tags2'><image class='redetail12' src='http://www.liujiarong.top/WXImg/redetail12.png'></image>土建工程师/建筑工程管理/项目经理</view>
+      <view class='tags1'><image class='redetail11' src='http://www.liujiarong.top/WXImg/redetail11.png'></image>{{item.company}}</view>
+      <view class='tags2'><image class='redetail12' src='http://www.liujiarong.top/WXImg/redetail12.png'></image>{{item.post}}</view>
       <view class='secondTitle'>工作内容：</view>
       <view class='secondCount'>
-      1、负责施工方案编制；<br/>
-      2、制定公司的相关规章制度；<br/>
-      3、负责项目项目管理协调各相关单位的工作；<br/>
-      4、负责检查、收集、协助编制项目安全管理资料及工程竣工验收资料<br/>
+      {{item.jobContent}}
       </view>
     </view>
 
-    <view class='list'>
-      <view class='time'>
-      2010/6--至今
-      </view>
-      <view class='tags1'><image class='redetail11' src='http://www.liujiarong.top/WXImg/redetail11.png'></image>广州金大建筑工程有限公司</view>
-      <view class='tags2'><image class='redetail12' src='http://www.liujiarong.top/WXImg/redetail12.png'></image>土建工程师/建筑工程管理/项目经理</view>
-      <view class='secondTitle'>工作内容：</view>
-      <view class='secondCount'>
-      1、负责施工方案编制；<br/>
-      2、制定公司的相关规章制度；<br/>
-      3、负责项目项目管理协调各相关单位的工作；<br/>
-      4、负责检查、收集、协助编制项目安全管理资料及工程竣工验收资料<br/>
-      </view>
-    </view>
+    
   </view>
   <!-- 项目经历 -->
   <view class='project'>
@@ -436,6 +420,16 @@
     
      </view> 
   </view>
+  <!-- 自定义板块 -->
+  <view class='evaluate' wx:for='{{resumePart.userDefine}}' wx:key='{{this}}'>
+    <view class='title'>
+     {{item.title}}
+    </view>
+    <view class='count'>
+  
+       {{item.content}}
+    </view>
+  </view>
   </block>
  </view>
 </template>
@@ -444,7 +438,7 @@
 <template name='positionClick'>
  <view class='positionClick'>
      <button class="weui-btn" hover-class='button-hover' type="primary">购买</button>
-     <view class='pright'>
+     <view class='pright' bindtap='clickshou'>
       <image class='redetail09' src='http://www.liujiarong.top/WXImg/redetail09.png'></image>
       <text>收藏</text>
      </view>
