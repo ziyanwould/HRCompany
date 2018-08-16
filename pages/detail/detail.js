@@ -168,12 +168,15 @@ Page({
     // that.setData({
     //   list: list
     // });
-
-    utils.post('api/resume/resume_list', {
+    let code = {
       "type_id": 1,
       "pageIndex": page,
       "pageSize": 8
-    }).then((res) => {
+    }
+ 
+    console.log("code", code)
+    utils.post('api/resume/resume_list', code).then((res) => {
+     
       console.log(res);//正确返回结果
       if (res.list == '') {
         wx.showToast({
@@ -193,9 +196,8 @@ Page({
           birthday: res.list[i].age,
           experience: res.list[i].jobexp,
           person: res.list[i].img,
-          time: res.list[i].utime.substr(0, 10) 
-
-
+          time: res.list[i].utime.substr(0, 10),
+          resume_id: res.list[i].resume_id
         }
         if (res.list[i].sex == 0) {
           lists.sex = '男'
@@ -248,10 +250,10 @@ Page({
 
     this.datalist()
   },
-  detail() {
-    let full ='full'
+  detail(e) {
+    //console.log(e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: `/pages/child/PositionFrist/PositionFrist?id=${full}`//全职简历
+      url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=全职`//全职简历
       // url:"/pages/child/Positionsecond/Positionsecond"   
     })
   },

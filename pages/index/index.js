@@ -176,7 +176,8 @@ Page({
         stats: i % 2 == 0 ? '资质' : '不限',
           pay: res.list[i].wages == null ? `面议` : `${res.list[i].wages}`,
         person: res.list[i].img,
-        time: res.list[i].utime.substr(0, 10) 
+        time: res.list[i].utime.substr(0, 10) ,
+        resume_id: res.list[i].resume_id
 
       }
         if (res.list[i].sex==0){
@@ -424,9 +425,10 @@ getPhoneNumber(e) {
     });
   }
   //
-  , detail(){
+  , detail(e){
+    //console.log(e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: "/pages/child/PositionFrist/PositionFrist"//全职简历
+      url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=兼职`//全职简历
       // url:"/pages/child/Positionsecond/Positionsecond"   
     })
   }

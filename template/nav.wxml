@@ -40,7 +40,7 @@
 
 <!-- 兼职/全职简历模板 -->
 <template name='partTime'>
-  <view class='partTime' bindtap='{{fn}}'>
+  <view class='partTime' bindtap='{{fn}}' data-id='{{resume_id}}'>
     <view class='left'>
         <image src='{{person?person:"http://www.liujiarong.top/WXImg/person.png"}}'></image>
     </view>
@@ -268,55 +268,55 @@
         <view class='first'>
            <view class='fLeft'>
               <view class='nameSex'>
-                <text>刘菲菲</text><image class='redetailWom' src='http://www.liujiarong.top/WXImg/redetailWom.png'></image>
+                <text>{{resumePart.baseUserData.real_name}}</text><image class='redetailWom' src="{{resumePart.baseUserData.sex=='女'?'http://www.liujiarong.top/WXImg/redetailWom.png':''}}"></image>
               </view>
                <view class='tags'>
-                <text>34岁</text>
-                 <text>本科</text>
-                  <text>15年</text>
+                <text>{{resumePart.baseUserData.age}}岁</text>
+                 <text>{{resumePart.baseUserData.education}}</text>
+                  <text>{{resumePart.baseUserData.job_years}}</text>
               </view>
            </view>
 
            <view class='fRight'>
-            <image class='redetailPerson' src='http://www.liujiarong.top/WXImg/redetailPerson.png'></image>
+            <image class='redetailPerson' src='{{resumePart.baseUserData.header_img}}'></image>
            </view>
         </view>
 
         <view class='second' wx:if='{{switchde}}'>
-          社保所在地：广东省-广州市 
+          社保所在地：{{resumePart.baseUserData.province?resumePart.baseUserData.province+'-':''}}{{resumePart.baseUserData.city}}
         </view>
 
         <view class='third'>
-           <view class='tLeft'>二级建造师 - 建筑工程</view>
+           <view class='tLeft'>{{resumePart.expectWork.moreInfo}}</view>
             <view class='tRight'>
-            <image class='redetailTime'  src='http://www.liujiarong.top/WXImg/redetailTime.png'></image><text>2018-05-20</text>
+            <image class='redetailTime'  src='http://www.liujiarong.top/WXImg/redetailTime.png'></image><text>{{resumePart.updateTime}}</text>
             </view>
         </view>
       </view>
 
       <view class='person2'>
 
-        <view class='showDe' wx:if='{{!switchde}}'>
+        <view class='showDe' wx:if='{{switchde}}'>
          <view class='shLeft'>
-           <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
-            <view class='list'><image class='redetail03' src='http://www.liujiarong.top/WXImg/redetail03.png'></image>证书状态：闲置中</view>
-             <view class='list'><image class='redetail05' src='http://www.liujiarong.top/WXImg/redetail05.png'></image>证书用途：资质</view>
+           <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：{{resumePart.certificate[0].ger_type_name}}</view>
+            <view class='list'><image class='redetail03' src='http://www.liujiarong.top/WXImg/redetail03.png'></image>证书状态：{{resumePart.certificate[0].state}}</view>
+             <view class='list'><image class='redetail05' src='http://www.liujiarong.top/WXImg/redetail05.png'></image>证书用途：{{resumePart.certificate[0].useRe}}</view>
          </view>
          <view class='shRight'>
-               <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：转注</view>
-             <view class='list'><image class='redetail04' src='http://www.liujiarong.top/WXImg/redetail04.png'></image>证书所在地：广东省-广州市</view>
+               <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：{{resumePart.certificate[0].registration}}</view>
+             <view class='list'><image class='redetail04' src='http://www.liujiarong.top/WXImg/redetail04.png'></image>证书所在地：{{resumePart.certificate[0].province?resumePart.certificate[0].province+'-':''}}{{resumePart.certificate[0].location}}</view>
          </view>
        </view>
 
-        <view class='showDe active' wx:if='{{switchde}}'>
+        <view class='showDe active' wx:if='{{!switchde}}'>
          <view class='shLeft'>
-           <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：二级建造师-建筑工程</view>
-            <view class='list'><image class='redetail07' src='http://www.liujiarong.top/WXImg/redetail07.png'></image>期望薪资：15000-20000元/月</view>
+           <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>期望职位：{{resumePart.expectWork.work}}</view>
+            <view class='list'><image class='redetail07' src='http://www.liujiarong.top/WXImg/redetail07.png'></image>期望薪资：{{resumePart.expectWork.monthlyPay}}元/月</view>
            
          </view>
          <view class='shRight'>
-               <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>到岗时间：随时</view>
-             <view class='list'><image class='redetail08' src='http://www.liujiarong.top/WXImg/redetail08.png'></image>工作类型：全职</view>
+               <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>求职状态：{{resumePart.baseUserData.job_status}}</view>
+             <view class='list'><image class='redetail08' src='http://www.liujiarong.top/WXImg/redetail08.png'></image>工作类型：{{resumePart.expectWork.positionType}}</view>
          </view>
        </view>
 
@@ -333,9 +333,10 @@
      {{explain}}
     </view>
     <view class='count'>
-     1、人品公诚勤勇、端正朴实，作风务实严谨，能吃苦耐劳；能承受加班和出差，能适应施工现场工作；<br/>
+     <!-- 1、人品公诚勤勇、端正朴实，作风务实严谨，能吃苦耐劳；能承受加班和出差，能适应施工现场工作；<br/>
      2、熟悉国家及相关行业有关工程的法律法规。<br/>
-     3、熟悉建设工程方案的编制、审核工作；工程资料的编制收集管理工作；工程竣工验收的相关工作。<br/>
+     3、熟悉建设工程方案的编制、审核工作；工程资料的编制收集管理工作；工程竣工验收的相关工作。<br/> -->
+       {{resumePart.selfDescription.content}}
     </view>
   </view>
   <block wx:if='{{fullTime}}'>
@@ -380,55 +381,36 @@
      项目经历
     </view>
 
-    <view class='list'>
+    <view class='list'  wx:for='{{resumePart.projectExperience}}' wx:key='{{this}}'>
      <view class='time'>
-      2010/6--至今
+      {{item.startTime}}--{{item.endTime}}
      </view>
-      <view class='tags3'><image class='redetail13' src='http://www.liujiarong.top/WXImg/redetail13.png'></image>江隆花园（三江盛会）一期二期工程项目</view>
+      <view class='tags3'><image class='redetail13' src='http://www.liujiarong.top/WXImg/redetail13.png'></image>{{item.projectName}}</view>
       <view class='secondTitle'>项目内容：</view>
       <view class='secondCount'>
-       项目的质量、安全管理工作；编制项目施工组织设计及专项施工方案；
+      {{item.projectContent}}
       </view>
     </view>
 
-     <view class='list'>
-      <view class='time'>
-        2010/6--至今
-      </view>
-        <view class='tags3'><image class='redetail13' src='http://www.liujiarong.top/WXImg/redetail13.png'></image>江隆花园（三江盛会）一期二期工程项目</view>
-        <view class='secondTitle'>项目内容：</view>
-        <view class='secondCount'>
-        项目的质量、安全管理工作；编制项目施工组织设计及专项施工方案；
-        </view>
-    </view>
+
   </view>
   <!-- 教育经历 -->
   <view class='education'>
     <view class='title'>
     教育经历
     </view>
-    <view class='list'>
+    <view class='list'  wx:for='{{resumePart.education}}' wx:key='{{this}}'>
       <view class='time'>
-      2011/2--2014/1
+     {{item.startTime}}--{{item.endTime}}
       </view>
       <view class='thirdCount'>
       <image class='redetail14' src='http://www.liujiarong.top/WXImg/redetail14.png'></image>
-      <text>广州建筑工程学校</text>
-        <text>工业与民用建筑</text>
-        <text>本科</text>
+      <text>{{item.school}}</text>
+        <text>{{item.profession}}</text>
+        <text>{{item.educationBack}}</text>
       </view>
     </view>
-     <view class='list'>
-      <view class='time'>
-      2011/2--2014/1
-      </view>
-      <view class='thirdCount'>
-      <image class='redetail14' src='http://www.liujiarong.top/WXImg/redetail14.png'></image>
-      <text>广州建筑工程学校</text>
-        <text>工业与民用建筑</text>
-        <text>本科</text>
-      </view>
-    </view>
+   
   
   </view>
   <!-- 证书信息 -->
@@ -438,28 +420,21 @@
      </view>
    
      
-     <view class='list'>
+     <view class='list' wx:for='{{resumePart.certificate}}' wx:key='{{this}}'>
        <view class='time'>
-         2011/2--2014/1
+        {{item.startTime}}--{{item.endTime}}
        </view> 
-       <view class='tags5'><image class='redetail15' src='http://www.liujiarong.top/WXImg/redetail15.png'></image>全国建设工程造价员资格证书</view>
+       <view class='tags5'><image class='redetail15' src='http://www.liujiarong.top/WXImg/redetail15.png'></image>{{item.NameCertificate}}</view>
        <view class='fourTCount'>
-        工业与民用建筑　　
+          <view>证书单位：{{item.organization}} </view>
+          <view>证书类别：{{item.ger_type_name}} </view>
+          <view>证书状态：{{item.state}} </view>
+          <view>证书用途：{{item.useRe}} </view>
+          <view>注册情况：{{item.registration}} </view>
+          <view>证书所在地：{{item.location}} </view>
        </view>
     
      </view> 
-     <view class='list'>
-       <view class='time'>
-         2011/2--2014/1
-       </view> 
-       <view class='tags5'><image class='redetail15' src='http://www.liujiarong.top/WXImg/redetail15.png'></image>全国建设工程造价员资格证书</view>
-       <view class='fourTCount'>
-        工业与民用建筑　　
-       </view>
-     </view>
-   
-    
-
   </view>
   </block>
  </view>
