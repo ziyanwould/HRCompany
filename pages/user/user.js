@@ -449,7 +449,7 @@ Page({
 
 
       function step2(resolve, reject) {
-
+        console.log("传入code", that.data.code)
         utils.post('api/common/get_com_wx_openid', that.data.code).then((res) => {
           console.log(res);//正确返回结果
           wx.hideLoading();
@@ -471,11 +471,13 @@ Page({
       }
 
       function step3(resolve, reject) {
+      
         let datas = {
           "openid": that.data.oppid,
           "encryptedData": that.data.encryptedData,
           "iv": that.data.iv
         };
+        console.log("获取登录值传入参数", datas)
         utils.post('api/common/wx_login_phone_token', datas).then((res) => {
           console.log(res);//正确返回结果
           // console.log(res.dic.has_Verify)

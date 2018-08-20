@@ -440,7 +440,7 @@
      <button class="weui-btn" hover-class='button-hover' type="primary">购买</button>
      <view class='pright' bindtap='clickshou'>
       <image class='redetail09' src='http://www.liujiarong.top/WXImg/redetail09.png'></image>
-      <text>收藏</text>
+      <text>{{names?'取消':'收藏'}}</text>
      </view>
  </view>
 </template>

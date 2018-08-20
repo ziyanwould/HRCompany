@@ -39,8 +39,14 @@ Page({
   onLoad: function () {
     page=1;
     var that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
     that.datalist()
-
+    
+   
     //var height = '100%';
 
   },
@@ -151,7 +157,20 @@ Page({
     //this.translateXMsgItem(e.currentTarget.id, 0, 0);
   },
   onDeleteMsgTap: function (e) {
-    //console.log("删除操作", e.currentTarget.id);
+    let that = this;
+    console.log("删除操作", e.currentTarget.id);
+    utils.post('api/resume/remove_collect_Resume', {
+      "resume_id": e.currentTarget.id
+    }, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+
+      //存储结束
+     // resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      wx.hideLoading();
+      //reject()
+    });
     this.deleteResume(e.currentTarget.id)
     this.deleteMsgItem(e);
   },
@@ -223,21 +242,28 @@ Page({
     this.setData(param);
   },
   active: function (e) {
+    page = 1;
+    
     var that = this;
     this.setData({
       activeIndex: e.currentTarget.id,
-      pageshows: false
+      pageshows: false,
+      msgList: [
+
+      ],
     })
+    that.datalist()
     var numberv = e.currentTarget.id;
     console.log("number", e.currentTarget.id);
+    console.log("数据结构", that.data.msgList)
     for (let i in that.data.msgList) {
-      console.log("数据结构", that.data.msgList[i].type)
+    
       if (numberv == 1 && that.data.msgList[i].type == "全职") {
 
         that.setData({
           pageshows: true
         })
-      } else if (numberv == 2 && that.data.msgList[i].type == "兼职") {
+      } else if (numberv == 2 && that.data.msgList!=0) {
 
         that.setData({
           pageshows: true
@@ -248,6 +274,7 @@ Page({
         })
       }
     }
+
 
   },
   urlto: function (e) {
@@ -396,12 +423,12 @@ Page({
     //   list: list
     // });
     //测试end
-
-    utils.post('api/resume/resume_list', {
-      "type_id": 0,
+    console.log("token",that.data.token)
+    utils.post('api/resume/get_collect_resume_list', {
+      "type_id": that.data.activeIndex,
       "pageIndex": page,
       "pageSize": 8
-    }).then((res) => {
+    }, that.data.token).then((res) => {
       console.log(res);//正确返回结果
       if (res.list == '') {
         wx.showToast({
@@ -411,37 +438,76 @@ Page({
         });
         return false;
       }
-      for (let i in res.list) {
-        console.log(res.list[i]);
-        let lists = {
-          fn: 'detail',
-          //sex: i % 2 == 0 ? '女' : '男',
-          tille: res.list[i].certificate.length == 0 ? res.list[i].title : `${res.list[i].certificate[0].fir_type_name}-${res.list[i].certificate[0].sec_type_name}`,
-          name: res.list[i].name,
-          area: res.list[i].certificate.length == 0 ? `${res.list[i].city}` : `${res.list[i].certificate[0].province}${res.list[i].certificate[0].city}`,
-          stats: i % 2 == 0 ? '资质' : '不限',
-          pay: res.list[i].wages == null ? `面议` : `${res.list[i].wages}`,
-          person: res.list[i].img,
-          time: res.list[i].utime.substr(0, 10),
-          resume_id:res.list[i].resume_id
+      if(that.data.activeIndex==0){
+        for (let i in res.list) {
+          console.log(res.list[i]);
+          let lists = {
+            fn: 'detail',
+            //sex: i % 2 == 0 ? '女' : '男',
+            tille: res.list[i].certificate.length == 0 ? res.list[i].title : `${res.list[i].certificate[0].fir_type_name}-${res.list[i].certificate[0].sec_type_name}`,
+            name: res.list[i].name,
+            area: res.list[i].certificate.length == 0 ? `${res.list[i].city}` : `${res.list[i].certificate[0].province}${res.list[i].certificate[0].city}`,
+            stats: i % 2 == 0 ? '资质' : '不限',
+            pay: res.list[i].wages == null ? `面议` : `${res.list[i].wages}`,
+            person: res.list[i].img,
+            time: res.list[i].utime.substr(0, 10),
+            resume_id: res.list[i].resume_id
 
+          }
+          if (res.list[i].sex == 0) {
+            lists.sex = '男'
+          } else if (res.list[i].sex == 1) {
+            lists.sex = '男'
+          } else if (res.list[i].sex == 2) {
+            lists.sex = '女'
+          } else {
+            lists.sex = res.list[i].sex
+          }
+          ;
+          list.push(lists)
         }
-        if (res.list[i].sex == 0) {
-          lists.sex = '男'
-        } else if (res.list[i].sex == 1) {
-          lists.sex = '男'
-        } else if (res.list[i].sex == 2) {
-          lists.sex = '女'
-        } else {
-          lists.sex = res.list[i].sex
+      }else if(that.data.activeIndex==1){
+        for (let i in res.list) {
+          console.log(res.list[i]);
+          let lists = {
+            fn: 'detail',
+            tille: res.list[i].work,
+            name: res.list[i].name,
+            education: res.list[i].education,
+            birthday: res.list[i].age,
+            experience: res.list[i].jobexp,
+            person: res.list[i].img,
+            time: res.list[i].utime.substr(0, 10),
+            resume_id: res.list[i].resume_id
+          }
+          if (res.list[i].sex == 0) {
+            lists.sex = '男'
+          } else if (res.list[i].sex == 1) {
+            lists.sex = '男'
+          } else if (res.list[i].sex == 2) {
+            lists.sex = '女'
+          } else {
+            lists.sex = res.list[i].sex
+          }
+          ;
+          list.push(lists)
         }
-        ;
-        list.push(lists)
       }
+     
       wx.hideLoading();
       that.setData({
         msgList: list
       });
+      if (that.data.msgList==0){
+
+        that.setData({
+          pageshows: false
+        })
+      }else{
+        that.setData({
+          pageshows: true
+        })
+      }
       page++;
       //resolve()
     }).catch((errMsg) => {

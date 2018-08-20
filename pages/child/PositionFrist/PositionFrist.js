@@ -19,8 +19,13 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    let that = this;
+  onLoad: function (options) { 
+  let that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token",token)
+    that.setData({
+      token: token.login_token
+    })
   console.log("mes",options)
     if (options.type=='全职'){
       that.setData({
@@ -96,17 +101,22 @@ Page({
 
     utils.post(url, {
       resume_id: id
-    }).then((res) => {
 
+    },that.data.token).then((res) => {
+    
       if (that.data.types == '全职') {
         that.setData({
           'personMes.resumePart': res.ResumeFull,
-          'explain.resumePart': res.ResumeFull
+          'explain.resumePart': res.ResumeFull,
+          names: res.ResumeFull.is_collect,
+          'datas.names': res.ResumeFull.is_collect,
         })
       } else {
         that.setData({
           'personMes.resumePart': res.resumePart,
-          'explain.resumePart': res.resumePart
+          'explain.resumePart': res.resumePart,
+          names: res.resumePart.is_collect,
+          'datas.names': res.resumePart.is_collect
         })
       }
    
@@ -128,7 +138,7 @@ Page({
   shoucang(name='收藏'){
     let that = this;
     let url = '';
-    if(name=='收藏'){
+    if(!that.data.names){
       url ='api/resume/collect_resume'
     }else{
       url ='api/resume/remove_collect_Resume'
@@ -139,18 +149,26 @@ Page({
       resume_id: that.data.explain.resumePart.resume_id
     },token.login_token).then((res) => {
       console.log(res);//正确返回结果
-      if(name=='收藏'){
+      if (!that.data.names){
         wx.showToast({
           title: '收藏成功',
           icon: 'success',
           duration: 3000
         });
+        that.setData({
+          names:true,
+          'datas.names': true
+        })
       }else{
         wx.showToast({
           title: '移除收藏',
           icon: 'success',
           duration: 3000
         });
+        that.setData({
+          names: false,
+          'datas.names': false
+        })
       }
       
       //resolve()
