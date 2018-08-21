@@ -84,7 +84,7 @@ Page({
          'class': 'image9',
          'image': 'QQ',
          'mes': '消息中心',
-         'fn': ''
+         'fn': 'message'
        }
     ],
     nolist: [
@@ -199,7 +199,9 @@ Page({
       })
     }
 
-    this.companyMes()
+    if (app.globalData.userinfo!=0){
+      console.log(app.globalData.userinfo)
+    }
     try {
       let value = wx.getStorageSync('token')
       if (value.has_Verify == 3) {
@@ -208,7 +210,7 @@ Page({
         });
       }
     } catch (e) {
-
+      that.companyMes()
     }
   },
 
@@ -312,7 +314,8 @@ Page({
   },
   companyMes(){
     const token = wx.getStorageSync('token')
-    utils.post('usercenter/get_cominfo',false,  token).then((res) => {
+    console.log("token",token)
+    utils.post('usercenter/get_cominfo', false, token.login_token).then((res) => {
       console.log(res);//正确返回结果
       // console.log(res.dic.has_Verify)
  
@@ -592,5 +595,11 @@ Page({
     wx.navigateTo({
       url: `/pages/child/resume/resume`//实际路径要写全
     })
-  }
+  },
+  message(){
+   
+    wx.navigateTo({
+      url: `/pages/child/map/map`//实际路径要写全
+  })}
+
 })

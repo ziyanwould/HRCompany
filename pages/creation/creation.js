@@ -233,6 +233,11 @@ Page({
         });
       }
     });
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
 
   },
 
@@ -453,7 +458,61 @@ Page({
   },
 
   publish(){
-    console.log(this.data.otherms)
+    let that = this;
+    let url = '';
+    let datas = [];
+    if (that.data.activeIndex==0){
+      url = 'api/position/public_part_position',
+      datas = {
+        "Position_Title": that.data.otherms.select[0].child[0].input,
+        "Company_Name": app.globalData.userinfo.Company_Name,
+        "Position_Year_Wage": that.data.otherms.select[0].child[1].countCount,
+        // "Position_Year_Wage": 10086,
+        "Remark": that.data.otherms.textarea[0].textarea,
+        "sho_position_gertificate": [
+          {
+
+            "Gertificate_Type_Id": that.data.pID,
+            "Reg_Status": that.data.otherms.select[1].child[1].countCount,
+            "Gertificate_Status": that.data.otherms.select[1].child[2].countCount,
+            "Province": that.data.province,
+            "City": that.data.city,
+            "Gertificate_Use": that.data.otherms.select[1].child[4].countCount,
+          }
+        ]
+      }
+      console.log("兼职",that.data.otherms)
+    }else{
+      url = 'api/position/public_full_position';
+      datas = {
+     
+      
+        "Position_Title": that.data.allms.select[0].child[0].input,
+        "Company_Name": app.globalData.userinfo.Company_Name,
+        "Position_Month_Wage": that.data.allms.select[0].child[1].countCount,
+        "Need_Count": that.data.allms.select[1].child[1].countCount,
+        "Province": that.data.province,
+        "City": that.data.city,
+        "County": that.data.county,
+        "Job_Exp": that.data.allms.select[1].child[3].countCount,
+        "Education": that.data.allms.select[1].child[4].countCount,
+        "Job_Type_Id": that.data.fID,
+        "Remark": that.data.allms.textarea[0].textarea
+      }
+      console.log("datas", datas)
+    }
+    utils.post(url, datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+
+      //存储结束
+      // resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      wx.hideLoading();
+      //reject()
+    });
+  
+    
   },
   
   //全职相关

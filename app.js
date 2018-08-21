@@ -4,7 +4,6 @@ App({
   onLaunch: function () {
     /*是否登录  更新状态*/
     var _this = this;
-
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -113,6 +112,22 @@ App({
                 duration: 3000
               });
               wx.removeStorageSync('token')
+            }else{
+           
+              common.post('usercenter/get_cominfo', false, value.login_token).then((res) => {
+                console.log("用户信息",res);//正确返回结果
+                // console.log(res.dic.has_Verify)
+                //更新全局变量方式 20180515
+                _this.globalData.userinfo = res.userinfo
+                typeof cb == "function" && cb(that.globalData.userinfo)
+            //更新全局变量结束 20180515
+               // wx.hideLoading();
+                // resolve()
+              }).catch((errMsg) => {
+                console.log(errMsg);//错误提示信息
+                //wx.hideLoading();
+                // reject()
+              });
             }
           },
           fail: function () {
@@ -148,6 +163,6 @@ App({
     Jobl: [],//职位列表
     CRL: [],//证书列表
     register:false,//登录状态
-    
+    userinfo:[]//用户信息
   }
 })
