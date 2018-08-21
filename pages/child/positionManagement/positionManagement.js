@@ -1,6 +1,9 @@
 //index.js
 //获取应用实例
-var app = getApp()
+let page = 1;
+const app = getApp();
+const utils = require('../../../utils/util.js')
+const Promise = require('../../../utils/bluebird.min.js')
 
 Page({
   data: {
@@ -34,12 +37,18 @@ Page({
   showState: 0, //0 未显示菜单 1显示菜单
   touchStartState: 0, // 开始触摸时的状态 0 未显示菜单 1 显示菜单
   swipeDirection: 0, //是否触发水平滑动 0:未触发 1:触发水平滑动 2:触发垂直滑动
-  onLoad: function () {
-    var that = this;
 
+
+  onLoad: function () {
+    let that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
 
     //var height = '100%';
-
+    that.getmessage()
   },
 
   ontouchstart: function (e) {
@@ -304,6 +313,9 @@ Page({
     //   }
     // }, app.globalData.login)
     // console.log("获取简历列表1", that.data.msgList)
+
+
+
   },
   //20180529 设置简历状态
   setStates: function (ids) {
@@ -331,5 +343,26 @@ Page({
 
     //   }
     // }, app.globalData.login)
+  },
+  //获取信息列表
+  getmessage(types=true){
+    let that = this;
+    let url = '';
+    let datas = {};
+    if(types){
+      url ='api/position/get_recruit_part_position'
+    }else{
+      url = 'api/position/get_recruit_full_position'
+    }
+    utils.post(url, datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+     
+
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+      //  reject()
+    });
   }
 })

@@ -7,3 +7,4 @@
 .page-body-button {
   margin-bottom: 30rpx;
 }
+@import '../../../model/model.wxss';

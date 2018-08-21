@@ -1,4 +1,6 @@
 // pages/child/map/map.js
+var model = require('../../../model/model.js')
+var item = {};
 Page({
 
   /**
@@ -24,7 +26,10 @@ Page({
         longitude: 113.304520,
         iconPath: '/image/location.png'
       }]
-    },
+    } , item: {
+      
+    }
+     
   },
 
   /**
@@ -59,15 +64,18 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-    this.mapCtx = wx.createMapContext('myMap')
+  onReady: function (e) {
+    this.mapCtx = wx.createMapContext('myMap');
+    var that = this;
+    //请求数据
+    model.updateAreaData(that, 0, e);
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.translate()
   },
 
   /**
@@ -140,5 +148,46 @@ Page({
         longitude: 113.3345211,
       }]
     })
-  }
+  },
+  //点击选择城市按钮显示picker-view
+  translate(e) {
+    let that = this;
+    //隐藏输入框及头部及底部
+    that.setData({
+      'otherms.showTextarea': true,
+      'allms.showTextarea': true,
+      show: true
+
+    })
+
+    model.animationEvents(this, 0, true, 400);
+  },
+  //隐藏picker-view
+  hiddenFloatView(e) {
+    var that = this;
+    //隐藏输入框及头部及底部
+    that.setData({
+      'otherms.showTextarea': false,
+      'allms.showTextarea': false,
+      show: false
+    })
+    model.animationEvents(this, 200, false, 400);
+    console.log(that.data.province, that.data.city,that.data.county)
+  },
+  //滑动事件
+  bindChange(e) {
+    let that = this;
+    model.updateAreaData(this, 1, e);
+    item = this.data.item;
+    this.setData({
+      province: item.provinces[item.value[0]].name,
+      city: item.citys[item.value[1]].name,
+      county: item.countys[item.value[2]].name
+    })
+
+  },
+  onReachBottom() {
+  },
+  nono() { },
+
 })
