@@ -2,7 +2,7 @@
 <import src="/template/nav" />
 
   <view class='page'>
-     <view class='count thisone'  bindtap=''>
+     <view class='count thisone'  bindtap='exchangPhotos'>
               <view class='Left'><text>公司LOGO</text></view>
               <view class='Right'><image class='img' src='{{Company_Logo}}'></image></view>
             </view>

@@ -265,7 +265,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '/pages/child/parTime/parTime?ID=' + e.currentTarget.id,
+        url: '/pages/child/position/position?ID=' + e.currentTarget.id,
       })
     }
 
@@ -359,6 +359,42 @@ Page({
       console.log(res);//正确返回结果
       that.setData({
         msgList:res.list
+      })
+
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+      //  reject()
+    });
+  },
+  //上架与取消上架
+  positionShow(){
+    let that = this;
+    let url = '';
+    let datas = {};
+    utils.post(url, datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+      that.setData({
+        msgList: res.list
+      })
+
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+      //  reject()
+    });
+  },
+  //刷新
+  refresh(){
+    let that = this;
+    let url = '';
+    let datas = {};
+    utils.post(url, datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+      that.setData({
+        msgList: res.list
       })
 
       //resolve()
