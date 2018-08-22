@@ -9,8 +9,8 @@ Page({
   data: {
     msgList: [
       {img: "https://api.17liepin.com/images/9fcfbb00028f4c05b09b28d51573a441.png",
-       resume_id:47,
-       status:"公开",
+       ID:47,
+       Is_Public:"公开",
        title:"兼职11",
        type:"全职",
        utime:"2018-05-30 17:01:34"
@@ -167,18 +167,18 @@ Page({
   onMarkMsgTap: function (e) {
     console.log(e);
     var index = this.getItemIndex(e.currentTarget.id);
-    console.log("序号你", this.data.msgList[index].resume_id)
-    var up = "msgList[" + index + "].status";//先用一个变量，把(info[0].gMoney)用字符串拼接起来
-    if (this.data.msgList[index].status == '上架') {
+    console.log("序号你", this.data.msgList[index].ID)
+    var up = "msgList[" + index + "].Is_Public";//先用一个变量，把(info[0].gMoney)用字符串拼接起来
+    if (this.data.msgList[index].Is_Public != 1) {
       this.setData({
-        [up]: '下架'
+        [up]: 1
       })
     } else {
       this.setData({
-        [up]: '上架'
+        [up]: 0
       })
     }
-    this.setStates(this.data.msgList[index].resume_id)
+    this.setStates(this.data.msgList[index].ID)
     this.translateXMsgItem(e.currentTarget.id, 0, 600);
   },
   onMarkMsgLongtap: function (e) {
@@ -187,7 +187,7 @@ Page({
   getItemIndex: function (id) {
     var msgList = this.data.msgList;
     for (var i = 0; i < msgList.length; i++) {
-      if (msgList[i].resume_id == id) {
+      if (msgList[i].ID == id) {
         return i;
       }
     }
@@ -261,11 +261,11 @@ Page({
     //return false;
     if (e.currentTarget.dataset.url == '全职') {
       wx.navigateTo({
-        url: '/pages/child/resume/resume?resume_id=' + e.currentTarget.id,
+        url: '/pages/child/resume/resume?ID=' + e.currentTarget.id,
       })
     } else {
       wx.navigateTo({
-        url: '/pages/child/parTime/parTime?resume_id=' + e.currentTarget.id,
+        url: '/pages/child/parTime/parTime?ID=' + e.currentTarget.id,
       })
     }
 
@@ -319,10 +319,11 @@ Page({
   },
   //20180529 设置简历状态
   setStates: function (ids) {
+    console.log("显示",ids)
     var setdata = {
-      "resume_id": ids
+      "ID": ids
     }
-    // common.request('api/resume/set_status', {
+    // common.request('api/resume/set_Is_Public', {
     //   params: setdata,
     //   success: function (res) {
     //     console.log("设置简历信息", res)
@@ -334,7 +335,7 @@ Page({
   deleteResume: function (cd) {
     console.log(cd)
     var deletedata = {
-      "resume_id": cd
+      "ID": cd
     }
     // common.request('api/resume/delete', {
     //   params: deletedata,
@@ -356,7 +357,9 @@ Page({
     }
     utils.post(url, datas, that.data.token).then((res) => {
       console.log(res);//正确返回结果
-     
+      that.setData({
+        msgList:res.list
+      })
 
       //resolve()
     }).catch((errMsg) => {

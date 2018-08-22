@@ -201,6 +201,15 @@ Page({
 
     if (app.globalData.userinfo!=0){
       console.log(app.globalData.userinfo)
+     that.setData({
+       'firlist.[0].count': app.globalData.userinfo.Company_Name,
+       'firlist.[1].count': app.globalData.userinfo.remark,
+       'firlist.[2].count': app.globalData.userinfo.email,
+       'firlist.[3].count': app.globalData.userinfo.Company_Web,
+       Company_Intro: app.globalData.userinfo.Company_Intro,
+       'comlist.[0].RTitle': app.globalData.userinfo.vip.Name
+
+     })
     }
     try {
       let value = wx.getStorageSync('token')
@@ -212,6 +221,8 @@ Page({
     } catch (e) {
       that.companyMes()
     }
+    //
+    console.log("message", that.data.firlist)
   },
 
   /**
@@ -598,8 +609,9 @@ Page({
   },
   message(){
    
-    wx.navigateTo({
-      url: `/pages/child/map/map`//实际路径要写全
-  })}
+  //   wx.navigateTo({
+  //     url: `/pages/child/map/map`//实际路径要写全
+  // })
+  }
 
 })

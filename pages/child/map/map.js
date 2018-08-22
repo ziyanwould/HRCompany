@@ -1,4 +1,7 @@
 // pages/child/map/map.js
+const app = getApp();
+const utils = require('../../../utils/util.js')
+const Promise = require('../../../utils/bluebird.min.js')
 var model = require('../../../model/model.js')
 var item = {};
 Page({
@@ -26,9 +29,13 @@ Page({
         longitude: 113.304520,
         iconPath: '/image/location.png'
       }]
-    } , item: {
+    } , 
+    item: {
       
-    }
+    },
+    adress:'请选择',
+    mapsplac:'请输入详细镇街道等地址',
+    maps:'请选择地点'
      
   },
 
@@ -36,29 +43,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    wx.chooseLocation({
-      success: function (res) {
-        // success
-        console.log(res, "location")
-        that.setData({
-          hasLocation: true,
-          location: {
-            longitude: res.longitude,
-            latitude: res.latitude
-          },
-          detail_info: res.address,
-          wd: res.latitude,
-          jd: res.longitude
-        })
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
+    let that = this;
+    if (app.globalData.userinfo != 0) {
+      console.log(app.globalData.userinfo)
+      that.setData({
+        adress: `${app.globalData.userinfo.province} ${app.globalData.userinfo.city} ${app.globalData.userinfo.county}`,
+        input: app.globalData.userinfo.remark,
+        maps: `${app.globalData.userinfo.Lat?'更改定位':'选择地点定位'}`,
+        wd: app.globalData.userinfo.Lat,
+        jd: app.globalData.userinfo.Lng,
+      })
+    }
   },
 
   /**
@@ -75,7 +70,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.translate()
+ 
   },
 
   /**
@@ -89,7 +84,20 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+    let that = this;
+    let value = {
+      latitude: that.data.wd,
+      longitude: that.data.jd,
+      province: that.data.province,
+      city: that.data.city,
+      county: that.data.county,
+      detail: that.data.input,
+
+    }
+    try {
+      wx.setStorageSync('map', value)
+    } catch (e) {
+    }
   },
 
   /**
@@ -172,7 +180,10 @@ Page({
       show: false
     })
     model.animationEvents(this, 200, false, 400);
-    console.log(that.data.province, that.data.city,that.data.county)
+    console.log(that.data.province, that.data.city,that.data.county);
+    that.setData({
+      adress: `${that.data.province} ${that.data.city} ${that.data.county}`
+    })
   },
   //滑动事件
   bindChange(e) {
@@ -189,5 +200,38 @@ Page({
   onReachBottom() {
   },
   nono() { },
-
+//对经纬度的选择
+map(){
+  let that= this;
+  wx.chooseLocation({
+    success: function (res) {
+      // success
+      console.log(res, "location")
+      that.setData({
+        hasLocation: true,
+        location: {
+          longitude: res.longitude,
+          latitude: res.latitude
+        },
+        detail_info: res.address,
+        wd: res.latitude,
+        jd: res.longitude,
+        maps:'更改定位'
+      })
+    },
+    fail: function () {
+      // fail
+    },
+    complete: function () {
+      // complete
+    }
+  })
+},
+//监听
+  watchinput(e){
+    console.log("input值", e.detail.value)
+    this.setData({
+      input: e.detail.value
+    })
+  }
 })

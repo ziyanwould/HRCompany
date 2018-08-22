@@ -30,7 +30,7 @@
 
               <view  class='Clist'><view class='imgCen'><image class='image4' src='http://www.liujiarong.top/WXImg/recommend.png'></image></view><text>企业介绍</text></view>
               <view class='detail'>
-                中住71（www.zhongzhu71.com）是广东中住七一网络科技有限公司创办经营的中国领先的城市建设领域服务供应平台，致力通过共享为城市建设领域提供专业化、定制化、一站式服务。
+               {{Company_Intro}}
               </view>
          
               <image class='image5' src='http://www.liujiarong.top/WXImg/logos.png'></image>

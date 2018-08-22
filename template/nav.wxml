@@ -1,5 +1,4 @@
 
-
 <!-- 自定义导航栏组件 -->
 <template name="nav">
       <view class="nav_link" bindtap="{{fn}}">
@@ -92,7 +91,7 @@
             <block wx:if='{{!showTextarea}}'>
               <view class='input' wx:if='{{!child.countTitle}}'>
                 <view class='Left'><text>{{child.inputTitle}}</text></view>
-                <view class='Right'><input placeholder='{{child.inputPlace}}' bindinput='{{child.fn}}'  placeholder-class='plclass' value='{{child.input}}'></input></view>
+                <view class='Right'><input placeholder='{{child.inputPlace}}' data-value='{{child.watchinput}}' bindinput='{{child.fn}}'  placeholder-class='plclass' value='{{child.input}}'></input></view>
               </view>
              </block>
         </block>
@@ -536,29 +535,56 @@
 
 <!-- 推荐组建 之列表 -->
 <template name='searchList'>
-        <view class='countList list'>
+        <view class='countList list' >
 
           <view class='lfirst'>
             <view class='left'>
-              <text>土木工程师-注册岩土工程师</text>
-              <text>兼职</text>
+              <text>{{Position_Title}}</text>
+              <text>{{Type_Id==0?'兼职':'全职'}}</text>
             </view>
             <view class='right'>
-              <!-- <text>刷新</text> -->
-              <text></text>
-              <text>刷新</text>
+              <text>{{Is_Public==1?'下架':'上架'}}</text>
+              <text wx:if='{{Audit_Status==0}}'>等待审核</text>
+              <text wx:if='{{Audit_Status==1}}'>等待审核</text>
+              <text wx:if='{{Audit_Status==2}}'>通过</text>
+              <text wx:if='{{Audit_Status==3}}'>不审核</text>
+              <text bindtap='refresh'>刷新</text>
             </view>
           </view>
           
           <view class='lsecond'>
               <view class='left'>
-              广东广州市
+             {{sho_position_gertificate[0].Province}}{{sho_position_gertificate[0].City}}
               </view>
               <view class='right'>
-              2018-05-20
+            {{Utime}}
               </view>
           </view>
         
+         <!-- //内容一样备份用 -->
+                <!-- <view class='lfirst'>
+            <view class='left'>
+              <text>土木工程师-注册岩土工程师{{item.Position_Title}}</text>
+              <text>兼职{{item.Type_Id==0?'兼职':'全职'}}</text>
+            </view>
+            <view class='right'>
+              <text>上架{{item.Is_Public==0?'上架':'下架'}}</text>
+              <text wx:if='{{item.Audit_Status==0}}'>等待分配</text>
+              <text wx:if='{{item.Audit_Status==1}}'>等待审核</text>
+              <text wx:if='{{item.Audit_Status==2}}'>通过</text>
+              <text wx:if='{{item.Audit_Status==3}}'>不审核</text>
+              <text bindtap='refresh'>刷新</text>
+            </view>
+          </view>
+          
+          <view class='lsecond'>
+              <view class='left'>
+              广东广州市{{item.Province}}{{item.City}}
+              </view>
+              <view class='right'>
+              2018-05-20{{item.Utime}}
+              </view>
+          </view> -->
         </view>
         
 </template>

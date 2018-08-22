@@ -8,3 +8,9 @@
   margin-bottom: 30rpx;
 }
 @import '../../../model/model.wxss';
+.mytitle{
+  font-size: 32rpx;
+}
+.secondTitle{
+  font-size: 26rpx;
+}
