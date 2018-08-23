@@ -76,6 +76,7 @@ const request=(url, requestHandler, token)=> {
     header: {
       'content-type': 'application/json',
       'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY=',
+      "edition": "company",
       'login_token': token
     },
     success: res=> {
@@ -110,6 +111,7 @@ function post(url, data, token) {
         header: {
           'content-type': 'application/json',
           'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY=',
+          "edition": "company",
           'login_token': token
         },
         success: res => {//服务器返回数据
@@ -131,6 +133,7 @@ function post(url, data, token) {
         header: {
           'content-type': 'application/json',
           'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY=',
+          "edition": "company",
           'login_token': token
         },
         success: res => {//服务器返回数据

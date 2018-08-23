@@ -1,6 +1,6 @@
 /* pages/template/Positondel.wxss */
 page{
-  background: #EEEFF3;
+  background: #FFFFFF;
   padding-bottom: 132rpx;
 }
 .section1{

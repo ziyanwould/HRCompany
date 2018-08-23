@@ -278,15 +278,16 @@ Page({
 
   },
   urlto: function (e) {
+    let that = this;
     console.log("简历", e.currentTarget);
     //return false;
-    if (e.currentTarget.dataset.url == '全职') {
+    if (that.data.activeIndex == 1) {
       wx.navigateTo({
-        url: '/pages/child/resume/resume?resume_id=' + e.currentTarget.id,
+        url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.id}&type=全职`//全职简历
       })
     } else {
       wx.navigateTo({
-        url: '/pages/child/parTime/parTime?resume_id=' + e.currentTarget.id,
+        url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.id}&type=兼职`
       })
     }
 

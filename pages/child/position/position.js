@@ -1,4 +1,8 @@
 // pages/child/position/position.js
+const app = getApp();
+const utils = require('../../../utils/util.js')
+const Promise = require('../../../utils/bluebird.min.js')
+
 Page({
 
   /**
@@ -53,7 +57,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('option', options)
+    let that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
   
+    that.getinfo(options.ID, options.type)
   },
 
   /**
@@ -103,5 +115,61 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+  //获取职位信息
+  getinfo(id,types){
+   let that = this;
+   let url = '';
+   let datas={
+     "position_id": id
+   };
+   if(types=='兼职'){
+     url ='api/position/get_part_detail_by_company'
+   }else{
+     url = 'api/position/get_full_detail_by_comapny'
+   }
+    console.log(types,datas)
+    utils.post(url, datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+      let data = [
+        {
+          address1: `${res.detail.company.province} ${res.detail.company.city} ${res.detail.company.county}`,
+          address2: res.detail.company.address, 
+          lat: res.detail.company.lat,
+          lon: res.detail.company.lng
+          }
+        ]
+      that.setData({
+    
+        message: res.detail,
+        list2: data
+      })
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+     
+    });
+  },
+  map: function (event) {
+    //   wx.getLocation({
+    //     type: 'gcj02', //返回可以用于wx.openLocation的经纬度  
+    //     success: function (res) {
+    //       var latitude = res.latitude
+    //       var longitude = res.longitude
+    //       wx.openLocation({
+    //         latitude: latitude,
+    //         longitude: longitude,
+    //         name: "花园桥肯德基",
+    //         scale: 28
+    //       })
+    //     }
+    //   })  
+    wx.openLocation({
+      latitude: parseFloat(event.currentTarget.dataset.lat),
+      longitude: parseFloat(event.currentTarget.dataset.lon),
+      name: event.currentTarget.dataset.area,
+      scale: 28
+    })
+  },
 })

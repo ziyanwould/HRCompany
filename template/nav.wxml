@@ -548,13 +548,16 @@
               <text wx:if='{{Audit_Status==1}}'>等待审核</text>
               <text wx:if='{{Audit_Status==2}}'>通过</text>
               <text wx:if='{{Audit_Status==3}}'>不审核</text>
-              <text bindtap='refresh'>刷新</text>
+
+              <!-- 暂时隐去刷新功能 -->
+              <!-- <text bindtap='refresh'>刷新</text> -->
             </view>
           </view>
           
           <view class='lsecond'>
               <view class='left'>
              {{sho_position_gertificate[0].Province}}{{sho_position_gertificate[0].City}}
+             {{Province}}{{City}}{{County}}
               </view>
               <view class='right'>
             {{Utime}}

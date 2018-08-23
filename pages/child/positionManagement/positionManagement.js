@@ -7,23 +7,15 @@ const Promise = require('../../../utils/bluebird.min.js')
 
 Page({
   data: {
-    msgList: [
-      {img: "https://api.17liepin.com/images/9fcfbb00028f4c05b09b28d51573a441.png",
-       ID:47,
-       Is_Public:"公开",
-       title:"兼职11",
-       type:"全职",
-       utime:"2018-05-30 17:01:34"
-       }
-       ],
+    msgList: [],
     height: 0,
     scrollY: true,
     activeIndex: 0,
     pageshows: true,
     used_list: [
-      { title: "分类01", name: "全部" },
-      { title: "分类02", name: "全职" },
       { title: "分类03", name: "兼职" },
+      { title: "分类02", name: "全职" },
+    
     ]
 
   },
@@ -157,7 +149,8 @@ Page({
     //this.translateXMsgItem(e.currentTarget.id, 0, 0);
   },
   onDeleteMsgTap: function (e) {
-    //console.log("删除操作", e.currentTarget.id);
+
+    console.log("删除操作", e.currentTarget.id);
     this.deleteResume(e.currentTarget.id)
     this.deleteMsgItem(e);
   },
@@ -165,6 +158,7 @@ Page({
     console.log(e);
   },
   onMarkMsgTap: function (e) {
+    let  that = this;
     console.log(e);
     var index = this.getItemIndex(e.currentTarget.id);
     console.log("序号你", this.data.msgList[index].ID)
@@ -173,10 +167,12 @@ Page({
       this.setData({
         [up]: 1
       })
+      that.positionShow(1, e.currentTarget.id)
     } else {
       this.setData({
         [up]: 0
       })
+      that.positionShow(0, e.currentTarget.id)
     }
     this.setStates(this.data.msgList[index].ID)
     this.translateXMsgItem(e.currentTarget.id, 0, 600);
@@ -234,6 +230,7 @@ Page({
       activeIndex: e.currentTarget.id,
       pageshows: false
     })
+    that.getmessage()
     var numberv = e.currentTarget.id;
     console.log("number", e.currentTarget.id);
     for (let i in that.data.msgList) {
@@ -257,15 +254,16 @@ Page({
 
   },
   urlto: function (e) {
+    let  that  =this;
     console.log("简历", e.currentTarget);
     //return false;
-    if (e.currentTarget.dataset.url == '全职') {
+    if (that.data.activeIndex == 1) {
       wx.navigateTo({
-        url: '/pages/child/resume/resume?ID=' + e.currentTarget.id,
+        url: '/pages/child/position/position?ID=' + e.currentTarget.id+'&type=全职',
       })
     } else {
       wx.navigateTo({
-        url: '/pages/child/position/position?ID=' + e.currentTarget.id,
+        url: '/pages/child/position/position?ID=' + e.currentTarget.id +'&type=兼职',
       })
     }
 
@@ -334,23 +332,30 @@ Page({
   //20180529 设置简历状态
   deleteResume: function (cd) {
     console.log(cd)
-    var deletedata = {
-      "ID": cd
-    }
-    // common.request('api/resume/delete', {
-    //   params: deletedata,
-    //   success: function (res) {
-    //     console.log("删除简历信息", res)
+   
+    let that = this;
+    let url = 'api/position/set_position_states';
+    let datas = {
+      "position_id": cd,//简历ID
+      "del": 1,//1是删除
+    };
+    utils.post(url, datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+     
 
-    //   }
-    // }, app.globalData.login)
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+      //  reject()
+    });
   },
   //获取信息列表
-  getmessage(types=true){
+  getmessage(){
     let that = this;
     let url = '';
     let datas = {};
-    if(types){
+    if (that.data.activeIndex==0){
       url ='api/position/get_recruit_part_position'
     }else{
       url = 'api/position/get_recruit_full_position'
@@ -360,6 +365,11 @@ Page({
       that.setData({
         msgList:res.list
       })
+      if (res.list!=0){
+        that.setData({
+          pageshows: true
+        }) 
+      }
 
       //resolve()
     }).catch((errMsg) => {
@@ -369,20 +379,19 @@ Page({
     });
   },
   //上架与取消上架
-  positionShow(){
+  positionShow(id,ids){
+    console.log("上架消息",id,ids)
     let that = this;
-    let url = '';
-    let datas = {};
+    let url = 'api/position/set_position_states';
+    let datas = {
+      "position_id": ids,//简历ID
+      "is_public": id,//0是公开，1是隐藏
+    };
     utils.post(url, datas, that.data.token).then((res) => {
       console.log(res);//正确返回结果
-      that.setData({
-        msgList: res.list
-      })
-
       //resolve()
     }).catch((errMsg) => {
       console.log(errMsg);//错误提示信息
-
       //  reject()
     });
   },
