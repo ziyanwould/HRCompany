@@ -95,14 +95,14 @@ Page({
     if (app.globalData.userinfo != 0) {
       console.log(app.globalData.userinfo)
       that.setData({
-        'cominfo.select[0].child[0].countCount': app.globalData.userinfo.remark,
+        'cominfo.select[0].child[0].countCount': app.globalData.userinfo.Address,
         'cominfo.select[0].child[1].input': app.globalData.userinfo.email,
         'cominfo.select[0].child[2].input': app.globalData.userinfo.Company_Web,
         'cominfo.select[1].child[0].input': app.globalData.userinfo.Link_Man,
         'cominfo.select[1].child[1].input': app.globalData.userinfo.Link_Tel,
         'cominfo.select[1].child[2].input': app.globalData.userinfo.Company_Area_Code,
         'cominfo.select[1].child[3].input': app.globalData.userinfo.qq,
-        'cominfo.textarea[0].textarea': app.globalData.userinfo.Company_Intro,
+        'cominfo.textarea[0]textarea': app.globalData.userinfo.Company_Intro,
          Company_Logo: app.globalData.userinfo.Company_Logo,
          province: app.globalData.userinfo.province,
          city: app.globalData.userinfo.city,
@@ -191,7 +191,7 @@ Page({
      if (len > this.data.noteMaxLen) return;
 
      this.setData({
-       'cominfo.textarea[0].textarea': value,
+       'cominfo.textarea[0]textarea': value,
        'cominfo.textarea[0]currentNoteLen': len, //当前字数  
        'cominfo.textarea[0]limitNoteLen': this.data.noteMaxLen - len //剩余字数  
      });
@@ -207,6 +207,22 @@ Page({
   //此乃发布
   publish(e){
     let that = this;
+    console.log("发布消息", "QQ", that.data.cominfo.select[1].child[3].input,
+      "email", that.data.cominfo.select[0].child[1].input,
+      "province", that.data.province,
+      "city", that.data.city,
+      "county", that.data.county,
+      "Address", that.data.cominfo.select[0].child[0].countCount,
+      "Company_Logo", that.data.Company_Logo,
+      "Company_Name", that.data.cominfo.select[1].child[0].input,
+      "Company_Web", that.data.cominfo.select[0].child[2].input,
+      "Company_Intro", that.data.cominfo.textarea[0].textarea,
+      "Company_Area_Code", that.data.cominfo.select[1].child[2].input,
+      "Company_Tel", that.data.cominfo.select[1].child[1].input,
+      "Link_Man", that.data.cominfo.select[1].child[0].input,
+      "Link_Tel", that.data.cominfo.select[1].child[1].input,
+      "Lat", that.data.latitude,
+      "Lng", that.data.longitude)
     utils.post('usercenter/update_cominfo', {
       "QQ": that.data.cominfo.select[1].child[3].input,
       "email": that.data.cominfo.select[0].child[1].input,
@@ -217,7 +233,7 @@ Page({
       "Company_Logo": that.data.Company_Logo,
       "Company_Name": that.data.cominfo.select[1].child[0].input,
       "Company_Web": that.data.cominfo.select[0].child[2].input,
-      "Company_Intro": that.data.cominfo.textarea[0].textare,
+      "Company_Intro": that.data.cominfo.textarea[0].textarea,
       "Company_Area_Code": that.data.cominfo.select[1].child[2].input,
       "Company_Tel": that.data.cominfo.select[1].child[1].input,
       "Link_Man": that.data.cominfo.select[1].child[0].input,

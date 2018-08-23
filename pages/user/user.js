@@ -203,7 +203,7 @@ Page({
       console.log(app.globalData.userinfo)
      that.setData({
        'firlist.[0].count': app.globalData.userinfo.Company_Name,
-       'firlist.[1].count': app.globalData.userinfo.remark,
+       'firlist.[1].count': app.globalData.userinfo.Address,
        'firlist.[2].count': app.globalData.userinfo.email,
        'firlist.[3].count': app.globalData.userinfo.Company_Web,
        Company_Intro: app.globalData.userinfo.Company_Intro,
