@@ -4,14 +4,16 @@
 
 <template is="notLogin" data="{{...items}}"/> 
 <!-- <text>pages/news/news.wxml</text> -->
-<template  is='search' data='{{...seekData}}' />
+
+
+<!-- <template  is='search' data='{{...seekData}}' /> -->
 
 <block wx:if='{{!inputShowed}}'>
     <template  is='searTitle'  data='{{...seekData}}' />
     
     <view class="count'  {{isIphoneX?'bottomPX':'bottomP'}}" >
     <block wx:if='{{searSencod}}'>
-       <template  is='searSencod'  />
+       <template  is='searSencod'  data='{{...lis}}'/>
     </block>
     <block wx:for="{{list}}" wx:key="{{this}}" wx:if='{{!searSencod}}'>
       <template is='partTime' data='{{...item}}'/>

@@ -1,6 +1,11 @@
 /* pages/news/news.wxss */
 @import "/pages/child/posOrgin/posOrgin.wxss";  
 /**index.wxss**/
+.active{
+  background:#00A2E9;
+color:#FFFFFF;
+
+}
 .userinfo {
   display: flex;
   flex-direction: column;

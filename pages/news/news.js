@@ -47,8 +47,12 @@ Page({
       inputShowed: false,
       inputVal: ""
     }
-    , list: []
- 
+    , list: [],
+    datas:{
+      sort: 0,
+      pageIndex: 1,
+      pageSize: 30
+    }
 
   },
 
@@ -108,12 +112,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let  that =this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
     page = 1;
     let isIphoneX = app.globalData.isIphoneX;
-    this.setData({
+    that.setData({
       isIphoneX: isIphoneX
     });
-    this.datalist();
+   // that.datalist();
+    that.getJob()
   },
 
   /**
@@ -176,50 +187,18 @@ Page({
   onShareAppMessage: function () {
   
   },
-  datalist: function (messages = "玩命加载中") {
+  datalist: function (messages = "玩命加载中", datas = {
+    "type_id": 0,
+    "pageIndex": page,
+    "pageSize": 30
+  }) {
     var that = this;
     wx.showLoading({
       title: messages,
     });
     var list = that.data.list;
-    //测试用start
-    // let setArr = ['李文文', '吴碧勇', '何碧碧',  '迪迦','李雯'];
-    // if (list.length>19) {
-    //   wx.showToast({
-    //     title: '到底了...',
-    //     icon: 'loading',
-    //     duration: 2000
-    //   });
 
-    // }
-    // for (let i in setArr) {
-    //   if (list.length > 19) {
-    //     continue;//终止循环
-    //   } 
-    //   //let sexs = (i+1) % 2 == 0 ?'男':'女';
-    //   let lists = {
-    //     fn: 'detail',
-    //     sex: i % 2 == 0 ? '女' : '男',
-    //     tille: i % 2 == 0 ? '土木工程师-注册岩土工程师' : '土木工程师-注册水利水电工程师',
-    //     name: setArr[i],
-    //     area: i % 2 == 0 ? '广东佛山市' : '广东广州市',
-    //     stats: i % 2 == 0 ? '资质' : '不限',
-    //     pay: '面议',
-    //     person: false
-
-    //   }
-    //   list.push(lists)
-    // }
-    // that.setData({
-    //   list: list
-    // });
-    //测试end
-
-    utils.post('api/resume/resume_list', {
-      "type_id": 0,
-      "pageIndex": page,
-      "pageSize": 8
-    }).then((res) => {
+    utils.post('api/resume/resume_list', datas ).then((res) => {
       console.log(res);//正确返回结果
       if (res.list == '') {
         wx.showToast({
@@ -279,14 +258,25 @@ Page({
   screen1(){
    this.setData({
      searSencod:true,
-     'seekData.scondSeek': false
+     'seekData.scondSeek': false,
+     'seekData.clickactive':0
    })
   },
   screen2() {
-    this.setData({
+    let that = this;
+    that.setData({
       searSencod: false,
-      'seekData.scondSeek':true
+      'seekData.clickactive': 1
     })
+    if (that.data.seekData.scondSeek==false){
+      that.setData({
+        'seekData.scondSeek': true
+      })
+    }else{
+      that.setData({
+        'seekData.scondSeek': false
+      })
+    }
   },
   //针对登录的js
 
@@ -475,6 +465,100 @@ Page({
         show: false
       }
     });
-  }
+  },
+  //获取发过职位的类别列表
+  getJob(){
+    let that = this;
+    utils.post('api/position/get_job_name', false,that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+      that.setData({
+        lis: res.lis,
+        'lis.xuhao':-1
+      })
+      that.cominfo(res.lis)
+    //  resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+   
+     // reject()
+    });
+  },
   //
+  actives(e) {
+    console.log(e.currentTarget.dataset.value)
+    console.log("序号来着", e)
+    this.setData({
+      'lis.xuhao': e.currentTarget.id,
+      'datas.type_id':e.currentTarget.dataset.type,
+      'datas.job_type_id': e.currentTarget.id,
+      'seekData.titleName': e.currentTarget.dataset.value
+     
+    })
+  },
+  pushsure(){
+    let that = this;
+    page =1;
+    that.setData({
+      list: [],
+      searSencod: false,
+      
+    })
+    that.datalist('努力加载中...',that.data.datas)
+  }
+  ,
+  //排序
+  paixu1(){
+    let that = this;
+    page = 1;
+    that.setData({
+    'seekData.paixu':false,
+      list: [],
+      'datas.sort': 1
+    })
+    that.datalist('努力加载中...', that.data.datas)
+  },
+  paixu2(){
+    let that = this;
+    page = 1;
+    that.setData({
+      'seekData.paixu': true,
+      list: [],
+      'datas.sort': 0
+    })
+    that.datalist('努力加载中...', that.data.datas)
+  },
+  //初始化数据
+  cominfo(lis){
+    let that = this;
+    let init = ''
+    if (lis.default.Full==null){
+   
+      for (let i in lis.part){
+        if (lis.part[i].ID == lis.default.Part){
+          init = lis.part[i].Name;
+         break;
+        }
+      }
+     that.setData({
+       'datas.type_id':0,
+       'datas.job_type_id':lis.default.Part,
+       'seekData.titleName': init
+     })
+    
+    }else{
+      for (let i in lis.full) {
+        if (lis.part[i].ID == lis.default.Full) {
+          init = lis.full[i].Name
+        break;
+        }
+      }
+      that.setData({
+        'datas.type_id': 1,
+        'datas.job_type_id': lis.default.Full,
+        'seekData.titleName': init
+      })
+    }
+
+    that.datalist('努力加载中...', that.data.datas) 
+  }
 })
