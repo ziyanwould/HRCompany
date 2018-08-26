@@ -247,7 +247,8 @@ Page({
     if (this.data.changeJob == '兼职') {
       var cityd = {
         "city": useCity,
-        "ger_type_id": e.currentTarget.id
+        // "ger_type_id": e.currentTarget.id
+        "job_type_id": e.currentTarget.id
       }
     } else {
       var cityd = {
@@ -455,6 +456,9 @@ Page({
     });
 
     var that = this;
+    that.setData({
+      pageshows: true
+    })
     if (that.data.changeJob == '全职') {
       var urlx = 'https://api.17liepin.com/api/resume/resume_list';
       var datax = {
@@ -502,35 +506,14 @@ Page({
       method: 'POST',
       header: {
         'content-type': 'application/json',
-        'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY='
+        'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY=',
+        "edition": "company",
       },
     }).then(res => {
       console.log('获取到职位列表', res)
       var list = that.data.list;
-      // for (var i = 0; i < res.data.data.positions.length; i++) {
-      //   res.data.data.positions[i].Utime = common.timeFat(res.data.data.positions[i].Utime);
-      //   if ((res.data.data.positions[i].Position_Title).length > 13)
-      //     res.data.data.positions[i].Position_Title = (res.data.data.positions[i].Position_Title).substring(0, 14) + '...';
-      //   list.push(res.data.data.positions[i]);
-
-
-      // }
-
-      // if (res.data.data.list.length == 0) {
-      //   that.setData({
-      //     pageshows: false
-      //   });
-      //   if (res.data.data.list.length > 0) {
-      //     that.setData({
-      //       otherNumber: true
-      //     })
-
-      //   }
-      // } else {
-      //   that.setData({
-      //     pageshows: true
-      //   });
-      // }
+      
+      
         if (that.data.changeJob != '全职') {
           for (let i in res.data.data.list) {
             console.log(res.data.data.list[i]);
@@ -597,10 +580,13 @@ Page({
   
       if (res.data.data.list.length == 0) {
         wx.showToast({
-          title: '没有相关职位',
+          title: '没有相关简历',
           icon: 'loading',
           duration: 2000
         });
+        that.setData({
+          pageshows:false 
+        })
       }
     })
   },
