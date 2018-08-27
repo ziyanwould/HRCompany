@@ -609,9 +609,9 @@ Page({
   },
   message(){
    
-  //   wx.navigateTo({
-  //     url: `/pages/child/map/map`//实际路径要写全
-  // })
+    wx.navigateTo({
+      url: `/pages/child/Message/Message`//实际路径要写全
+  })
   }
 
 })

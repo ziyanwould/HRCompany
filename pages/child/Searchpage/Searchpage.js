@@ -526,6 +526,7 @@ Page({
               stats: i % 2 == 0 ? '资质' : '不限',
               pay: res.data.data.list[i].wages == null ? `面议` : `${res.data.data.list[i].wages}`,
               person: res.data.data.list[i].img,
+              resume_id: res.data.data.list[i].resume_id,
               time: res.data.data.list[i].utime.substr(0, 10)
 
             }
@@ -552,6 +553,7 @@ Page({
               birthday: res.data.data.list[i].age,
               experience: res.data.data.list[i].jobexp,
               person: res.data.data.list[i].img,
+              resume_id: res.data.data.list[i].resume_id,
               time: res.data.data.list[i].utime.substr(0, 10)
 
 
@@ -584,68 +586,78 @@ Page({
           icon: 'loading',
           duration: 2000
         });
-        that.setData({
-          pageshows:false 
-        })
+        if (list.length == 0){
+          that.setData({
+            pageshows: false
+          })
+        }
+      
       }
     })
   },
-  tapCompass: function (e) {
+  detail: function (e) {
     var that = this;
-    //console.log(e.currentTarget.dataset.counts);
-    //console.log(e.currentTarget.dataset.counts.ID);
-    var id = e.currentTarget.dataset.counts.ID;
-    const jobs = that.data.changeJob;
+    console.log(e);
+ 
+   
+    var id = e.currentTarget.dataset.id;
+     const jobs = that.data.changeJob;
 
 
     //获取详情页信息   使用Promise进行异步流程处理
     if (jobs == "兼职") {
-      var urls = 'https://api.17liepin.com/api/position/get_part_detail';
-
+      // var urls = 'https://api.17liepin.com/api/position/get_part_detail';
+      wx.navigateTo({
+        url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=兼职`//全职简历
+        // url:"/pages/child/Positionsecond/Positionsecond"   
+      })
 
     } else {
-      var urls = 'https://api.17liepin.com/api/position/get_full_detail';
+      // var urls = 'https://api.17liepin.com/api/position/get_full_detail';
 
-
+      wx.navigateTo({
+        url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=全职`//全职简历
+        // url:"/pages/child/Positionsecond/Positionsecond"   
+      })
     }
 
-    let requestPromisified = common.wxPromisify(wx.request);
-    requestPromisified({
-      data: { "position_id": id },
-      url: urls,
-      method: 'POST',
-      header: {
-        'content-type': 'application/json',
-        'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY='
-      },
-    }).then(res => {
-      console.log('获取点击的详情的内容', res)
-      if (res.data.data.detail.job_sec_type) {
-        //var mycode = (res.data.data.detail.job_sec_type).slice(0, 1);
-        var jobx = "全职"
-      } else {
-        // var mycode = (res.data.data.detail.certificate["0"].sec_type_name).slice(0, 1);
-        var jobx = "兼职"
-      }
-      /**字符串时间格式化 for组 */
-      for (let i in res.data.data.detail.recommend) {
-        res.data.data.detail.recommend[i].Utime = common.timeFat(res.data.data.detail.recommend[i].Utime);
-        if ((res.data.data.detail.recommend[i].Position_Title).length > (app.globalData.deleTitle - 1))
-          res.data.data.detail.recommend[i].Position_Title = (res.data.data.detail.recommend[i].Position_Title).substring(0, app.globalData.deleTitle) + '...';
+    // let requestPromisified = common.wxPromisify(wx.request);
+    // requestPromisified({
+    //   data: { "position_id": id },
+    //   url: urls,
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/json',
+    //     'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY='
+    //   },
+    // }).then(res => {
+    //   console.log('获取点击的详情的内容', res)
+    //   if (res.data.data.detail.job_sec_type) {
+    //     //var mycode = (res.data.data.detail.job_sec_type).slice(0, 1);
+    //     var jobx = "全职"
+    //   } else {
+    //     // var mycode = (res.data.data.detail.certificate["0"].sec_type_name).slice(0, 1);
+    //     var jobx = "兼职"
+    //   }
+    //   /**字符串时间格式化 for组 */
+    //   for (let i in res.data.data.detail.recommend) {
+    //     res.data.data.detail.recommend[i].Utime = common.timeFat(res.data.data.detail.recommend[i].Utime);
+    //     if ((res.data.data.detail.recommend[i].Position_Title).length > (app.globalData.deleTitle - 1))
+    //       res.data.data.detail.recommend[i].Position_Title = (res.data.data.detail.recommend[i].Position_Title).substring(0, app.globalData.deleTitle) + '...';
 
-      }
-      wx.setStorageSync('jobx', jobx);
-      wx.setStorageSync('childs', res.data.data.detail)
-      // that.setData({
-      //   seachKey: mycode
-      // })
-    }).then(res => {
-      console.log('列表的关键字:', that.data.seachKey);
-      //  that.second()
-      wx.navigateTo({
-        url: '/pages/child/part-timeJob/part-timeJob'//实际路径要写全
-      })
-    })
+    //   }
+    //   wx.setStorageSync('jobx', jobx);
+    //   wx.setStorageSync('childs', res.data.data.detail)
+    //   // that.setData({
+    //   //   seachKey: mycode
+    //   // })
+    // }).then(res => {
+    //   console.log('列表的关键字:', that.data.seachKey);
+    //   //  that.second()
+    //   wx.navigateTo({
+    //     url: '/pages/child/part-timeJob/part-timeJob'//实际路径要写全
+    //   })
+    // })
 
 
 

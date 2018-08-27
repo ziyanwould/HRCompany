@@ -200,12 +200,20 @@ Page({
 
     utils.post('api/resume/resume_list', datas ).then((res) => {
       console.log(res);//正确返回结果
+
+      that.setData({
+        pageshows:true
+      })
+
       if (res.list == '') {
         wx.showToast({
           title: '到底了...',
           icon: 'loading',
           duration: 2000
         });
+        that.setData({
+          pageshows: false
+        })
         return false;
       }
       for (let i in res.list) {

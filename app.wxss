@@ -168,6 +168,19 @@ border-radius:0;}
   box-sizing: border-box;
 } 
 
+/* 没有信息状态提示样式 */
 
+.noDt{
+  padding-top: 200rpx;
+ text-align: center;
+}
+.Dtcount{
+  font-size: 28rpx;
+  line-height: 76rpx;
+  color: #bfbfbf
+}
+.searchResult{
+  background: #FFFFFF;
+}
 
 

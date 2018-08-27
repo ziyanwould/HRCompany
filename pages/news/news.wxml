@@ -15,10 +15,17 @@
     <block wx:if='{{searSencod}}'>
        <template  is='searSencod'  data='{{...lis}}'/>
     </block>
-    <block wx:for="{{list}}" wx:key="{{this}}" wx:if='{{!searSencod}}'>
-      <template is='partTime' data='{{...item}}'/>
-      </block>
+    <block  wx:if='{{!searSencod}}'>
+      <template wx:for="{{list}}" wx:key="{{this}}" is='partTime' data='{{...item}}'/>
+      
+        <view class='noDt' wx:if='{{!pageshows}}'>
+          <image style='width:352rpx;height:305rpx;' src='http://www.liujiarong.top/WX/bannerTd.png'></image>
+            <view class='Dtcount'>暂无推荐</view>
+            <view class='Dtcount'>尝试发布别的职位</view>
+        </view>
+    </block>
     </view>
+    
 </block>
 
 

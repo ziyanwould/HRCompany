@@ -57,6 +57,20 @@
         </view>
      </view>
 
+    <button class='list buttonx'  open-type="contact" session-from="weapp">
+        <view class='left'>
+           <view class='imgCen'> 
+               <image style='width:28rpx;height:28rpx'  src='http://www.liujiarong.top/WX/images/wx_retroaction.png'></image>
+           </view>
+           <text>客服</text>
+        </view>
+        <view class='right'>
+        
+           <image class='toright' src='http://www.liujiarong.top/WXImg/toright.png'></image>
+        </view>
+     </button>
+     
+
 
 
 
