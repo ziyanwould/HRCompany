@@ -1,5 +1,8 @@
 
 /* pages/user/user.wxss */
+page{
+  height: 1000px;
+}
 .userinfo {
   display: flex;
   flex-direction: column;

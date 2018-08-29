@@ -539,34 +539,38 @@
 <!-- 推荐组建 之列表 -->
 <template name='searchList'>
         <view class='countList list' >
-
-          <view class='lfirst'>
-            <view class='left'>
-              <text>{{Position_Title}}</text>
-              <text>{{Type_Id==0?'兼职':'全职'}}</text>
-            </view>
-            <view class='right'>
-              <text>{{Is_Public==1?'下架':'上架'}}</text>
-              <text wx:if='{{Audit_Status==0}}'>等待审核</text>
-              <text wx:if='{{Audit_Status==1}}'>等待审核</text>
-              <text wx:if='{{Audit_Status==2}}'>通过</text>
-              <text wx:if='{{Audit_Status==3}}'>不审核</text>
-
-              <!-- 暂时隐去刷新功能 -->
-              <!-- <text bindtap='refresh'>刷新</text> -->
-            </view>
-          </view>
-          
-          <view class='lsecond'>
+          <view id='{{ID}}' bindtap='urlto'>
+            <view class='lfirst'>
               <view class='left'>
-             {{sho_position_gertificate[0].Province}}{{sho_position_gertificate[0].City}}
-             {{Province}}{{City}}{{County}}
+                <text>{{Position_Title}}</text>
+                <text>{{Type_Id==0?'兼职':'全职'}}</text>
               </view>
               <view class='right'>
-            {{Utime}}
+                <text>{{Is_Public==1?'下架':'上架'}}</text>
+                <text wx:if='{{Audit_Status==0}}'>等待审核</text>
+                <text wx:if='{{Audit_Status==1}}'>等待审核</text>
+                <text wx:if='{{Audit_Status==2}}'>通过</text>
+                <text wx:if='{{Audit_Status==3}}'>不审核</text>
+
+                <!-- 暂时隐去刷新功能 -->
+                <!-- <text bindtap='refresh'>刷新</text> -->
               </view>
+            </view>
+            
+            <view class='lsecond'>
+                <view class='left'>
+              {{sho_position_gertificate[0].Province}}{{sho_position_gertificate[0].City}}
+              {{Province}}{{City}}{{County}}
+                </view>
+                <view class='right'>
+              {{Utime}}
+                </view>
+            </view>
+        </view>
+          <view class='lthird'  id='{{ID}}' bindtap='collecting'>
+             查看投递的简历
           </view>
-        
+
          <!-- //内容一样备份用 -->
                 <!-- <view class='lfirst'>
             <view class='left'>

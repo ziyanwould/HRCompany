@@ -412,5 +412,20 @@ Page({
 
       //  reject()
     });
+  },
+  // 投递的简历
+  collecting(e){
+    let that = this;
+    console.log(that.data.activeIndex)
+    console.log(e.currentTarget.id);
+    let url =''
+    if (that.data.activeIndex==0){
+      url = '/pages/child/resume/resume?ID=' + e.currentTarget.id + '&type=兼职&collect=true'
+    }else{
+      url = '/pages/child/resume/resume?ID=' + e.currentTarget.id + '&type=全职&collect=true'
+    }
+    wx.navigateTo({
+      url: url,
+    })
   }
 })

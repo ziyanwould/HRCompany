@@ -35,9 +35,25 @@ Page({
   showState: 0, //0 未显示菜单 1显示菜单
   touchStartState: 0, // 开始触摸时的状态 0 未显示菜单 1 显示菜单
   swipeDirection: 0, //是否触发水平滑动 0:未触发 1:触发水平滑动 2:触发垂直滑动
-  onLoad: function () {
-    page = 1;
+  onLoad: function (e) {
     var that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
+    console.log(e)
+    if (e.collect){
+      that.setData({
+        send_id: e.ID,
+        send_type: e.type,
+        send_collect: e.collect
+      })
+      wx.setNavigationBarTitle({
+        title: '投递的简历'
+      })
+    }
+    page = 1;
     that.datalist()
 
     //var height = '100%';
@@ -250,15 +266,17 @@ Page({
 
   },
   urlto: function (e) {
+    let that = this;
     console.log("简历", e.currentTarget);
+    console.log(that.data.send_type)
     //return false;
-    if (e.currentTarget.dataset.url == '全职') {
+    if (that.data.send_type == '全职') {
       wx.navigateTo({
-        url: '/pages/child/resume/resume?resume_id=' + e.currentTarget.id,
+         url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.id}&type=全职`//全职简历
       })
     } else {
       wx.navigateTo({
-        url: '/pages/child/parTime/parTime?resume_id=' + e.currentTarget.id,
+         url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.id}&type=兼职`//全职简历
       })
     }
 
@@ -363,6 +381,11 @@ Page({
       title: messages,
     });
     var list = that.data.msgList;
+    let url = '';
+    let datas ={};
+    that.setData({
+      pageshows:true
+    })
     //测试用start
     // let setArr = ['李文文', '吴碧勇', '何碧碧',  '迪迦','李雯'];
     // if (list.length>19) {
@@ -395,12 +418,24 @@ Page({
     //   list: list
     // });
     //测试end
-
-    utils.post('api/resume/resume_list', {
-      "type_id": 0,
-      "pageIndex": page,
-      "pageSize": 8
-    }).then((res) => {
+    if (that.data.send_collect){
+      url = 'api/resume/deliver_log_company',
+      datas = {
+        "ID": that.data.send_id,
+        "type_id": `${that.data.send_type=='兼职'?0:1}`,
+        "pageIndex": page,
+        "pageSize": 10
+      }
+    }else{
+      url = 'api/resume/resume_list',
+      datas = {
+        "type_id": 0,
+        "pageIndex": page,
+        "pageSize": 10
+      }
+    }
+    console.log(datas);
+    utils.post(url,datas,that.data.token).then((res) => {
       console.log(res);//正确返回结果
       if (res.list == '') {
         wx.showToast({
@@ -408,6 +443,9 @@ Page({
           icon: 'loading',
           duration: 2000
         });
+        that.setData({
+          pageshows: false
+        })
         return false;
       }
       for (let i in res.list) {

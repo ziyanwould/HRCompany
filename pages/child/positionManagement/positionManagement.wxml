@@ -10,7 +10,7 @@
       <block wx:if="{{activeIndex==0}}">
        <view wx:for='{{msgList}}' wx:key='{{this}}' class='msg-item' animation='{{item.wrapAnimation}}'> 
 
-            <view id='{{item.ID}}' bindtap='urlto' data-url='{{item.type}}' class='msg' animation='{{item.animation}}' bindtouchstart='ontouchstart' bindtouchmove='ontouchmove' bindtouchend='ontouchend'>
+            <view id='{{item.ID}}' data-url='{{item.type}}' class='msg' animation='{{item.animation}}' bindtouchstart='ontouchstart' bindtouchmove='ontouchmove' bindtouchend='ontouchend'>
                 <!-- <image class='header-img' src="{{item.img}}" ></image> -->
                 <!-- <text class='user-name' style='color:{{item.type=="全职"?"#17A8E2":"#F8DC9C"}}'>{{item.type}}</text>
                 <text class='msg-text'>{{item.msgText}}</text>
@@ -36,7 +36,7 @@
        <block wx:if="{{activeIndex==1}}">
          <view wx:for='{{msgList}}' wx:key='{{this}}' class='msg-item' animation='{{item.wrapAnimation}}'> 
 
-            <view id='{{item.ID}}' bindtap='urlto' data-url='{{item.type}}' class='msg' animation='{{item.animation}}' bindtouchstart='ontouchstart' bindtouchmove='ontouchmove' bindtouchend='ontouchend'>
+            <view id='{{item.ID}}'  data-url='{{item.type}}' class='msg' animation='{{item.animation}}' bindtouchstart='ontouchstart' bindtouchmove='ontouchmove' bindtouchend='ontouchend'>
                 <!-- <image class='header-img' src="{{item.img}}" ></image> -->
                 <!-- <text class='user-name' style='color:{{item.type=="全职"?"#17A8E2":"#F8DC9C"}}'>{{item.type}}</text>
                 <text class='msg-text'>{{item.msgText}}</text>
