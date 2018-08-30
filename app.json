@@ -20,7 +20,9 @@
     "pages/child/citySelect/citySelect",
     "pages/child/position/position",
     "pages/child/Message/Message",
-    "pages/child/Mesdetail/Mesdetail"
+    "pages/child/Mesdetail/Mesdetail",
+    "pages/child/HRbeans/HRbeans",
+    "pages/child/member/member"
 
 
   ],

@@ -50,7 +50,7 @@ Page({
         'class':'Cmmember',
         'image':'Cmmember',
         'mes':'会员中心',
-        'fn':'',
+        'fn':'member',
         'RTitle':'开通会员，畅享会员高级功能',
         'Tclass':'Tclass'
       },
@@ -58,7 +58,7 @@ Page({
         'class': 'Hrdoug',
         'image': 'Hrdoug',
         'mes': '猎聘豆',
-        'fn': ''
+        'fn': 'HRbeans'
       },
       {
         'class': 'image6',
@@ -612,6 +612,17 @@ Page({
     wx.navigateTo({
       url: `/pages/child/Message/Message`//实际路径要写全
   })
+  },
+ HRbeans(){
+  
+   wx.navigateTo({
+     url: `/pages/child/HRbeans/HRbeans`//实际路径要写全
+   })
+ },
+  member(){
+    wx.navigateTo({
+      url: `/pages/child/member/member`//实际路径要写全
+    })
   }
-
+   
 })
