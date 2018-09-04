@@ -116,7 +116,7 @@ App({
            
               common.post('usercenter/get_cominfo', false, value.login_token).then((res) => {
                 console.log("用户信息",res);//正确返回结果
-                // console.log(res.dic.has_Verify)
+                 console.log('res',res)
                 //更新全局变量方式 20180515
                 _this.globalData.userinfo = res.userinfo
                 typeof cb == "function" && cb(that.globalData.userinfo)
@@ -159,7 +159,6 @@ App({
   },  
   globalData: {
     isIphoneX: false,  
-    userInfo: null,
     Jobl: [],//职位列表
     CRL: [],//证书列表
     register:false,//登录状态

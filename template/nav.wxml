@@ -436,9 +436,9 @@
 <!-- 底部按钮效果 -->
 <template name='positionClick'>
  <view class='positionClick'>
-     <button class="weui-btn" hover-class='button-hover' type="primary">购买</button>
+     <button class="weui-btn" hover-class='button-hover' bindtap='{{fun}}' type="primary">{{buyType}}</button>
      <view class='pright' bindtap='clickshou'>
-      <image class='redetail09' src='http://www.liujiarong.top/WXImg/redetail09.png'></image>
+      <image class='redetail09' src='http://www.liujiarong.top/WXImg/{{names?"readyCollect":"redetail09"}}.png'></image>
       <text>{{names?'取消':'收藏'}}</text>
      </view>
  </view>

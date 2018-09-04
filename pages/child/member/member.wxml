@@ -1,9 +1,9 @@
 <!--pages/child/member/member.wxml-->
 <view class='first'>
-   <view class='f1Left'><image class='mberPerson' src='http://www.liujiarong.top/WXImg/mberPerson.png'></image></view>
+   <view class='f1Left'><image class='mberPerson' src='{{logo}}'></image></view>
    <view class='f1Right'>
-     <view>广东中住七一网络科技有限公司</view>
-     <view><image class='mberVIP1'src='http://www.liujiarong.top/WXImg/mberVIP1.png'></image> <text>（有效期至2018-08-08)</text></view>
+     <view>{{nameCompany}}</view>
+     <view><image class="{{vips=='高级会员'?'mberVIP2':'mberVIP1'}}" src="http://www.liujiarong.top/WXImg/{{vips=='高级会员'?'mberVIP2':'mberVIP1'}}.png"></image> <text>（有效期至{{Etime_String}})</text></view>
    </view>
 </view>
 

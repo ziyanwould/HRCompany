@@ -584,7 +584,7 @@ margin: 0 24rpx;
 }
 .personMes .person2{
   height: 200rpx;
-  padding-top: 169rpx;
+  padding-top: 180rpx;
   /* background:rgba(245, 205, 25, 0.2); */
   margin: 0 10rpx;
 }
@@ -697,7 +697,7 @@ margin: 0 24rpx;
 }
 .personMes .active{
   position: relative;
-  top: 30rpx;
+  top: -10rpx;
 }
 .personMes .showDe .list{
   display: flex;

@@ -13,6 +13,10 @@ Page({
     }
     , personMes:{
       switchde:true
+    },
+    datas:{
+      buyType:'购买',
+      fun:'payTo'
     }
   },
 
@@ -136,6 +140,10 @@ Page({
   },
   //收藏取消收藏
   shoucang(name='收藏'){
+    if (!this.data.token) {
+      utils.noLogon();
+      return false;
+    }
     let that = this;
     let url = '';
     if(!that.data.names){
@@ -195,6 +203,21 @@ Page({
       })
     }
 
-  }
+  },
+  //购买按钮
+  payTo(){
+
+    if (!this.data.token){
+     
+      utils.noLogon()
+     }else{
+      wx.showToast({
+        title: '暂不支持购买',
+        icon: 'loading',
+        duration: 3000
+      });
+     }
+  },
+
 
 })

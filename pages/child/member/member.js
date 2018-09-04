@@ -1,4 +1,7 @@
 // pages/child/member/member.js
+const app = getApp();
+const utils = require('../../../utils/util.js')
+const Promise = require('../../../utils/bluebird.min.js')
 Page({
 
   /**
@@ -36,7 +39,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    let that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
+
+    console.log(app.globalData.userinfo)
+    that.getmessage();
+    that.getvip();
+    that.commom()
   },
 
   /**
@@ -86,5 +99,43 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  getmessage() {
+    let that = this;
+    utils.post('api/order/vip_goods_list', false, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+      that.setData({
+      
+      })
+      // resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      wx.hideLoading();
+      //reject()
+    });
+  },
+  getvip() {
+    let that = this;
+      utils.post('usercenter/get_vip', false, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+      that.setData({
+        Etime_String: res.vip.Etime_String,
+        vips: res.vip.Name
+      })
+      // resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      wx.hideLoading();
+      //reject()
+    });
+  },
+  commom(){
+    let that = this;
+    let useinfo = app.globalData.userinfo;
+    that.setData({
+      nameCompany: useinfo.Company_Name,
+      logo: useinfo.Company_Logo
+    
+    })
   }
 })

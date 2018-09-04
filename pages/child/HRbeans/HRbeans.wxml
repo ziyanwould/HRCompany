@@ -1,23 +1,23 @@
 <!--pages/child/HRbeans/HRbeans.wxml-->
 <view class='title'>
   <view>余额</view>
-  <view><text>520</text><image class='beans1' src='http://www.liujiarong.top/WXImg/beans1.png'></image></view>
+  <view><text>{{Lp_fee}}</text><image class='beans1' src='http://www.liujiarong.top/WXImg/beans1.png'></image></view>
 </view>
 <view class='second'>
    <image class='beans2' src='http://www.liujiarong.top/WXImg/beans2.png'></image><text>猎聘豆充值</text>
 </view>
 <view class='list'>
-    <view class='childs {{activeindex==item.id?"actives":""}}' wx:for='{{list1}}' wx:key='{{this}}' id='{{item.id}}' bindtap='config'>
-      <text>{{item.title}}</text>
-      <text>{{item.name}}</text>
-      <image wx:if='{{activeindex==item.id}}' class='beans3' src='http://www.liujiarong.top/WXImg/beans3.png'> </image>
+    <view class='childs {{activeindex==item.Product_Id?"actives":""}}' wx:for='{{list1}}' wx:key='{{this}}' id='{{item.Product_Id}}' bindtap='config'>
+      <text>{{item.Name}}</text>
+      <text>￥{{item.base_price}}</text>
+      <image wx:if='{{activeindex==item.Product_Id}}' class='beans3' src='http://www.liujiarong.top/WXImg/beans3.png'> </image>
     </view>
 </view>
 <view class='list'>
-    <view class='childs {{activeindex==item.id?"actives":""}}' wx:for='{{list2}}' wx:key='{{this}}' id='{{item.id}}' bindtap='config'>
-      <text>{{item.title}}</text>
-      <text>{{item.name}}</text>
-      <image wx:if='{{activeindex==item.id}}'  class='beans3' src='http://www.liujiarong.top/WXImg/beans3.png'> </image>
+    <view class='childs {{activeindex==item.Product_Id?"actives":""}}' wx:for='{{list2}}' wx:key='{{this}}' id='{{item.Product_Id}}' bindtap='config'>
+      <text>{{item.Name}}</text>
+      <text>￥{{item.base_price}}</text>
+      <image wx:if='{{activeindex==item.Product_Id}}'  class='beans3' src='http://www.liujiarong.top/WXImg/beans3.png'> </image>
     </view>
 </view>
 
@@ -27,4 +27,4 @@
   <text>3520元</text>
 </view>
 
-<view class='recharge'>确认充值</view>
+<view class='recharge' bindtap='pays'>确认充值</view>
