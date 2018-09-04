@@ -316,8 +316,9 @@ const IsEmpty = (obj) =>
     
    let pdf = false;
   for (let i in obj) { // 如果不为空，则会执行到这一步，返回true
-    if (obj[i]==undefined){
-      console.log("数据",obj[i] )
+    console.log("数据", obj[i])
+    if (obj[i] == undefined || obj[i] == '' || obj[i] == null || obj[i] == '请选择'){
+     
        pdf = false;
        break;
     }else{

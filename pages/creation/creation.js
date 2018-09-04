@@ -502,6 +502,9 @@ Page({
       console.log("datas", datas)
     }
     console.log("是否有空的东西", utils.IsEmpty(datas), datas) ;
+    if (datas.sho_position_gertificate){
+      console.log("证书", utils.IsEmpty(datas.sho_position_gertificate[0]), datas.sho_position_gertificate[0]);
+    }
     return false;
     utils.post(url, datas, that.data.token).then((res) => {
       console.log(res);//正确返回结果
