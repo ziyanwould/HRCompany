@@ -177,10 +177,10 @@ function post1(url, data, token) {
         },
         success: res => {//服务器返回数据
           console.log(res)
-          if (res.data.code == 0) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件 
-            resolve(res.data.data);
+          if (res.data) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件 
+            resolve(res.data);
           } else {//返回错误提示信息
-            reject(res.data.message);
+            reject(res);
           }
         },
         error: e => {
@@ -198,11 +198,11 @@ function post1(url, data, token) {
           'login_token': token
         },
         success: res => {//服务器返回数据
-          console.log(res)
-          if (res.data.code == 0) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件 
-            resolve(res.data.data);
+          console.log(res,)
+          if (res.data) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件 
+            resolve(res.data);
           } else {//返回错误提示信息
-            reject(res.data.message);
+            reject(res);
           }
         },
         error: e => {

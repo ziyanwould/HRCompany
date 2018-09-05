@@ -461,6 +461,24 @@ Page({
     let that = this;
     let url = '';
     let datas = [];
+    if (!that.data.token){
+      wx.showToast({
+        title: '您未登录',
+        icon: 'loading',
+        duration: 1500
+      });
+      setTimeout(function(){
+        that.setData({
+          items: {
+            //height: 550,
+            masTitle: "",
+            show: true,
+            fages: true
+          }
+        });
+      },1500)
+      return false;
+    }
     if (that.data.activeIndex==0){
       url = 'api/position/public_part_position',
       datas = {
@@ -501,14 +519,39 @@ Page({
       }
       console.log("datas", datas)
     }
-    console.log("是否有空的东西", utils.IsEmpty(datas), datas) ;
-    if (datas.sho_position_gertificate){
-      console.log("证书", utils.IsEmpty(datas.sho_position_gertificate[0]), datas.sho_position_gertificate[0]);
+    // console.log("是否有空的东西", utils.IsEmpty(datas), datas) ;
+    // if (datas.sho_position_gertificate){
+    //   console.log("证书", utils.IsEmpty(datas.sho_position_gertificate[0]), datas.sho_position_gertificate[0]);
+    // }
+   
+
+    //判断是否有空的输入填入
+    if (!utils.IsEmpty(datas)){
+      wx.showToast({
+        title: '有未填项',
+        icon: 'loading',
+        duration: 3000
+      });
+      return false;
+    }else{
+      if (datas.sho_position_gertificate){
+        if (!utils.IsEmpty(datas.sho_position_gertificate[0])){
+          wx.showToast({
+            title: '有未填项',
+            icon: 'loading',
+            duration: 3000
+          });
+          return false;
+        }
+      }
     }
-    return false;
     utils.post(url, datas, that.data.token).then((res) => {
       console.log(res);//正确返回结果
-
+      wx.showToast({
+        title: '已发布',
+        icon: 'success',
+        duration: 3000
+      });
       //存储结束
       // resolve()
     }).catch((errMsg) => {

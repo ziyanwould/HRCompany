@@ -200,8 +200,8 @@ Page({
     function step2(resolve, reject) {
       let datas= {
         code: that.data.code.code,
-        // code:"bndfuhdu54545454",
-        total_fee: 10000,//精确到分
+        //code:"bndfuhdu54545454",
+        total_fee: 1,//精确到分
         product_id: 20,//商品ID
         count: 1,//数量
         roomid: 1,
@@ -217,9 +217,11 @@ Page({
     
       console.log('paydatas', datas)
       utils.post1('Pay/pay.ashx', datas,that.data.token).then((res) => {
-        console.log('支付', res);//正确返回结果
-
-         resolve()
+        //console.log('支付', res);//正确返回结果
+        that.setData({
+          keys: res
+        })
+        resolve(true)
       }).catch((errMsg) => {
         console.log(errMsg);//错误提示信息
 
@@ -230,16 +232,16 @@ Page({
 
     function step3(resolve, reject) {
       wx.requestPayment({
-        'timeStamp': '',
-        'nonceStr': '',
-        'package': '',
-        'signType': 'MD5',
-        'paySign': '',
+        'timeStamp': that.data.keys.timeStamp,
+        'nonceStr': that.data.keys.nonceStr,
+        'package': that.data.keys.package,
+        'signType': that.data.keys.signType,
+        'paySign': that.data.keys.paySign,
         'success': function (res) {
-          resolve()
+          resolve(res)
         },
         'fail': function (res) {
-          reject()
+          reject(res)
         }
       })
     }

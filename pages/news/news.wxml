@@ -9,7 +9,7 @@
 <!-- <template  is='search' data='{{...seekData}}' /> -->
 
 <block wx:if='{{!inputShowed}}'>
-    <template  is='searTitle'  data='{{...seekData}}' />
+    <template wx:if='{{token}}'  is='searTitle'  data='{{...seekData}}' />
     
     <view class="count'  {{isIphoneX?'bottomPX':'bottomP'}}" >
     <block wx:if='{{searSencod}}'>
