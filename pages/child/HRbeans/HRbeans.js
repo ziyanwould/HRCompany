@@ -167,7 +167,7 @@ Page({
     new Promise(step1)
       .then(function (val) {
         console.log(val);
-      //return new Promise(step2)
+      return new Promise(step2)
       })
       .then(function (val) {
         console.log(val);
@@ -200,6 +200,7 @@ Page({
     function step2(resolve, reject) {
       let datas= {
         code: that.data.code.code,
+        // code:"bndfuhdu54545454",
         total_fee: 10000,//精确到分
         product_id: 20,//商品ID
         count: 1,//数量
