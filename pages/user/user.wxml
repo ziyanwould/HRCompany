@@ -39,7 +39,7 @@
 
 
     <view class='noLogin' wx:if='{{!token}}' bindtap='login'>
-      <image class='wai' src='http://www.liujiarong.top/WXImg/loginUse_1.png'></image>
+      <image class='wai {{items.show?"":"active"}}' src='http://www.liujiarong.top/WXImg/loginUse_1.png'></image>
         <image class='nei' src='http://www.liujiarong.top/WXImg/uselogin.png'></image>
        <view class='text'>
          <text>登录</text>

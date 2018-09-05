@@ -159,7 +159,10 @@ margin-bottom: 20rpx;
   width: 180rpx;
   height: 180rpx;
   margin-top: 128rpx;
-    animation: rotateplane 5.2s infinite ease-in-out;
+ 
+}
+.noLogin .active{
+ animation: rotateplane 5.2s infinite ease-in-out;
 }
 .noLogin .nei{
   position: absolute;
