@@ -9,6 +9,7 @@ Page({
    */
   data: {
     activeindex:-1,
+    detailPay:0,
     list1:[
       {
         title:'50豆',
@@ -111,10 +112,12 @@ Page({
   
   },
   config(e){
+    console.log(e.currentTarget.dataset.pay)
     let that  =this;
     console.log(e.currentTarget.id);
     that.setData({
-      activeindex: e.currentTarget.id
+      activeindex: e.currentTarget.id,
+      detailPay: e.currentTarget.dataset.pay
     })
   },
   //获取列表消息
@@ -175,6 +178,7 @@ Page({
       })
       .then(function () {
         // return new Promise(step1)
+      
         console.log('搞定！')
       })
 

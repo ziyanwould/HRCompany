@@ -172,32 +172,51 @@ Page({
       isIphoneX: isIphoneX
     });
 
+    try {
+      let value = wx.getStorageSync('token')
+      if (value.has_Verify == 3) {
+        that.setData({
+          token: true,
+          login_token: value.login_token
+        });
+      }
+    } catch (e) {
+      that.companyMes()
+    }
+    //
+    console.log("message", that.data.firlist)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
     }
+    //新的else
+    else{
+      that.getNewINfo()
+    }
+    //旧的else
+    // else if (this.data.canIUse) {
+    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+    //   // 所以此处加入 callback 以防止这种情况
+    //   app.userInfoReadyCallback = res => {
+    //     this.setData({
+    //       userInfo: res.userInfo,
+    //       hasUserInfo: true
+    //     })
+    //   }
+    // } else {
+    //   // 在没有 open-type=getUserInfo 版本的兼容处理
+    //   wx.getUserInfo({
+    //     success: res => {
+    //       app.globalData.userInfo = res.userInfo
+    //       this.setData({
+    //         userInfo: res.userInfo,
+    //         hasUserInfo: true
+    //       })
+    //     }
+    //   })
+    // }
 
     if (app.globalData.userinfo!=0){
       console.log(app.globalData.userinfo)
@@ -211,18 +230,7 @@ Page({
 
      })
     }
-    try {
-      let value = wx.getStorageSync('token')
-      if (value.has_Verify == 3) {
-        that.setData({
-         token:true
-        });
-      }
-    } catch (e) {
-      that.companyMes()
-    }
-    //
-    console.log("message", that.data.firlist)
+
   },
 
   /**
@@ -440,6 +448,7 @@ Page({
           return new Promise(step3)
         })
         .then(function () {
+          that.getNewINfo()
           console.log('搞定！')
         })
 
@@ -531,6 +540,7 @@ Page({
               }
             })
           } else if (res.dic.has_Verify == 3) {
+         
             wx.showToast({
               title: '登录成功',
               icon: 'success',
@@ -543,7 +553,8 @@ Page({
               app.globalData.register = true;
               that.setData({
                 'items.show': false,
-                token: true
+                token: true,
+                login_token: res.dic.login_token
               })
             } catch (e) {
             }
@@ -623,6 +634,33 @@ Page({
     wx.navigateTo({
       url: `/pages/child/member/member`//实际路径要写全
     })
-  }
+  },
+   getNewINfo(){
+     let that = this;
+     utils.post('usercenter/get_cominfo', false, that.data.login_token).then((res) => {
+       console.log("用户信息", res);//正确返回结果
+       console.log('res', res)
+       //更新全局变量方式 20180515
+       app.globalData.userinfo = res.userinfo
+       typeof cb == "function" && cb(that.globalData.userinfo)
+       //更新全局变量结束 20180515
+       // wx.hideLoading();
+       // resolve()
+       that.setData({
+         userInfo: res.userinfo,
+         hasUserInfo: true,
+         'firlist.[0].count': res.userinfo.Company_Name,
+         'firlist.[1].count': res.userinfo.Address,
+         'firlist.[2].count': res.userinfo.email,
+         'firlist.[3].count': res.userinfo.Company_Web,
+         Company_Intro: res.userinfo.Company_Intro,
+         'comlist.[0].RTitle': res.userinfo.vip.Name
+       })
+     }).catch((errMsg) => {
+       console.log(errMsg);//错误提示信息
+       //wx.hideLoading();
+       // reject()
+     });
+   }
    
 })

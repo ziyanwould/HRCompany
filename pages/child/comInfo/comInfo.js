@@ -243,7 +243,17 @@ Page({
 
     }, that.data.token).then((res) => {
       console.log(res);//正确返回结果
-
+      wx.showToast({
+        title: '已提交',
+        icon: 'success',
+        duration: 3000
+      });
+      that.getNewINfo()
+      setTimeout(function(){
+        wx.navigateBack({
+          delta: 2
+        })
+      },1500)
 
       //resolve()
     }).catch((errMsg) => {
@@ -310,5 +320,23 @@ Page({
         })
       }
     })
+  },
+  getNewINfo() {
+    let that = this;
+    utils.post('usercenter/get_cominfo', false, that.data.token).then((res) => {
+      console.log("用户信息", res);//正确返回结果
+      console.log('res', res)
+      //更新全局变量方式 20180515
+      app.globalData.userinfo = res.userinfo
+      typeof cb == "function" && cb(that.globalData.userinfo)
+      //更新全局变量结束 20180515
+      // wx.hideLoading();
+      // resolve()
+
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      //wx.hideLoading();
+      // reject()
+    });
   }
 })

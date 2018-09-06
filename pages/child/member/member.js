@@ -137,5 +137,91 @@ Page({
       logo: useinfo.Company_Logo
     
     })
+  },
+    // 支付
+  pays() {
+    let that = this;
+    let detail = '建筑猎聘会员充值';
+    new Promise(step1)
+      .then(function (val) {
+        console.log(val);
+        return new Promise(step2)
+      })
+      .then(function (val) {
+        console.log(val);
+        return new Promise(step3)
+      })
+      .then(function () {
+        // return new Promise(step1)
+        console.log('搞定！')
+      })
+
+
+
+    function step1(resolve, reject) {
+      const mylogin = utils.wxPromisify(wx.login);
+      mylogin().then(res => {
+        console.log(res)
+        let data = {
+          "code": res.code
+        }
+        that.setData({
+          code: data
+        })
+        resolve(true)
+      }).catch(res => {
+        reject(false)
+      })
+    }
+
+
+    function step2(resolve, reject) {
+      let datas = {
+        code: that.data.code.code,
+        //code:"bndfuhdu54545454",
+        total_fee: 1,//精确到分
+        product_id: 20,//商品ID
+        count: 1,//数量
+        roomid: 1,
+        describe: `建筑猎聘-${detail}`//充值描述
+      }
+
+
+      // let formData = new Window.FormData();
+      // formData.append('code', that.data.code.code)
+
+
+      //datas.append("total_fee", that.data.code.code)
+
+      console.log('paydatas', datas)
+      utils.post1('Pay/pay.ashx', datas, that.data.token).then((res) => {
+        //console.log('支付', res);//正确返回结果
+        that.setData({
+          keys: res
+        })
+        resolve(true)
+      }).catch((errMsg) => {
+        console.log(errMsg);//错误提示信息
+
+        reject()
+      });
+
+    }
+
+    function step3(resolve, reject) {
+      wx.requestPayment({
+        'timeStamp': that.data.keys.timeStamp,
+        'nonceStr': that.data.keys.nonceStr,
+        'package': that.data.keys.package,
+        'signType': that.data.keys.signType,
+        'paySign': that.data.keys.paySign,
+        'success': function (res) {
+          resolve(res)
+        },
+        'fail': function (res) {
+          reject(res)
+        }
+      })
+    }
   }
 })
