@@ -205,7 +205,7 @@ Page({
       let datas= {
         code: that.data.code.code,
         //code:"bndfuhdu54545454",
-        total_fee: 1,//精确到分
+        total_fee: 3,//精确到分
         product_id: 20,//商品ID
         count: 1,//数量
         roomid: 1,

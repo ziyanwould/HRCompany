@@ -165,7 +165,12 @@ Page({
 
   }
   ,
-  Ondetail: function () {
+  Ondetail: function (e) {
+    // console.log(e.currentTarget.dataset.value)
+    try {
+      wx.setStorageSync('message', e.currentTarget.dataset.value)
+    } catch (e) {
+    }
     wx.navigateTo({
       url: '/pages/child/Mesdetail/Mesdetail'//实际路径要写全
     })

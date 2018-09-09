@@ -88,6 +88,7 @@ Page({
    */
   onUnload: function () {
     let that = this;
+    
     let value = {
       latitude: that.data.wd,
       longitude: that.data.jd,
@@ -97,9 +98,18 @@ Page({
       detail: that.data.input,
 
     }
+
     try {
       wx.setStorageSync('map', value)
     } catch (e) {
+    }
+    if (!utils.IsEmpty(value)) {
+      wx.showToast({
+        title: '您有未填项',
+        icon: 'loading',
+        duration: 1500
+      });
+      return false;
     }
   },
 

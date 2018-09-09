@@ -1,6 +1,6 @@
 <!--pages/child/Message/Message.wxml-->
 <!-- 搜索功能 -->
-<include src="/template/search.wxml"/>
+<!-- <include src="/template/search.wxml"/> -->
 
 <block wx:if='{{!(inputVal.length > 0)}}'>
 
@@ -19,7 +19,7 @@
     </view>
   </view>
 
-  <view class='Mlist' wx:for="{{list}}" wx:key="this" bindtap='Ondetail'>
+  <view class='Mlist' wx:for="{{list}}" wx:key="this" bindtap='Ondetail' data-value='{{item}}'>
     <view class='list_left'>
         <view class='Tone'>
           <image style='border-radius:85rpx'  src='http://www.liujiarong.top/WX/messageHr.jpg'></image>

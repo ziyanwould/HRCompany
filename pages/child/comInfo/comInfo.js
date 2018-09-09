@@ -223,25 +223,34 @@ Page({
       "Link_Tel", that.data.cominfo.select[1].child[1].input,
       "Lat", that.data.latitude,
       "Lng", that.data.longitude)
-    utils.post('usercenter/update_cominfo', {
+    let datas ={
       "QQ": that.data.cominfo.select[1].child[3].input,
-      "email": that.data.cominfo.select[0].child[1].input,
-      "province": that.data.province,
-      "city": that.data.city,
-      "county": that.data.county,
-      "Address": that.data.cominfo.select[0].child[0].countCount,
-      "Company_Logo": that.data.Company_Logo,
-      "Company_Name": that.data.cominfo.select[1].child[0].input,
-      "Company_Web": that.data.cominfo.select[0].child[2].input,
-      "Company_Intro": that.data.cominfo.textarea[0].textarea,
-      "Company_Area_Code": that.data.cominfo.select[1].child[2].input,
-      "Company_Tel": that.data.cominfo.select[1].child[1].input,
-      "Link_Man": that.data.cominfo.select[1].child[0].input,
-      "Link_Tel": that.data.cominfo.select[1].child[1].input,
-      "Lat": that.data.latitude,
-      "Lng": that.data.longitude
+        "email": that.data.cominfo.select[0].child[1].input,
+          "province": that.data.province,
+            "city": that.data.city,
+              "county": that.data.county,
+                "Address": that.data.cominfo.select[0].child[0].countCount,
+                  "Company_Logo": that.data.Company_Logo,
+                    "Company_Name": that.data.cominfo.select[1].child[0].input,
+                      "Company_Web": that.data.cominfo.select[0].child[2].input,
+                        "Company_Intro": that.data.cominfo.textarea[0].textarea,
+                          "Company_Area_Code": that.data.cominfo.select[1].child[2].input,
+                            "Company_Tel": that.data.cominfo.select[1].child[1].input,
+                              "Link_Man": that.data.cominfo.select[1].child[0].input,
+                                "Link_Tel": that.data.cominfo.select[1].child[1].input,
+                                  "Lat": that.data.latitude,
+                                    "Lng": that.data.longitude
 
-    }, that.data.token).then((res) => {
+    }
+    if (!utils.IsEmpty(datas)) {
+      wx.showToast({
+        title: '有未填项',
+        icon: 'loading',
+        duration: 3000
+      });
+      return false;
+    }
+    utils.post('usercenter/update_cominfo', datas, that.data.token).then((res) => {
       console.log(res);//正确返回结果
       wx.showToast({
         title: '已提交',
