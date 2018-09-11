@@ -1,4 +1,6 @@
 // pages/child/Mesdetail/Mesdetail.js
+var app = getApp()
+var common = require('../../../utils/util.js');
 Page({
 
   /**
@@ -16,14 +18,21 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+    let token = wx.getStorageSync('token')
+    console.log("token", token)
+    that.setData({
+      token: token.login_token
+    })
     try {
       let value = wx.getStorageSync('message')
+      console.log("内容",value)
       if (value) {
         that.setData({
           time: `${value.Ctime != null ? value.Ctime:'00:00'}`,
           imgurl: 'http://www.liujiarong.top/WX/messageHr.jpg',
           title: '我的客服',
-          count: value.Detail
+          count: value.Detail,
+          id:value.ID
         })
       }
     } catch (e) {
@@ -40,6 +49,8 @@ Page({
         })
       },1500)
     }
+
+    that.reader()
   },
 
   /**
@@ -89,5 +100,20 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  reader(){
+    let that = this;
+    let datas = {
+      "message_id": that.data.id
+    }
+    console.log(datas, datas)
+    common.post('api/message/set_read', datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+    
+      //reject()
+    });
   }
 })

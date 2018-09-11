@@ -104,8 +104,36 @@ Page({
     let that = this;
     utils.post('api/order/vip_goods_list', false, that.data.token).then((res) => {
       console.log(res);//正确返回结果
+      let datas = [
+        {
+          img1: 'mber1',
+          vip: res.vipList[0].Name,
+          pay: res.vipList[0].base_price,
+          Product_Id:res.vipList[0].Product_Id,
+          lists: [
+            { img: 'mber3', text: '下载与邀约人才全职月薪不超过15000' },
+            { img: 'mber4', text: '兼职年薪不超过35000' },
+            { img: 'mber5', text: `可发布各类职位${res.vipList[0].Ext_public}个` },
+            { img: 'mber6', text: `下载简历${res.vipList[0].Full_max}份` }
+
+          ]
+        },
+        {
+          img1: 'mber2',
+          vip: res.vipList[1].Name,
+          pay: res.vipList[1].base_price,
+          Product_Id: res.vipList[1].Product_Id,
+          lists: [
+            { img: 'mber3', text: '下载与邀约人才月薪与年薪不限' },
+            { img: 'mber5', text: `可发布各类职位${res.vipList[1].Ext_public}个` },
+            { img: 'mber6', text: `下载简历${res.vipList[1].Full_max}份` }
+
+          ]
+        }
+      ]
       that.setData({
-      
+      //会员价格列表
+        list:datas
       })
       // resolve()
     }).catch((errMsg) => {
@@ -139,9 +167,21 @@ Page({
     })
   },
     // 支付
-  pays() {
+  pays(e) {
     let that = this;
     let detail = '建筑猎聘会员充值';
+    console.log(e)
+    let price =e.target.dataset.pay;
+    let ID = e.target.id;
+   // return false
+    if (price == 0 || price == null || price == undefined){
+      wx.showToast({
+        title: '价格不能为0',
+        icon: 'loading',
+        duration: 1500
+      });
+      return false
+    }
     new Promise(step1)
       .then(function (val) {
         console.log(val);
@@ -179,8 +219,8 @@ Page({
       let datas = {
         code: that.data.code.code,
         //code:"bndfuhdu54545454",
-        total_fee: 1,//精确到分
-        product_id: 20,//商品ID
+        total_fee: price*100,//精确到分
+        product_id: ID,//商品ID
         count: 1,//数量
         roomid: 1,
         describe: `建筑猎聘-${detail}`//充值描述

@@ -36,7 +36,9 @@ Page({
         'explain.explain':"自我介绍",
         'personMes.switchde':false,
         'explain.fullTime':true,
-         types:'全职'
+         types:'全职',
+         'datas.buyType':'邀约',
+        'datas.fun':'payTo2'
       })
     }
 
@@ -107,7 +109,7 @@ Page({
       resume_id: id
 
     },that.data.token).then((res) => {
-    
+      utils.deleteEmptyProperty(res);
       if (that.data.types == '全职') {
         that.setData({
           'personMes.resumePart': res.ResumeFull,
@@ -206,18 +208,67 @@ Page({
   },
   //购买按钮
   payTo(){
-
+    let that = this;
     if (!this.data.token){
      
       utils.noLogon()
      }else{
-      wx.showToast({
-        title: '暂不支持购买',
-        icon: 'loading',
-        duration: 3000
-      });
+      // wx.showToast({
+      //   title: '暂不支持购买',
+      //   icon: 'loading',
+      //   duration: 3000
+      // });
+      that.patTime()
      }
   },
+  payTo2() {
+    let that = this;
+    if (!this.data.token) {
 
+      utils.noLogon()
+    } else {
+      // wx.showToast({
+      //   title: '暂不支持购买',
+      //   icon: 'loading',
+      //   duration: 3000
+      // });
+      that.fullTime()
+    }
+  },
+  //购买组件
+   patTime(){
+     let that = this;
+     let datas = {
+       "resume_id": that.data.explain.resumePart.resume_id,
+       "Company_Id": "" 
+     }
+     console.log('datas', datas)
+     utils.post('api/resume/obtain',datas,that.data.token).then((res) => {
+       console.log(res);//正确返回结果
 
+       //resolve()
+     }).catch((errMsg) => {
+       console.log(errMsg);//错误提示信息
+
+       //  reject()
+     });
+   },
+  //邀约组件
+  fullTime() {
+    let that = this;
+    let datas = {
+      "resume_id": that.data.explain.resumePart.resume_id,
+      "Company_Id": "02" 
+    }
+    console.log('datas', datas)
+    utils.post('api/resume/invite', datas, that.data.token).then((res) => {
+      console.log(res);//正确返回结果
+
+      //resolve()
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+
+      //  reject()
+    });
+  }
 })

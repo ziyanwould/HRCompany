@@ -165,6 +165,7 @@ Page({
   },
   // 支付
   pays(){
+
     let that = this;
     let detail = '建筑猎聘会员充值';
     new Promise(step1)
@@ -202,11 +203,20 @@ Page({
 
 
     function step2(resolve, reject) {
+      if (that.data.activeindex==-1){
+        wx.showToast({
+          title: '请选择商品',
+          icon: 'loading',
+          duration: 1500
+        });
+        reject(false);
+        return false ;
+      }
       let datas= {
         code: that.data.code.code,
         //code:"bndfuhdu54545454",
-        total_fee: 3,//精确到分
-        product_id: 20,//商品ID
+        total_fee: that.data.detailPay*100,//精确到分
+        product_id: that.data.activeindex,//商品ID
         count: 1,//数量
         roomid: 1,
         describe: `建筑猎聘-${detail}`//充值描述

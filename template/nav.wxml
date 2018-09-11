@@ -282,7 +282,7 @@
         </view>
 
         <view class='second' wx:if='{{switchde}}'>
-          社保所在地：{{resumePart.baseUserData.province?resumePart.baseUserData.province+'-':''}}{{resumePart.baseUserData.city}}
+          社保所在地：{{resumePart.baseUserData.province?resumePart.baseUserData.province+'-':''}}{{resumePart.baseUserData.city}} <text>证书：{{resumePart.certificate[0].title}}</text>
         </view>
 
         <view class='third'>
@@ -304,6 +304,12 @@
          <view class='shRight'>
                <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：{{resumePart.certificate[0].registration}}</view>
              <view class='list'><image class='redetail04' src='http://www.liujiarong.top/WXImg/redetail04.png'></image>证书所在地：{{resumePart.certificate[0].province?resumePart.certificate[0].province+'-':''}}{{resumePart.certificate[0].location}}</view>
+                <view class='list' wx:if='{{resumePart.certificate[0].b_card!=0}}'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>B证状态：
+                  <block wx:if="{{resumePart.certificate[0].b_card==1}}">带B证</block>
+                  <block wx:if="{{resumePart.certificate[0].b_card==2}}">不带B证</block>
+                  <block wx:if="{{resumePart.certificate[0].b_card==3}}">考B证</block>
+                  <block wx:if="{{resumePart.certificate[0].b_card==4}}">情况不清</block> 
+                </view>
          </view>
        </view>
 
@@ -314,8 +320,9 @@
            
          </view>
          <view class='shRight'>
-               <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>求职状态：{{resumePart.baseUserData.job_status}}</view>
+             
              <view class='list'><image class='redetail08' src='http://www.liujiarong.top/WXImg/redetail08.png'></image>工作类型：{{resumePart.expectWork.positionType}}</view>
+               <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>求职状态：{{resumePart.baseUserData.job_status}}</view>
          </view>
        </view>
 
@@ -410,7 +417,12 @@
        <view class='tags5'><image class='redetail15' src='http://www.liujiarong.top/WXImg/redetail15.png'></image>{{item.NameCertificate}}</view>
        <view class='fourTCount'>
           <view>证书单位：{{item.organization}} </view>
+          <view>证书名称：{{item.title}} </view>
           <view>证书类别：{{item.ger_type_name}} </view>
+          <block wx:if="{{item.b_card==1}}">B证情况：带B证</block>
+          <block wx:if="{{item.b_card==2}}">B证情况：不带B证</block>
+          <block wx:if="{{item.b_card==3}}">B证情况：考B证</block>
+          <block wx:if="{{item.b_card==4}}">B证情况：情况不清</block>
           <view>证书状态：{{item.state}} </view>
           <view>证书用途：{{item.useRe}} </view>
           <view>注册情况：{{item.registration}} </view>

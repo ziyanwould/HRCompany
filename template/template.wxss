@@ -630,6 +630,9 @@ margin: 0 24rpx;
   color: #848484;
   font-size: 24rpx;
 }
+.personMes .person1 .second text{
+ float: right;
+}
 .personMes .person1 .third{
   border-top: 1rpx dashed #F1F0F4;
   margin-top: 20rpx;
