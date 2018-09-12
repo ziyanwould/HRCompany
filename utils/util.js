@@ -215,6 +215,67 @@ function post1(url, data, token) {
   return promise;
 }
 
+function requid(url, data, token) {
+  var promise = new Promise((resolve, reject) => {
+    //init
+    var that = this;
+    var postData = data;
+    /*
+    //自动添加签名字段到postData，makeSign(obj)是一个自定义的生成签名字符串的函数
+    postData.signature = that.makeSign(postData);
+    */
+    //网络请求
+    if (data) {
+      wx.request({
+        url: 'https://api.17liepin.com/' + url,
+        data: postData,
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY=',
+          "edition": "company",
+          'login_token': token
+        },
+        success: res => {//服务器返回数据
+          console.log(res)
+          if (res) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件 
+            resolve(res);
+          } else {//返回错误提示信息
+            //reject(res);
+          }
+        },
+        error: e => {
+          reject('网络出错');
+        }
+      })
+    } else {
+      wx.request({
+        url: 'https://api.17liepin.com/' + url,
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'appid': 'bHA4MDYzNWM3OC0zYjYxLTQ1NDgtOTgyNS01ZjQxMWE4MzBkNDY=',
+          "edition": "company",
+          'login_token': token
+        },
+        success: res => {//服务器返回数据
+          console.log(res)
+          if (res) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件 
+            resolve(res);
+          } else {//返回错误提示信息
+            //reject(res);
+          }
+        },
+        error: e => {
+          reject('网络出错');
+        }
+      })
+    }
+
+  });
+  return promise;
+}
+
 //异步处理方案 
 function wxPromisify(fn) {
   return function (obj = {}) {
@@ -346,5 +407,6 @@ module.exports = {
   post: post,
   post1: post1,
   IsEmpty: IsEmpty,
-  noLogon: noLogon
+  noLogon: noLogon,
+  requid: requid
 }

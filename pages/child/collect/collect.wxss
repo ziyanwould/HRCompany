@@ -22,7 +22,8 @@
   border-right: none;
   background: #F6F7F7;
 }
-.Tdtitle text:nth-of-type(3){
+.Tdtitle text:nth-of-type(2){
+  /* 此处数字有三项时候改为三 */
     border-right: 1rpx solid #32A4E9 ;
     border-top-right-radius: 10rpx;
      border-bottom-right-radius: 10rpx;

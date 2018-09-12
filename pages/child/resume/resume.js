@@ -15,8 +15,8 @@ Page({
     pageshows: true,
     used_list: [
       { title: "分类01", name: "已购买简历" },
-      { title: "分类02", name: "已邀约人才" },
-      { title: "分类03", name: "求职者投递" },
+      { title: "分类02", name: "已邀约人才" }
+      // { title: "分类03", name: "求职者投递" },
     ],
     seekData: {
       inputShowed: false,
@@ -43,7 +43,7 @@ Page({
       token: token.login_token
     })
     console.log(e)
-    if (e.collect){
+    if (e.collect){//这个是投递者投递过来的简历
       that.setData({
         send_id: e.ID,
         send_type: e.type,
@@ -245,24 +245,30 @@ Page({
     })
     var numberv = e.currentTarget.id;
     console.log("number", e.currentTarget.id);
-    for (let i in that.data.msgList) {
-      console.log("数据结构", that.data.msgList[i].type)
-      if (numberv == 1 && that.data.msgList[i].type == "全职") {
+    page=0;
+    that.setData({
+      msgList: []
+      
+    })
+    that.datalist()
+    // for (let i in that.data.msgList) {
+    //   console.log("数据结构", that.data.msgList[i].type)
+    //   if (numberv == 1 && that.data.msgList[i].type == "全职") {
 
-        that.setData({
-          pageshows: true
-        })
-      } else if (numberv == 2 && that.data.msgList[i].type == "兼职") {
+    //     that.setData({
+    //       pageshows: true
+    //     })
+    //   } else if (numberv == 2 && that.data.msgList[i].type == "兼职") {
 
-        that.setData({
-          pageshows: true
-        })
-      } else if (numberv == 0 && that.data.msgList.length > 0) {
-        that.setData({
-          pageshows: true
-        })
-      }
-    }
+    //     that.setData({
+    //       pageshows: true
+    //     })
+    //   } else if (numberv == 0 && that.data.msgList.length > 0) {
+    //     that.setData({
+    //       pageshows: true
+    //     })
+    //   }
+    // }
 
   },
   urlto: function (e) {
@@ -418,7 +424,7 @@ Page({
     //   list: list
     // });
     //测试end
-    if (that.data.send_collect){
+    if (that.data.send_collect){//判断是否是职位管理下投递的简历
       url = 'api/resume/deliver_log_company',
       datas = {
         "ID": that.data.send_id,
@@ -427,7 +433,7 @@ Page({
         "pageSize": 10
       }
     }else{
-      url = 'api/resume/resume_list',
+      url = `${that.data.activeIndex == 0 ? 'api/resume/obtain_log' :'api/resume/invite_log'}`,
       datas = {
         "type_id": 0,
         "pageIndex": page,

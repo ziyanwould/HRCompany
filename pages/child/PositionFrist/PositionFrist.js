@@ -17,7 +17,8 @@ Page({
     datas:{
       buyType:'购买',
       fun:'payTo'
-    }
+    },
+    useinfo:false
   },
 
   /**
@@ -40,6 +41,13 @@ Page({
          'datas.buyType':'邀约',
         'datas.fun':'payTo2'
       })
+     
+    }else{
+      that.setData({
+    
+        types: '兼职',
+      
+      })
     }
 
     console.log(0==[])
@@ -57,7 +65,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
@@ -124,8 +132,31 @@ Page({
           names: res.resumePart.is_collect,
           'datas.names': res.resumePart.is_collect
         })
+      } console.log('res', res)
+      if (that.data.types == '兼职' && res.resumePart.is_obtain){
+         that.setData({
+           'datas.buyType': '查看联系信息',
+            busying:true
+         })
+      } 
+     else if (that.data.types == '全职' && res.ResumeFull.is_invite){
+        that.setData({
+          'datas.buyType': '查看联系信息',
+          busying: true
+        })
       }
-   
+      if (that.data.types == '兼职' && res.resumePart.is_deliver) {
+        that.setData({
+          'datas.buyType': '查看联系信息',
+          busying: true
+        })
+      }
+      else if (that.data.types == '全职' && res.ResumeFull.is_deliver) {
+        that.setData({
+          'datas.buyType': '查看联系信息',
+          busying: true
+        })
+      }
       console.log(res, that.data.explain);//正确返回结果
       wx.hideLoading();
       // that.setData({
@@ -209,10 +240,16 @@ Page({
   //购买按钮
   payTo(){
     let that = this;
+ 
     if (!this.data.token){
      
       utils.noLogon()
-     }else{
+    } else if (that.data.busying){
+      that.setData({
+        useinfo:true
+      })
+     }
+     else{
       // wx.showToast({
       //   title: '暂不支持购买',
       //   icon: 'loading',
@@ -226,7 +263,11 @@ Page({
     if (!this.data.token) {
 
       utils.noLogon()
-    } else {
+    } else if (that.data.busying) {
+      that.setData({
+        useinfo: true
+      })
+    }else {
       // wx.showToast({
       //   title: '暂不支持购买',
       //   icon: 'loading',
@@ -240,16 +281,27 @@ Page({
      let that = this;
      let datas = {
        "resume_id": that.data.explain.resumePart.resume_id,
-       "Company_Id": "" 
+       "Company_Id": "00000000-0000-0000-0000-000000000000" 
      }
      console.log('datas', datas)
-     utils.post('api/resume/obtain',datas,that.data.token).then((res) => {
+     utils.requid('api/resume/obtain',datas,that.data.token).then((res) => {
        console.log(res);//正确返回结果
-
+       if (res.data.message == "购买成功") {
+         wx.showToast({
+           title: '购买成功',
+           icon: 'success',
+           duration: 1500
+         });
+         that.setData({
+           'datas.buyType': '查看联系信息',
+           busying: true
+         })
+       }
        //resolve()
      }).catch((errMsg) => {
        console.log(errMsg);//错误提示信息
-
+  
+      
        //  reject()
      });
    },
@@ -258,17 +310,33 @@ Page({
     let that = this;
     let datas = {
       "resume_id": that.data.explain.resumePart.resume_id,
-      "Company_Id": "02" 
+      "Company_Id": "00000000-0000-0000-0000-000000000000" 
     }
     console.log('datas', datas)
-    utils.post('api/resume/invite', datas, that.data.token).then((res) => {
+    utils.requid('api/resume/invite', datas, that.data.token).then((res) => {
       console.log(res);//正确返回结果
-
+      if (res.data.message == '邀约成功') {
+        wx.showToast({
+          title: '邀约成功',
+          icon: 'success',
+          duration: 1500
+        });
+        that.setData({
+          'datas.buyType': '查看联系信息',
+          busying: true
+        })
+      }
       //resolve()
     }).catch((errMsg) => {
       console.log(errMsg);//错误提示信息
-
+  
       //  reject()
     });
+  },
+  //关闭个人信息
+  hrclose(){
+    this.setData({
+      useinfo:false
+    })
   }
 })
