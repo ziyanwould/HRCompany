@@ -58,7 +58,8 @@ Page({
         'class': 'Hrdoug',
         'image': 'Hrdoug',
         'mes': '猎聘豆',
-        'fn': 'HRbeans'
+        'fn': 'HRbeans',
+        'Tclass': 'Tclass'
       },
       {
         'class': 'image6',
@@ -226,7 +227,8 @@ Page({
        'firlist.[2].count': app.globalData.userinfo.email,
        'firlist.[3].count': app.globalData.userinfo.Company_Web,
        Company_Intro: app.globalData.userinfo.Company_Intro,
-       'comlist.[0].RTitle': app.globalData.userinfo.vip.Name
+       'comlist.[0].RTitle': app.globalData.userinfo.vip.Name,
+       'comlist.[1].RTitle': app.globalData.userinfo.Lp_fee
 
      })
     }

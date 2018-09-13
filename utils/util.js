@@ -1,5 +1,5 @@
-const Promise = require('bluebird.min.js')
-  
+const Promise = require('bluebird.min.js');
+const URL = 'https://api.17liepin.com/';
   const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -69,7 +69,7 @@ const request=(url, requestHandler, token)=> {
   const params = requestHandler.params;
   //获取登录钥匙
   wx.request({
-    url: 'https://api.17liepin.com/' + url,
+    url: URL + url,
     data: params,
     method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT  
     // header: {}, // 设置请求的 header 
@@ -85,6 +85,11 @@ const request=(url, requestHandler, token)=> {
     },
     fail: res=> {
       requestHandler.fail(res)
+      wx.showToast({
+        title: '网络故障',
+        icon: 'loading',
+        duration: 3000
+      });
     },
     complete: function () {
       // complete  
@@ -105,7 +110,7 @@ function post(url, data, token) {
     //网络请求
     if(data){
       wx.request({
-        url: 'https://api.17liepin.com/' + url,
+        url: URL + url,
         data: postData,
         method: 'POST',
         header: {
@@ -124,11 +129,16 @@ function post(url, data, token) {
         },
         error: e => {
           reject('网络出错');
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 3000
+          });
         }
       })
     }else{
       wx.request({
-        url: 'https://api.17liepin.com/' + url,
+        url: URL + url,
         method: 'POST',
         header: {
           'content-type': 'application/json',
@@ -146,6 +156,11 @@ function post(url, data, token) {
         },
         error: e => {
           reject('网络出错');
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 3000
+          });
         }
       })
     }
@@ -166,7 +181,7 @@ function post1(url, data, token) {
     //网络请求
     if (data) {
       wx.request({
-        url: 'https://api.17liepin.com/' + url,
+        url: URL + url,
         data: postData,
         method: 'POST',
         header: {
@@ -185,11 +200,16 @@ function post1(url, data, token) {
         },
         error: e => {
           reject('网络出错');
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 3000
+          });
         }
       })
     } else {
       wx.request({
-        url: 'https://api.17liepin.com/' + url,
+        url: URL + url,
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded',
@@ -207,6 +227,11 @@ function post1(url, data, token) {
         },
         error: e => {
           reject('网络出错');
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 3000
+          });
         }
       })
     }
@@ -227,7 +252,7 @@ function requid(url, data, token) {
     //网络请求
     if (data) {
       wx.request({
-        url: 'https://api.17liepin.com/' + url,
+        url: URL + url,
         data: postData,
         method: 'POST',
         header: {
@@ -246,11 +271,16 @@ function requid(url, data, token) {
         },
         error: e => {
           reject('网络出错');
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 3000
+          });
         }
       })
     } else {
       wx.request({
-        url: 'https://api.17liepin.com/' + url,
+        url: URL + url,
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded',
@@ -268,6 +298,11 @@ function requid(url, data, token) {
         },
         error: e => {
           reject('网络出错');
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 3000
+          });
         }
       })
     }

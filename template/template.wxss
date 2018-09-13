@@ -34,6 +34,7 @@
  .partTime .left image{
    width: 88rpx;
    height: 88rpx;
+   border-radius: 88rpx;
  }
 .partTime .right .title image{
   width: 30rpx;
@@ -595,6 +596,7 @@ margin: 0 24rpx;
 .redetailPerson{
   width: 88rpx;
   height: 88rpx;
+  border-radius: 88rpx;
 }
 .redetailTime{
   width: 22rpx;

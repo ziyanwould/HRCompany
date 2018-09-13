@@ -422,9 +422,9 @@ Page({
   keywordAdvice: function (value) {
     var that = this;
     if (that.data.changeJob == '全职') {
-      var urlx = 'https://api.17liepin.com/sort/search_job_type'
+      var urlx = app.globalData.url+'sort/search_job_type'
     } else {
-      var urlx = 'https://api.17liepin.com/sort/search_ger_type'
+      var urlx = app.globalData.url+'sort/search_ger_type'
     }
     let requestPromisified = common.wxPromisify(wx.request);
     requestPromisified({
@@ -460,7 +460,7 @@ Page({
       pageshows: true
     })
     if (that.data.changeJob == '全职') {
-      var urlx = 'https://api.17liepin.com/api/resume/resume_list';
+      var urlx = app.globalData.url+'api/resume/resume_list';
       var datax = {
         "pageIndex": pageIndex,
         "pageSize": 10,
@@ -481,7 +481,7 @@ Page({
       }
       console.log("data的内容：", datax)
     } else {
-      var urlx = 'https://api.17liepin.com/api/resume/resume_list';
+      var urlx = app.globalData.url+'api/resume/resume_list';
       var datax = {
         "pageIndex": pageIndex,
         "pageSize": 10,
@@ -606,14 +606,14 @@ Page({
 
     //获取详情页信息   使用Promise进行异步流程处理
     if (jobs == "兼职") {
-      // var urls = 'https://api.17liepin.com/api/position/get_part_detail';
+      // var urls = app.globalData.url+'api/position/get_part_detail';
       wx.navigateTo({
         url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=兼职`//全职简历
         // url:"/pages/child/Positionsecond/Positionsecond"   
       })
 
     } else {
-      // var urls = 'https://api.17liepin.com/api/position/get_full_detail';
+      // var urls = app.globalData.url+'api/position/get_full_detail';
 
       wx.navigateTo({
         url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=全职`//全职简历

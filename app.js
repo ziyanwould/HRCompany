@@ -162,6 +162,7 @@ App({
     Jobl: [],//职位列表
     CRL: [],//证书列表
     register:false,//登录状态
-    userinfo:[]//用户信息
+    userinfo: [], //用户信息
+    url:'https://api.17liepin.com/'
   }
 })

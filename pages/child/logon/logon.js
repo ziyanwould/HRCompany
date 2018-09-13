@@ -474,7 +474,7 @@ Page({
 
         const uploadFile = utils.wxPromisify(wx.uploadFile);
         uploadFile({
-          url: 'https://api.17liepin.com/usercenter/upload_img', //仅为示例，非真实的接口地址
+          url: app.globalData.url+'usercenter/upload_img', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
           name: 'file',
           header: {
