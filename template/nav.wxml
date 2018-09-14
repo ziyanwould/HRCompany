@@ -282,7 +282,7 @@
         </view>
 
         <view class='second' wx:if='{{switchde}}'>
-          社保所在地：{{resumePart.baseUserData.province?resumePart.baseUserData.province+'-':''}}{{resumePart.baseUserData.city}} <text>证书：{{resumePart.certificate[0].title}}</text>
+          社保所在地：{{resumePart.baseUserData.province?resumePart.baseUserData.province+'-':''}}{{resumePart.baseUserData.city?resumePart.baseUserData.city:"无"}} <text>证书：{{resumePart.certificate[0].title}}</text>
         </view>
 
         <view class='third'>
