@@ -23,17 +23,17 @@
 
               <view class='Clist' wx:for='{{firlist}}' wx:key='{{this}}'>
                 <view class='imgCen'><image class='{{item.class}}' src='http://www.liujiarong.top/WXImg/{{item.pic}}.png'></image></view>
-                <text class='{{item.classt}}'>{{item.count}}</text>
+                <text class='{{item.classt}}'>{{item.count!=null?item.count:"(未填写)"}}</text>
               </view>
 
           </view>
 
               <view  class='Clist'><view class='imgCen'><image class='image4' src='http://www.liujiarong.top/WXImg/recommend.png'></image></view><text>企业介绍</text></view>
               <view class='detail'>
-               {{Company_Intro}}
+               {{Company_Intro!=null?Company_Intro:"(未填写)"}}
               </view>
          
-              <image class='image5' src='http://www.liujiarong.top/WXImg/logos.png'></image>
+              <image class='image5' src='{{Company_Logo?Company_Logo:"http://www.liujiarong.top/WXImg/logos.png"}}'></image>
               <button class='edit' bindtap='edit'>编辑</button>
      </view>
 
@@ -66,6 +66,19 @@
         </view>
         <view class='right'>
         
+           <image class='toright' src='http://www.liujiarong.top/WXImg/toright.png'></image>
+        </view>
+     </button>
+
+     <button class='list buttonx'  open-type="openSetting" bindopensetting="handler" bindtap='mapinfo'>
+        <view class='left'>
+           <view class='imgCen'> 
+               <image style='width:28rpx;height:28rpx'  src='http://www.liujiarong.top/WX/images/wx_retroaction.png'></image>
+           </view>
+           <text>授权定位</text>
+        </view>
+        <view class='right'>
+               <text class='Tclass' >{{mapState?'已授权':'未授权'}}</text>
            <image class='toright' src='http://www.liujiarong.top/WXImg/toright.png'></image>
         </view>
      </button>

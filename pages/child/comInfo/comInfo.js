@@ -2,6 +2,8 @@
 const app = getApp();
 const utils = require('../../../utils/util.js')
 const Promise = require('../../../utils/bluebird.min.js')
+var model = require('../../../model/model.js')
+var item = {};
 Page({
 
   /**
@@ -15,12 +17,13 @@ Page({
            //comTitle: '任职要求',
           child: [
             {
-              countTitle: '公司地址',
-              countCount: '请选择',
-              fn: 'chooseArea'
+              countTitle: '公司所在省市',
+              countCount: '',
+              fn: 'translate'
+              // fn: 'chooseArea'
             },
             {
-              inputTitle: '电子邮箱',
+              inputTitle: '公司所在地址',
               inputPlace: '请输入',
               input: '',
               watchinput: 'cominfo.select[0].child[1].input',
@@ -28,12 +31,11 @@ Page({
 
             },
             {
-              inputTitle: '公司网址',
-              inputPlace: '请输入',
-              input: '',
-              watchinput: 'cominfo.select[0].child[2].input',
-              fn: 'watchinput'
-            },
+              countTitle: '公司地图定位',
+              countCount: '选择地点定位',
+              fn: 'map'
+            }
+
            
           ],
         },
@@ -68,6 +70,21 @@ Page({
               watchinput: 'cominfo.select[1].child[3].input',
               fn: 'watchinput'
             },
+            {
+              inputTitle: '电子邮箱',
+              inputPlace: '请输入',
+              input: '',
+              watchinput: 'cominfo.select[1].child[4].input',
+              fn: 'watchinput'
+
+            },
+            {
+              inputTitle: '公司网址',
+              inputPlace: '请输入',
+              input: '',
+              watchinput: 'cominfo.select[1].child[5].input',
+              fn: 'watchinput'
+            },
 
           ],
         }
@@ -92,23 +109,46 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+    let mapS ='';
     if (app.globalData.userinfo != 0) {
       console.log(app.globalData.userinfo)
+      if (app.globalData.userinfo.Lat!='0'){
+        mapS ='更改定位'
+      }
       that.setData({
-        'cominfo.select[0].child[0].countCount': app.globalData.userinfo.Address,
-        'cominfo.select[0].child[1].input': app.globalData.userinfo.email,
-        'cominfo.select[0].child[2].input': app.globalData.userinfo.Company_Web,
+        // 原来
+        // 'cominfo.select[0].child[0].countCount': app.globalData.userinfo.Address,
+        // 'cominfo.select[0].child[1].input': app.globalData.userinfo.email,
+        // 'cominfo.select[0].child[2].input': app.globalData.userinfo.Company_Web,
+        // 'cominfo.select[1].child[0].input': app.globalData.userinfo.Link_Man,
+        // 'cominfo.select[1].child[1].input': app.globalData.userinfo.Link_Tel,
+        // 'cominfo.select[1].child[2].input': app.globalData.userinfo.Company_Area_Code,
+        // 'cominfo.select[1].child[3].input': app.globalData.userinfo.qq,
+        // 'cominfo.textarea[0]textarea': app.globalData.userinfo.Company_Intro,
+        //  Company_Logo: app.globalData.userinfo.Company_Logo,
+        //  province: app.globalData.userinfo.province,
+        //  city: app.globalData.userinfo.city,
+        //  county: app.globalData.userinfo.county,
+        //  latitude: app.globalData.userinfo.Lat,
+        //  longitude: app.globalData.userinfo.Lng
+        
+        //新的
+        'cominfo.select[0].child[0].countCount': `${app.globalData.userinfo.province} ${app.globalData.userinfo.city} ${app.globalData.userinfo.county}`,
+        'cominfo.select[0].child[1].input': app.globalData.userinfo.Address,
         'cominfo.select[1].child[0].input': app.globalData.userinfo.Link_Man,
         'cominfo.select[1].child[1].input': app.globalData.userinfo.Link_Tel,
         'cominfo.select[1].child[2].input': app.globalData.userinfo.Company_Area_Code,
         'cominfo.select[1].child[3].input': app.globalData.userinfo.qq,
+        'cominfo.select[1].child[4].input': app.globalData.userinfo.email,
+        'cominfo.select[1].child[5].input': app.globalData.userinfo.Company_Web,
         'cominfo.textarea[0]textarea': app.globalData.userinfo.Company_Intro,
          Company_Logo: app.globalData.userinfo.Company_Logo,
          province: app.globalData.userinfo.province,
          city: app.globalData.userinfo.city,
          county: app.globalData.userinfo.county,
          latitude: app.globalData.userinfo.Lat,
-         longitude: app.globalData.userinfo.Lng
+         longitude: app.globalData.userinfo.Lng,
+        'cominfo.select[0].child[2].countCount':`${mapS?mapS:"选择地点定位"}`
 
 
       })
@@ -125,8 +165,11 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  
+  onReady: function (e) {
+    this.mapCtx = wx.createMapContext('myMap');
+    var that = this;
+    //请求数据
+    model.updateAreaData(that, 0, e);
   },
 
   /**
@@ -134,19 +177,7 @@ Page({
    */
   onShow: function () {
     console.log(this.data.cominfo)
-    let that = this;
-    let map = wx.getStorageSync('map')
-    console.log("map", map)
-    if(map){
-      that.setData({
-        'cominfo.select[0].child[0].countCount': map.detail,
-        province: map.province,
-        city: map.city,
-        county: map.county,
-        latitude: map.latitude,
-        longitude: map.longitude
-      })
-    }
+
   },
 
   /**
@@ -208,14 +239,14 @@ Page({
   publish(e){
     let that = this;
     console.log("发布消息", "QQ", that.data.cominfo.select[1].child[3].input,
-      "email", that.data.cominfo.select[0].child[1].input,
+      "email", that.data.cominfo.select[1].child[4].input,
       "province", that.data.province,
       "city", that.data.city,
       "county", that.data.county,
-      "Address", that.data.cominfo.select[0].child[0].countCount,
+      "Address", that.data. cominfo.select[0].child[1].input,
       "Company_Logo", that.data.Company_Logo,
       "Company_Name", that.data.cominfo.select[1].child[0].input,
-      "Company_Web", that.data.cominfo.select[0].child[2].input,
+      "Company_Web", that.data.cominfo.select[1].child[5].input,
       "Company_Intro", that.data.cominfo.textarea[0].textarea,
       "Company_Area_Code", that.data.cominfo.select[1].child[2].input,
       "Company_Tel", that.data.cominfo.select[1].child[1].input,
@@ -225,14 +256,14 @@ Page({
       "Lng", that.data.longitude)
     let datas ={
       "QQ": that.data.cominfo.select[1].child[3].input,
-        "email": that.data.cominfo.select[0].child[1].input,
+        "email": that.data.cominfo.select[1].child[4].input,
           "province": that.data.province,
             "city": that.data.city,
               "county": that.data.county,
-                "Address": that.data.cominfo.select[0].child[0].countCount,
+                "Address": that.data.cominfo.select[0].child[1].input,
                   "Company_Logo": that.data.Company_Logo,
                     "Company_Name": that.data.cominfo.select[1].child[0].input,
-                      "Company_Web": that.data.cominfo.select[0].child[2].input,
+                     "Company_Web": that.data.cominfo.select[1].child[5].input,
                         "Company_Intro": that.data.cominfo.textarea[0].textarea,
                           "Company_Area_Code": that.data.cominfo.select[1].child[2].input,
                             "Company_Tel": that.data.cominfo.select[1].child[1].input,
@@ -243,33 +274,48 @@ Page({
 
     }
     if (!utils.IsEmpty(datas)) {
-      wx.showToast({
-        title: '有未填项',
-        icon: 'loading',
-        duration: 3000
+      wx.showModal({
+        title: '温馨提示',
+        content: '建议您完善所有信息，更能吸引人才',
+        confirmText: "继续提交",
+        cancelText: "继续修改",
+        success: function (res) {
+          console.log(res);
+          if (res.confirm) {
+            chajian()
+          } else {
+            return false;
+          }
+        }
       });
-      return false;
+  
+    }else{
+      chajian()
     }
-    utils.post('usercenter/update_cominfo', datas, that.data.token).then((res) => {
-      console.log(res);//正确返回结果
-      wx.showToast({
-        title: '已提交',
-        icon: 'success',
-        duration: 3000
+    function chajian(){
+      utils.post('usercenter/update_cominfo', datas, that.data.token).then((res) => {
+        console.log(res);//正确返回结果
+        wx.showToast({
+          title: '已提交',
+          icon: 'success',
+          duration: 3000
+        });
+        that.getNewINfo()
+
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 2
+          })
+        }, 1500)
+
+        //resolve()
+      }).catch((errMsg) => {
+        console.log(errMsg);//错误提示信息
+
+        //  reject()
       });
-      that.getNewINfo()
-      setTimeout(function(){
-        wx.navigateBack({
-          delta: 2
-        })
-      },1500)
+    }
 
-      //resolve()
-    }).catch((errMsg) => {
-      console.log(errMsg);//错误提示信息
-
-      //  reject()
-    });
   },
   //更改数据
   watchinput(e){
@@ -347,5 +393,96 @@ Page({
       //wx.hideLoading();
       // reject()
     });
-  }
+  },
+  map() {
+    let that = this;
+    console.log("进入了编辑页面")
+    let pd = wx.getStorageSync('mapState')
+    if (!pd){
+      wx.showModal({
+        content: '您未授权小程序获取定位权限，请您返回上一页，在最下面点击授权',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          }
+        }
+      });
+    }
+    //追踪获取到位置
+    wx.chooseLocation({
+      success: function (res) {
+        // success
+        console.log(res, "location")
+        that.setData({
+          hasLocation: true,
+          location: {
+            longitude: res.longitude,
+            latitude: res.latitude
+          },
+          detail_info: res.address,
+          latitude: res.latitude,
+          longitude: res.longitude,
+          'cominfo.select[0].child[2].countCount': '更改定位'
+        })
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+  //点击选择城市按钮显示picker-view
+  translate(e) {
+    let that = this;
+  
+    //隐藏输入框及头部及底部
+    that.setData({
+      'otherms.showTextarea': true,
+      'allms.showTextarea': true,
+      show: true,
+      beifen: that.data.cominfo.select[1],
+      benfen2: that.data.cominfo.textarea,
+      'cominfo.select[1]':[],
+      'cominfo.textarea': [],
+
+    })
+
+    model.animationEvents(this, 0, true, 400);
+  },
+  //隐藏picker-view
+  hiddenFloatView(e) {
+    var that = this;
+    //隐藏输入框及头部及底部
+    that.setData({
+      'otherms.showTextarea': false,
+      'allms.showTextarea': false,
+      show: false,
+      'cominfo.select[1]': that.data.beifen,
+      'cominfo.textarea': that.data.benfen2,
+    })
+    model.animationEvents(this, 200, false, 400);
+    console.log(that.data.province, that.data.city, that.data.county);
+    that.setData({
+      'cominfo.select[0].child[0].countCount': `${that.data.province} ${that.data.city} ${that.data.county}`
+    })
+  },
+  //滑动事件
+  bindChange(e) {
+    let that = this;
+    model.updateAreaData(this, 1, e);
+    item = this.data.item;
+    this.setData({
+      province: item.provinces[item.value[0]].name,
+      city: item.citys[item.value[1]].name,
+      county: item.countys[item.value[2]].name
+    })
+
+  },
+  onReachBottom() {
+  },
+  nono() { },
+//对经纬度的选择
 })

@@ -49,7 +49,7 @@ Page({
       that.setData({
         adress: `${app.globalData.userinfo.province} ${app.globalData.userinfo.city} ${app.globalData.userinfo.county}`,
         input: app.globalData.userinfo.Address,
-        maps: `${app.globalData.userinfo.Lat?'更改定位':'选择地点定位'}`,
+        maps: `${app.globalData.userinfo.Lat!='0'?'更改定位':'选择地点定位'}`,
         wd: app.globalData.userinfo.Lat,
         jd: app.globalData.userinfo.Lng,
         province: app.globalData.userinfo.province,

@@ -1,5 +1,6 @@
 /* pages/child/comInfo/comInfo.wxss */
-@import "/template/template.wxss";  
+@import "/template/template.wxss";
+@import '../../../model/model.wxss';  
 .cssActive{
   color: #00A2E9;
 }

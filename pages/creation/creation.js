@@ -519,10 +519,10 @@ Page({
       }
       console.log("datas", datas)
     }
-    // console.log("是否有空的东西", utils.IsEmpty(datas), datas) ;
-    // if (datas.sho_position_gertificate){
-    //   console.log("证书", utils.IsEmpty(datas.sho_position_gertificate[0]), datas.sho_position_gertificate[0]);
-    // }
+    console.log("是否有空的东西", utils.IsEmpty(datas), 'datas',datas) ;
+     if (datas.sho_position_gertificate){
+       console.log("证书", utils.IsEmpty(datas.sho_position_gertificate[0]), datas.sho_position_gertificate[0]);
+    }
    
 
     //判断是否有空的输入填入
@@ -550,13 +550,38 @@ Page({
       wx.showToast({
         title: '已发布',
         icon: 'success',
-        duration: 3000
+        duration: 1500
       });
+      setTimeout(function(){
+        wx.showModal({
+      
+          content: '是否查看发布的该简历？',
+          confirmText: "是",
+          cancelText: "否",
+          success: function (res) {
+            console.log(res);
+            if (res.confirm) {
+              console.log('用户点击主操作')
+              wx.navigateTo({
+                url: '/pages/child/positionManagement/positionManagement'//
+              })
+            } else {
+              console.log('用户点击辅助操作')
+              return false;
+            }
+          }
+        });
+      },1000)
       //存储结束
       // resolve()
     }).catch((errMsg) => {
       console.log(errMsg);//错误提示信息
-      wx.hideLoading();
+      wx.showToast({
+        title: '发布失败',
+        icon: 'loading',
+        duration: 3000
+      });
+
       //reject()
     });
   

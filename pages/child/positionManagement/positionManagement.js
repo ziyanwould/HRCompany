@@ -40,7 +40,8 @@ Page({
     })
 
     //var height = '100%';
-    that.getmessage()
+    that.getmessage();
+    that.remain();
   },
 
   ontouchstart: function (e) {
@@ -427,5 +428,19 @@ Page({
     wx.navigateTo({
       url: url,
     })
+  },
+  //获取剩余发布职位
+  remain(){
+    let that = this;
+    utils.post('api/position/public_may', false, that.data.token).then((res) => {
+      console.log("职位次数", res.count);//正确返回结果
+      that.setData({
+        jobNumber: `${res.count != 0 ? res.count:'无次数'}`
+      })
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      //  reject()
+    });
   }
+
 })

@@ -3,6 +3,7 @@
 <import src="/template/nav" />
   <view class='Tdtitle'>
     <text  wx:for="{{used_list}}" wx:key="*this" class="{{activeIndex==index?'active':''}}" id="{{index}}" bindtap="active">{{item.name}}</text>
+   <text style='float:right;'> 剩余发布职位数：{{jobNumber}}</text>
   </view>
 <view class="containers">
    <scroll-view  scroll-y='{{scrollY}}' class='msg-list' bindscroll = 'onScroll'>

@@ -10,13 +10,15 @@
   position: relative;
   margin:0 15rpx;
   top: -24rpx; 
+  border-radius: 10px;
 }
 .seeinput input{
   display: block;
   height: 48rpx;
   background: #FFFFFF;
   box-shadow: darkgrey 10rpx 10rpx 30rpx 5rpx ;/*框阴影*/
-  border-radius: 10rpx;
+  border-radius: 10px;
+  text-align: center;
 }
 .sde{
   text-align: center;

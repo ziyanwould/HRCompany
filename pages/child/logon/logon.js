@@ -222,7 +222,7 @@ Page({
             placeholder: '',
             placlass: 'loPlone',
             fn: 'watchInput',
-            fn2: 'getVerificationCodes',
+            fn2: 'getVerificationCode',
             valMessPan: true,
             time: "获取验证码"
 
@@ -329,6 +329,7 @@ Page({
   onShareAppMessage: function () {
   
   },
+  //尝试更改是否可以恢复
   getVerificationCodes(e){
     this.getVerificationCode(e,"手机注册")
   },
@@ -357,6 +358,7 @@ Page({
       return false;
     }
     //启动计数器
+    console.log("手机验证码烈性", types)
     utils.post('api/common/send_smscode', {
       "mobile": mobile,
       "action_type": types,
@@ -813,7 +815,13 @@ Page({
       })
     }else{
       let url ='';
-      that.save(5)
+      if (that.data.login_token){
+        console.log("token", that.data.login_token)
+        that.save(5)
+      }else{
+        that.save(4)
+      }
+     
       if (that.data.has_Verify){
         url ='api/common/company_again_register'
       }else{
@@ -965,8 +973,8 @@ Page({
           value: '',
           placeholder: '',
           placlass: 'loPlone',
-          fn: 'watchInput',
-          fn2:'getVerificationCode',
+          fn: 'watchInput',//验证码修改
+          fn2:'getVerificationCodes',
           valMessPan:true,
           time: "获取验证码"
 

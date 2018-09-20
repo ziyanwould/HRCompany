@@ -219,19 +219,7 @@ Page({
     //   })
     // }
 
-    if (app.globalData.userinfo!=0){
-      console.log(app.globalData.userinfo)
-     that.setData({
-       'firlist.[0].count': app.globalData.userinfo.Company_Name,
-       'firlist.[1].count': app.globalData.userinfo.Address,
-       'firlist.[2].count': app.globalData.userinfo.email,
-       'firlist.[3].count': app.globalData.userinfo.Company_Web,
-       Company_Intro: app.globalData.userinfo.Company_Intro,
-       'comlist.[0].RTitle': app.globalData.userinfo.vip.Name,
-       'comlist.[1].RTitle': app.globalData.userinfo.Lp_fee
-
-     })
-    }
+  
 
   },
 
@@ -258,6 +246,23 @@ Page({
         token: true
       });
     }
+    if (app.globalData.userinfo != 0) {
+      console.log(app.globalData.userinfo)
+      that.setData({
+        'firlist.[0].count': app.globalData.userinfo.Company_Name,
+        'firlist.[1].count': app.globalData.userinfo.Address,
+        'firlist.[2].count': app.globalData.userinfo.email,
+        'firlist.[3].count': app.globalData.userinfo.Company_Web,
+        Company_Intro: app.globalData.userinfo.Company_Intro,
+        'comlist.[0].RTitle': app.globalData.userinfo.vip.Name,
+        'comlist.[1].RTitle': app.globalData.userinfo.Lp_fee,
+        Company_Logo: app.globalData.userinfo.Company_Logo
+
+      })
+    }
+    //更新地址授权信息
+    that.mapinfo()
+    
   },
 
   /**
@@ -664,5 +669,24 @@ Page({
        // reject()
      });
    }
-   
+   ,
+  mapinfo(e){
+    let that  = this;
+   console.log(e);
+    wx.getSetting({
+      success:function(res){
+        let pd = res.authSetting["scope.userLocation"]
+        console.log(pd);
+
+         that.setData({
+           mapState: pd
+         })
+        wx.setStorageSync('mapState', pd)
+      },
+      fail:function(res){
+        console.log(res)
+      }
+    })
+  }
+  
 })
