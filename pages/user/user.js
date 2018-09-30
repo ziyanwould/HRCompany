@@ -219,7 +219,45 @@ Page({
     //   })
     // }
 
-  
+     //获取用户信息
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res.userInfo)
+              that.savePerson(res.userInfo.avatarUrl)
+            }
+          })
+          that.setData({
+            SQ:true
+          })
+        }else{
+          console.log("授权失败")
+          that.setData({
+            SQ: false
+          })
+          wx.showModal({
+            content: '您未授权用户信息，则发布职位时候，求职者无法看到发布者信息',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              }
+            }
+          });
+        }
+      },
+      fail(res){
+        console.log("获取失败，未授权");
+        wx.showToast({
+          title: '网络故障',
+          icon: 'loading',
+          duration: 3000
+        });
+      }
+    })
 
   },
 
@@ -687,6 +725,43 @@ Page({
         console.log(res)
       }
     })
+  },
+  //用户信息
+  bindGetUserInfo(e) {
+    console.log(e.detail.userInfo)
+    let myself = e.detail.userInfo;
+    let that = this;
+    let situe = false
+    if(myself) {
+      situe = true;
+      that.savePerson(myself.avatarUrl)
+    }else{
+      situe = false
+    }
+    that.setData({
+      SQ: situe
+    })
+  
+  },
+  //保存头像
+  savePerson(url){
+    let that = this;
+    let datas = {
+      "header_img": url
+      }
+    console.log("url", datas)
+    utils.post('usercenter/change_header_img', datas, that.data.login_token).then((res) => {
+      console.log("更换图片", res);//正确返回结果
+  
+      // wx.hideLoading();
+      // resolve()
+    
+    }).catch((errMsg) => {
+      console.log(errMsg);//错误提示信息
+      //wx.hideLoading();
+      // reject()
+    });
+ 
   }
   
 })

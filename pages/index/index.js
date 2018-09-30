@@ -175,7 +175,7 @@ Page({
           // area: res.list[i].certificate.length == 0 ? `${res.list[i].city}` : `${res.list[i].certificate[0].province}${res.list[i].certificate[0].city}`,备份
         area: res.list[i].certificate.length == 0 ? `${res.list[i].city}` : `${res.list[i].certificate[0].city}`,
         stats: i % 2 == 0 ? '资质' : '不限',
-          pay: res.list[i].wages == (null ||-1 )? `面议` : `${res.list[i].wages}`,
+          pay: res.list[i].wages == (null  )? `面议` : `${res.list[i].wages}`,
         person: res.list[i].img,
         time: res.list[i].utime.substr(0, 10) ,
         resume_id: res.list[i].resume_id

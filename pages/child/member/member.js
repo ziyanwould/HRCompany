@@ -14,10 +14,10 @@ Page({
         vip:'普通会员',
         pay:'5000/年',
         lists:[
-          { img: 'mber3', text:'下载与邀约人才全职月薪不超过15000'},
-          { img: 'mber4', text: '兼职年薪不超过35000' },
-          { img: 'mber5', text: '可发布各类职位300个' },
-          { img: 'mber6', text: '下载简历300份' }
+          { img: 'mber3', text:'发布职位数量300条'},
+          { img: 'mber4', text: '拥有邀约面试特权' },
+          { img: 'mber5', text: '开通即赠送50000猎聘豆' },
+          // { img: 'mber6', text: '下载简历300份' }
           
         ]
       },
@@ -26,9 +26,9 @@ Page({
         vip: '高级会员',
         pay: '10000/年',
         lists: [
-          { img: 'mber3', text: '下载与邀约人才月薪与年薪不限' },
-          { img: 'mber5', text: '可发布各类职位800个' },
-          { img: 'mber6', text: '下载简历800份' }
+          { img: 'mber3', text: '发布职位数量不限' },
+          { img: 'mber5', text: '拥有邀约面试特权'  },
+          { img: 'mber6', text: '开通即赠送100000猎聘豆' }
 
         ]
       }
@@ -111,9 +111,8 @@ Page({
           pay: res.vipList[0].base_price,
           Product_Id:res.vipList[0].Product_Id,
           lists: [
-            { img: 'mber3', text: '下载与邀约人才全职月薪不超过15000' },
-            { img: 'mber4', text: '兼职年薪不超过35000' },
-            { img: 'mber5', text: `可发布各类职位${res.vipList[0].Ext_public}个` },
+            { img: 'mber3', text: `开通即赠送猎聘豆${res.vipList[0].Give_Lp_fee}` },
+            { img: 'mber5', text: `可发布各类职位${res.vipList[0].Ext_public == 999999 ? "无限" : res.vipList[0].Ext_public}个` },
             { img: 'mber6', text: `下载简历${res.vipList[0].Full_max}份` }
 
           ]
@@ -124,8 +123,8 @@ Page({
           pay: res.vipList[1].base_price,
           Product_Id: res.vipList[1].Product_Id,
           lists: [
-            { img: 'mber3', text: '下载与邀约人才月薪与年薪不限' },
-            { img: 'mber5', text: `可发布各类职位${res.vipList[1].Ext_public}个` },
+            { img: 'mber3', text: `开通即赠送猎聘豆${res.vipList[1].Give_Lp_fee}` },
+            { img: 'mber5', text: `可发布各类职位${res.vipList[1].Ext_public == 999999 ? "无限" : res.vipList[1].Ext_public}个` },
             { img: 'mber6', text: `下载简历${res.vipList[1].Full_max}份` }
 
           ]

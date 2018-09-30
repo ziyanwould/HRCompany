@@ -83,6 +83,19 @@
         </view>
      </button>
      
+     <button class='list buttonx'  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+        <view class='left'>
+           <view class='imgCen'> 
+               <image style='width:28rpx;height:28rpx'  src='http://www.liujiarong.top/WX/images/wx_retroaction.png'></image>
+           </view>
+           <text>授权用户信息</text>
+        </view>
+        <view class='right'>
+               <text class='Tclass' >{{SQ?'已授权':'未授权'}}</text>
+           <image class='toright' src='http://www.liujiarong.top/WXImg/toright.png'></image>
+        </view>
+     </button>
+     
 
 
 

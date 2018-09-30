@@ -9,7 +9,7 @@
 .seeinput{
   position: relative;
   margin:0 15rpx;
-  top: -24rpx; 
+  top: -2rpx; 
   border-radius: 10px;
 }
 .seeinput input{
@@ -60,7 +60,7 @@
 } 
 
 .partTime .right .name text{
-  font-size: 26rpx;
+  font-size: 30rpx;
   color: #737373;
 }  
 .partTime .right .message image{
@@ -68,8 +68,14 @@
   height: 24rpx;
 }
 .partTime .right .message text{
- font-size: 23rpx;
+ font-size: 26rpx;
  margin-right: 12rpx;
+ padding-right: 12rpx;
+ border-right: 1rpx solid #e5e5e5;
+}
+.partTime .right .message text:last-child{
+ 
+ border-right:none;
 }
 .partTime .right .message{
   display: inline-flex;
@@ -79,6 +85,7 @@
   justify-content:flex-start;
   position: relative;
 }
+
 .partTime .right{
   padding-left: 20rpx;
   flex: 1;
@@ -111,10 +118,10 @@
 }
 
 .partTime .right .time{
-  
+ 
   position: absolute;
   right: 0;
-  bottom: -36rpx;
+  bottom: -30rpx;
   display: inline-flex;
   align-items:center;
 }
@@ -574,7 +581,10 @@ margin: 0 24rpx;
 .personMes{
   position: relative;
   margin: 0 20rpx;
-  height: 340rpx;
+  height: 600rpx;
+}
+.actives{
+  height: 480rpx;
 }
 .personMes .person1{
   width: 100%;
@@ -586,7 +596,7 @@ margin: 0 24rpx;
   box-shadow: #FAD2FC 5rpx 5rpx 15rpx 3rpx ;/*框阴影*/
 }
 .personMes .person2{
-  height: 200rpx;
+  /* height: 200rpx; */
   padding-top: 180rpx;
   /* background:rgba(245, 205, 25, 0.2); */
   margin: 0 10rpx;
@@ -709,9 +719,10 @@ margin: 0 24rpx;
 .personMes .showDe .list{
   display: flex;
   align-items:center;
-  padding: 10rpx 0;
+  padding: 18rpx 0;
   color: #5b5b5b;
-  font-size: 22rpx;
+  font-size: 27rpx;
+  height: 35rpx;
 }
 .personMes .showDe .list image{
   margin-right: 10rpx;
@@ -766,7 +777,7 @@ margin: 0 24rpx;
   padding: 30rpx 0 20rpx 0;}
 .positionCount .evaluate .count{
 
-  font-size: 24rpx;
+  font-size: 27rpx;
   /* line-height: 35rpx; */
   padding-bottom: 30rpx;
 }
@@ -776,7 +787,7 @@ margin: 0 24rpx;
    padding: 0 30rpx 30rpx 30rpx;
 }
 .positionCount .time{
-  font-size: 26rpx;
+  font-size: 27rpx;
   color: #5b5b5b;
   padding-bottom: 20rpx;
 }
@@ -788,16 +799,17 @@ margin: 0 24rpx;
 }
 .positionCount .tags1 {
    color: #5b5b5b;
-   font-size: 24rpx;
+   font-size: 26rpx;
 }
 .positionCount .tags2 {
   color: #a3a3a3;
-    font-size: 24rpx;
+    font-size: 26rpx;
 }
 .positionCount .secondTitle{
  padding-top: 20rpx;
 }
 .positionCount .secondCount{
+  font-size: 27rpx;
   padding-top: 10rpx;
   /* padding-bottom: 30rpx; */
 }
@@ -837,15 +849,23 @@ margin: 0 24rpx;
   margin-top: 30rpx;
 }
 .positionCount .tags3{
+  font-size: 26rpx;
   color: #a3a3a3;
 }
 .positionCount .secondTitle{
+  font-size: 28rpx;
   font-weight: 600;
 }
 .positionCount .education{
     background: #FFFFFF;
    border-top: 24rpx solid #EFEFEF;
     padding: 0 30rpx 30rpx 30rpx;
+}
+.positionCount .thirdCount{
+  font-size: 27rpx;
+}
+.positionCount .tags5{
+  font-size: 29rpx;
 }
 .positionCount  .education .list{
   border-top: 1rpx  dotted #F1F0F4;
@@ -878,6 +898,11 @@ margin: 0 24rpx;
 }
 .positionCount .fourTCount{
   margin-top: 5rpx;
+  font-size: 27rpx;
+}
+.positionCount .fourTCount view{
+  margin-top: 15rpx;
+ 
 }
 .positionClick{
   width: 95%;

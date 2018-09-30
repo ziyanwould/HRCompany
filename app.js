@@ -92,6 +92,14 @@ App({
     //检查登录是否失效并提示，且删除本地token值
     try {
       var value = wx.getStorageSync('token')
+
+      common.post('usercenter/update_last_time', false, value.login_token).then((res) => {
+        console.log("更新登录时间", res);//正确返回结果
+
+      }).catch((errMsg) => {
+        console.log(errMsg);//错误提示信息
+    
+      });
       if (value) {
         console.log("token", value)
         // common.request('api/common/check_islogin', {

@@ -4,7 +4,11 @@
      <view class='count thisone'  bindtap='exchangPhotos'>
               <view class='Left'><text>公司LOGO</text></view>
               <view class='Right'><image class='img' src='{{Company_Logo?Company_Logo:"http://www.liujiarong.top/WXImg/logos.png"}}'></image></view>
-            </view>
+      </view>
+      <!-- <view class='count thisone'  bindtap='changePerson'>
+              <view class='Left'><text>发布者头像</text></view>
+              <view class='Right'><image class='img' src='{{Company_Logo?Company_Logo:"http://www.liujiarong.top/WXImg/logos.png"}}'></image></view>
+      </view> -->
     <template is='creation' data='{{...cominfo}}'/>
   </view>
 

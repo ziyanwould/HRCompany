@@ -426,7 +426,7 @@ Page({
     })
   },
   FchoosePay(){
-    let arry = ["3k -6k", "6k -10k", "10k -15k","15k以上","面议"];
+    let arry = [ "1.5W-3.5W", "3.5W-4.5W", "4.5W-5.5W", "5.5W-6.5W","6.5W以上","面议"];
     let ele = 'otherms.select[0].child[1].countCount';
     this.selsect(arry, ele)
   },

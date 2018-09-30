@@ -19,9 +19,33 @@
 
 <!-- 背景图组价 -->
 <template name="banner">
-  <view class='bannerImg'>
-    <image src='http://www.liujiarong.top/WXImg/bannner.png'></image>
-  </view>
+  
+
+     
+             <swiper indicator-dots="true"  autoplay="true" interval="5000" duration="500" circular="true"> 
+    
+       
+        <swiper-item  > 
+         <view class='bannerImg'>
+          <image src='http://www.liujiarong.top/WXImg/bannner.png'></image>
+        </view>
+        </swiper-item> 
+
+        <swiper-item> 
+           <view class='bannerImg'>
+          <image src='http://www.zhongzhu71.com/UploadImgs/20171123//20171123170556212.png'></image>
+        </view>
+        </swiper-item> 
+
+        <swiper-item> 
+           <view class='bannerImg'>
+          <image src='http://www.zhongzhu71.com/UploadImgs/20171123//20171123165431252.png'></image>
+        </view>
+        </swiper-item> 
+</swiper>
+      
+
+    
 </template>
 
 <template name="banner1">
@@ -36,9 +60,8 @@
    <input placeholder-class='sde' placeholder='搜索' disabled='disabled' bindtap='{{fn}}'></input>
   </view>
 </template>
-
-<!-- 兼职/全职简历模板 -->
-<template name='partTime'>
+<!-- 旧的兼职/全职简历模板 -->
+<!-- <template name='partTime'>
   <view class='partTime' bindtap='{{fn}}' data-id='{{resume_id}}'>
     <view class='left'>
         <image src='{{person?person:"http://www.liujiarong.top/WXImg/person.png"}}'></image>
@@ -53,13 +76,13 @@
        <view class='message' wx:if='{{!education}}'>
          <image src='http://www.liujiarong.top/WXImg/area.png'></image><text>{{area}}</text>
          <image src='http://www.liujiarong.top/WXImg/stats.png'></image><text class='stats'>{{stats}}</text>
-         <image src='http://www.liujiarong.top/WXImg/pay.png'></image><text class='pay'>{{pay}}</text>
+         <image src='http://www.liujiarong.top/WXImg/pay.png'></image><text class='pay'>{{pay==(-1)?'面议':pay}}</text>
       </view>
       <!-- 全职版块应有信息 -->
-      <view class='message fullTime' wx:if='{{education}}'>
+      <!-- <view class='message fullTime' wx:if='{{education}}'>
          <image src='http://www.liujiarong.top/WXImg/education.png'></image><text class='education'>{{education}}</text>
          <image src='http://www.liujiarong.top/WXImg/birthday.png'></image><text class='birthday'>{{birthday}}</text>
-         <image src='http://www.liujiarong.top/WXImg/experience.png'></image><text class='experience'>{{experience}}</text>
+         <image src='http://www.liujiarong.top/WXImg/experience.png'></image><text class='experience'>{{experience==null?'1年':experience}}</text>
       </view>
       <view class='other' wx:if='{{!log}}'>
        查看简历
@@ -67,6 +90,42 @@
        <view class='time' wx:if='{{!log}}'>
            <image style='width:20rpx;height:20rpx;' src='http://www.liujiarong.top/WXImg/upTime.png'></image>
            <text style='font-size:20rpx;color:#CED4D9;'>{{time}}</text>
+      </view>
+    </view>
+
+  </view>
+</template> --> 
+<!-- 兼职/全职简历模板 -->
+<template name='partTime'>
+  <view class='partTime' bindtap='{{fn}}' data-id='{{resume_id}}'>
+    <view class='left'>
+        <image src='{{person?person:"http://www.liujiarong.top/WXImg/person.png"}}'></image>
+    </view>
+    <view class='right'>
+      <view class='title'>
+         <text>{{tille}}</text>
+      </view>
+      <view class='name'>
+         <!-- <image  src='http://www.liujiarong.top/WXImg/{{sex=="男"?"name":"nv"}}.png'></image>--><text>{{name}}</text> 
+      </view>
+       <view class='message' wx:if='{{!education}}'>
+         <text>{{sex}}</text>
+         <text>{{area}}</text>
+         <text>{{stats}}</text>
+         <text >{{pay==(-1)?'面议':pay}}</text>
+      </view>
+      <!-- 全职版块应有信息 -->
+      <view class='message fullTime' wx:if='{{education}}'>
+        <text>{{education}}</text>
+        <text>{{birthday}}</text>
+        <text>{{experience==null?'1年':experience}}</text>
+      </view>
+      <!-- <view class='other' wx:if='{{!log}}'>
+       查看简历
+      </view> -->
+       <view class='time' wx:if='{{!log}}'>
+           <image style='width:30rpx;height:30rpx;' src='http://www.liujiarong.top/WXImg/upTime.png'></image>
+           <text style='font-size:25rpx;color:#CED4D9;padding-top:6rpx;'>{{time}}</text>
       </view>
     </view>
 
@@ -261,7 +320,7 @@
 <!-- 详情页的人物信条 -->
 
 <template name='personMes'>
-  <view class='personMes'>
+  <view class='personMes {{!switchde?"actives":""}}'>
 
       <view class="person1 {{switchde?'':'success_circle'}}" >
         <view class='first'>
@@ -300,9 +359,7 @@
            <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>证书类别：{{resumePart.certificate[0].ger_type_name}}</view>
             <view class='list'><image class='redetail03' src='http://www.liujiarong.top/WXImg/redetail03.png'></image>证书状态：{{resumePart.certificate[0].state}}</view>
              <view class='list'><image class='redetail05' src='http://www.liujiarong.top/WXImg/redetail05.png'></image>证书用途：{{resumePart.certificate[0].useRe}}</view>
-         </view>
-         <view class='shRight'>
-               <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：{{resumePart.certificate[0].registration}}</view>
+                <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：{{resumePart.certificate[0].registration}}</view>
              <view class='list'><image class='redetail04' src='http://www.liujiarong.top/WXImg/redetail04.png'></image>证书所在地：
             <block wx:if='{{resumePart.certificate[0].province!="不限"}}'>
              {{resumePart.certificate[0].province?resumePart.certificate[0].province+'-':''}}
@@ -320,19 +377,39 @@
                   <block wx:if="{{resumePart.certificate[0].b_card==4}}">情况不清</block> 
                 </view>
          </view>
+         <!-- <view class='shRight'>
+               <view class='list'><image class='redetail02' src='http://www.liujiarong.top/WXImg/redetail02.png'></image>注册情况：{{resumePart.certificate[0].registration}}</view>
+             <view class='list'><image class='redetail04' src='http://www.liujiarong.top/WXImg/redetail04.png'></image>证书所在地：
+            <block wx:if='{{resumePart.certificate[0].province!="不限"}}'>
+             {{resumePart.certificate[0].province?resumePart.certificate[0].province+'-':''}}
+            </block>
+
+            <!-- <block wx:if='{{resumePart.certificate[0].province=="不限"}}'>
+             {{resumePart.certificate[0].province?resumePart.certificate[0].province+'-':''}}
+            </block> -->
+             <!-- {{resumePart.certificate[0].location}}
+             </view>
+                <view class='list' wx:if='{{resumePart.certificate[0].b_card!=0}}'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>B证状态：
+                  <block wx:if="{{resumePart.certificate[0].b_card==1}}">带B证</block>
+                  <block wx:if="{{resumePart.certificate[0].b_card==2}}">不带B证</block>
+                  <block wx:if="{{resumePart.certificate[0].b_card==3}}">考B证</block>
+                  <block wx:if="{{resumePart.certificate[0].b_card==4}}">情况不清</block> 
+                </view>
+         </view> --> 
        </view>
 
         <view class='showDe active' wx:if='{{!switchde}}'>
          <view class='shLeft'>
            <view class='list'><image class='redetail01' src='http://www.liujiarong.top/WXImg/redetail01.png'></image>期望职位：{{resumePart.expectWork.work}}</view>
             <view class='list'><image class='redetail07' src='http://www.liujiarong.top/WXImg/redetail07.png'></image>期望薪资：{{resumePart.expectWork.monthlyPay}}元/月</view>
-           
-         </view>
-         <view class='shRight'>
-             
              <view class='list'><image class='redetail08' src='http://www.liujiarong.top/WXImg/redetail08.png'></image>工作类型：{{resumePart.expectWork.positionType}}</view>
                <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>求职状态：{{resumePart.baseUserData.job_status}}</view>
          </view>
+         <!-- <view class='shRight'>
+             
+             <view class='list'><image class='redetail08' src='http://www.liujiarong.top/WXImg/redetail08.png'></image>工作类型：{{resumePart.expectWork.positionType}}</view>
+               <view class='list'><image class='redetail06' src='http://www.liujiarong.top/WXImg/redetail06.png'></image>求职状态：{{resumePart.baseUserData.job_status}}</view>
+         </view> -->
        </view>
 
       </view>
