@@ -5,6 +5,7 @@
   width: 100%;
   height: 360rpx;
   overflow: hidden;
+
 } 
 .seeinput{
   position: relative;
@@ -581,7 +582,10 @@ margin: 0 24rpx;
 .personMes{
   position: relative;
   margin: 0 20rpx;
-  height: 600rpx;
+  height: 550rpx;
+}
+.shLeft{
+  margin-top: 10rpx;
 }
 .actives{
   height: 480rpx;
@@ -593,7 +597,8 @@ margin: 0 24rpx;
   background:#FFFFFF;
   position: absolute;
   top: -128rpx;
-  box-shadow: #FAD2FC 5rpx 5rpx 15rpx 3rpx ;/*框阴影*/
+  /* box-shadow: #FAD2FC 5rpx 5rpx 15rpx 3rpx ;框阴影 */
+  box-shadow: #EFEFEF 5rpx 15rpx 18rpx 3rpx;
 }
 .personMes .person2{
   /* height: 200rpx; */

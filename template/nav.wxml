@@ -50,7 +50,7 @@
 
 <template name="banner1">
   <view class='bannerImg'>
-    <image src='http://www.liujiarong.top/WXImg/redetailBan.png'></image>
+    <!-- <image src='http://www.liujiarong.top/WXImg/redetailBan.png'></image> -->
   </view>
 </template>
 

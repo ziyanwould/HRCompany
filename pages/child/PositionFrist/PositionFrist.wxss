@@ -70,3 +70,9 @@ page{
 .child text:nth-of-type(2){
   color: #aaaaaa;
 }
+ .bannerImg{
+  width: 100%;
+  height: 160rpx;
+  overflow: hidden;
+ background: #00B38B;
+} 
