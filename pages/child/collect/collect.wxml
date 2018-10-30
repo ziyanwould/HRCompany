@@ -1,6 +1,6 @@
 <!--pages/child/collect/collect.wxml-->
 <import src="/template/nav" />
-  <template  is='search' data='{{...seekData}}' />
+  <!-- <template  is='search' data='{{...seekData}}' /> -->
 
 <block wx:if='{{!(seekData.inputVal.length > 0)}}'>
     <view class='Tdtitle'>

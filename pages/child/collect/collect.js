@@ -17,7 +17,7 @@ Page({
     used_list: [
       { title: "分类01", name: "兼职" },
       { title: "分类02", name: "全职" },
-      { title: "分类03", name: "新闻" },
+      // { title: "分类03", name: "新闻" },
     ],
     seekData: {
       inputShowed: false,

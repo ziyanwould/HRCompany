@@ -197,7 +197,7 @@ Page({
       title: messages,
     });
     var list = that.data.list;
-
+    console.log('datas', datas)
     utils.post('api/resume/resume_list', datas ).then((res) => {
       console.log(res);//正确返回结果
 
@@ -227,8 +227,11 @@ Page({
           stats: i % 2 == 0 ? '资质' : '不限',
           pay: res.list[i].wages == null ? `面议` : `${res.list[i].wages}`,
           person: res.list[i].img,
-          time: res.list[i].utime.substr(0, 10)
-
+          time: res.list[i].utime.substr(0, 10),
+          education: res.list[i].education,
+          birthday: res.list[i].age,
+          experience: res.list[i].jobexp,
+          resume_id: res.list[i].resume_id
         }
         if (res.list[i].sex == 0) {
           lists.sex = '男'
@@ -568,5 +571,20 @@ Page({
     }
 
     that.datalist('努力加载中...', that.data.datas) 
+  },
+  detail: function (e) {
+    let that = this;
+    console.log("简历", e.currentTarget.dataset.id);
+    // return false;
+    if (that.data.datas.type_id == 1) {
+      wx.navigateTo({
+        url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=全职`//全职简历
+      })
+    } else {
+      wx.navigateTo({
+        url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.dataset.id}&type=兼职`
+      })
+    }
+
   }
 })

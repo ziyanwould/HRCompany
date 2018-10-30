@@ -1,6 +1,9 @@
 /* pages/child/posOrgin/posOrgin.wxss */
 page{
   border-top: 1rpx solid #dcdcdc;
+  height: 100%;
+  background: #F6F7F7;
+ 
 }
 .position.headerSeach{
   height: 70rpx;
@@ -58,18 +61,18 @@ margin-top: -18rpx;
   border: 1rpx solid #088ee7;
 }
 
-.right text:nth-of-type(1){
+/* .right text:nth-of-type(1){
   color: #088ee7;
   display: inline-block;
   margin-right: 20rpx;
-}
-.right text:nth-of-type(2){
+} */
+/* .right text:nth-of-type(2){
   padding: 5rpx 10rpx;
   border-radius: 10rpx;
   background: #088ee7;
   color: #FFFFFF;
   margin-right:10rpx;
-}
+} */
 .lsecond{
   padding: 20rpx 30rpx;
   margin-top: 10rpx;

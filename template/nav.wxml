@@ -110,7 +110,7 @@
       </view>
        <view class='message' wx:if='{{!education}}'>
          <text>{{sex}}</text>
-         <text>{{area}}</text>
+         <text>{{area=='不限不限'?'不限':area}}</text>
          <text>{{stats}}</text>
          <text >{{pay==(-1)?'面议':pay}}</text>
       </view>

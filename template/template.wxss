@@ -33,6 +33,7 @@
    border-radius: 15rpx;
    display: flex;
     align-items:center;
+    min-height: 160rpx;
  }
  .partTime .left image{
    width: 88rpx;
@@ -582,7 +583,8 @@ margin: 0 24rpx;
 .personMes{
   position: relative;
   margin: 0 20rpx;
-  height: 550rpx;
+  /* height: 550rpx; */
+  height: auto;
 }
 .shLeft{
   margin-top: 10rpx;
