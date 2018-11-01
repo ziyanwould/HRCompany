@@ -33,7 +33,7 @@
    border-radius: 15rpx;
    display: flex;
     align-items:center;
-    min-height: 160rpx;
+    /* min-height: 160rpx; */
  }
  .partTime .left image{
    width: 88rpx;
