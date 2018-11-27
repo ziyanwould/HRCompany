@@ -247,7 +247,8 @@ Page({
     console.log("number", e.currentTarget.id);
     page=0;
     that.setData({
-      msgList: []
+      msgList: [],
+      numbers: numberv
       
     })
     that.datalist()
@@ -276,7 +277,7 @@ Page({
     console.log("简历", e.currentTarget);
     console.log(that.data.send_type)
     //return false;
-    if (that.data.send_type == '全职') {
+    if (that.data.numbers == 1) {
       wx.navigateTo({
          url: `/pages/child/PositionFrist/PositionFrist?id=${e.currentTarget.id}&type=全职`//全职简历
       })
