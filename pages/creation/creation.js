@@ -607,7 +607,7 @@ Page({
     this.selsect(arry, ele)
   },
   receuit(){
-    let arry = ["1-5人", "4-20人", "20-30人", "若干人"];
+    let arry = ["1-5人", "5-20人", "20-30人", "若干人"];
     let ele = 'allms.select[1].child[1].countCount';
     this.selsect(arry, ele)
   },
